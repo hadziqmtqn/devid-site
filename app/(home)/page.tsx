@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   title: { absolute: 'Devid: local PHP development for Intel Macs' },
   description:
     'Every project gets its own https:// address. PHP 8.3 to 8.5, nginx, Caddy or Apache, with no Homebrew, Docker or VM.',
+  openGraph: {
+    title: 'Devid: local PHP development for Intel Macs',
+    url: '/',
+    siteName: 'Devid',
+    type: 'website',
+    images: { url: '/og/home.png', width: 1200, height: 630, alt: 'Devid: every project gets its own https:// address' },
+  },
 };
 
 export default function HomePage() {

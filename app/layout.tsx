@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://devid.bekenweb.com'),
   title: { default: 'Devid', template: '%s | Devid' },
   description: 'Local PHP development for Intel Macs, with no Homebrew, Docker or VM.',
+  openGraph: { siteName: 'Devid', type: 'website' },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function Layout({ children }: LayoutProps<'/'>) {
