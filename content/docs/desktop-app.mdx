@@ -1,0 +1,22 @@
+---
+title: The desktop app
+description: "Devid.app: a menu-bar icon with the same pages as the TUI."
+---
+
+Devid.app is a menu-bar icon with a window that has the same pages as the TUI: Sites, PHP, Server, Logs and Settings. It is optional: your sites run without it.
+
+```sh
+# at the first install, in one command (no sudo for the app itself):
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --gui
+# or later, in a new terminal:
+devid setup --gui              # install it into ~/Applications; open it from Spotlight
+devid login-item on            # show its menu-bar icon after every login (default: off)
+```
+
+Without `--gui`, Devid installs no app.
+
+- **Gatekeeper:** the app is ad-hoc signed and not notarized. Installed by `devid setup --gui`, it opens without a prompt. If you download `Devid-darwin-x86_64.zip` in a browser instead, run `xattr -dr com.apple.quarantine Devid.app` after unzipping it.
+- **Menu bar:** the icon shows whether Devid runs, and a dot when updates are available. Its menu starts, stops and restarts everything, and opens the window or Settings.
+- **Dock:** the app is in the Dock and in Cmd+Tab only while its window is open. At other times it is a menu-bar icon (under 10 MB, no CPU at idle).
+- **Updates:** `devid self-update` updates the app together with devid once the app is installed. An open window keeps the old version until you close it.
+- **Removal:** `devid uninstall` removes the app.

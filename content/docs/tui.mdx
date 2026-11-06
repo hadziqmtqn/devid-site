@@ -1,0 +1,18 @@
+---
+title: The TUI
+description: "Devid's terminal UI and its keys."
+---
+
+Run `devid` with no arguments, or run `devid tui`. The TUI has five pages: Sites, PHP, Server, Logs and Settings. Every action in it is also a CLI command.
+
+| Where | Keys |
+|---|---|
+| Everywhere | `↑ ↓` or `j k` move · `tab` switch sidebar/page · `1`–`5` jump to a page · `r` refresh · `?` help · `q` quit |
+| Sites | `enter` actions (open in browser, open in Terminal, copy URL, PHP version, remove, unlink) · `a` link a folder · `p` park a folder · `U` unpark · `I` serve an ignored site again |
+| PHP | `enter` actions (extensions, make default, Xdebug, pcov, edit php.ini, restart, install) · `u` check for updates · `U` update |
+| PHP → Extensions… | `space` tick catalog extensions · `tab` to the Install button · `enter` install the ticked ones (after a confirmation, with an `installing 2/3 imagick… 52%` line) · `r` remove one (after a confirmation) · `x` Xdebug · `c` pcov |
+| Server | `enter` actions (use, install, restart, stop/start, view config) · `S` stop all · `A` start all |
+| Logs | `f` follow · `c` clear |
+| Settings | `d` health check · `u` check for updates · `U` update PHP/nginx · `D` update devid · `s` setup · `X` uninstall · `a` serve sites at login |
+
+Destructive actions ask for confirmation first. Colors come from your terminal theme, and every state also has a symbol and a word. Set `NO_COLOR=1` for a monochrome UI.

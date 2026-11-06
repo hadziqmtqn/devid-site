@@ -1,0 +1,22 @@
+{
+  "title": "Devid",
+  "pages": [
+    "---Get started---",
+    "index",
+    "install",
+    "first-steps",
+    "---Using Devid---",
+    "sites",
+    "php",
+    "extensions",
+    "web-servers",
+    "desktop-app",
+    "tui",
+    "https",
+    "---Maintenance---",
+    "updates",
+    "troubleshooting",
+    "uninstall",
+    "files"
+  ]
+}

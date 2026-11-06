@@ -1,0 +1,11 @@
+---
+title: First steps
+description: "Serve your projects at https://<folder>.test."
+---
+
+```sh
+devid park ~/Projects          # every subfolder becomes <folder>.test
+devid doctor                   # check that everything works
+```
+
+Then open `https://<folder>.test` in your browser. If the folder has a `public/` subfolder (Laravel, Symfony), Devid serves that; otherwise it serves the folder itself.

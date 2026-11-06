@@ -1,0 +1,12 @@
+---
+title: Uninstall
+description: "Undo setup, with or without your data."
+---
+
+```sh
+devid uninstall --dry-run      # show what would change
+devid uninstall                # undo setup; keeps ~/.devid (PHP, config, CA, certificates)
+devid uninstall --purge        # also delete ~/.devid
+```
+
+Uninstall undoes the system setup (with sudo), removes the LaunchAgents, the `PATH` line and Devid.app, and deletes `~/.devid/bin`.

@@ -1,0 +1,44 @@
+---
+title: Install
+description: "One command installs Devid, with or without the desktop app."
+---
+
+With the desktop app:
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --gui
+```
+
+Without it (the CLI and TUI only):
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
+The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it:
+
+1. Copies `devid` to `~/.devid/bin`, and adds the `php` and `composer` commands there.
+2. Puts `~/.devid/bin` first on your `PATH` in `~/.zshrc`.
+3. Runs the Devid daemon as a LaunchAgent, so it starts at every login.
+4. Downloads `composer.phar` and checks it.
+5. Asks for your password **once** for the system setup:
+   - `.test` DNS (`/etc/resolver/test`);
+   - ports 80/443 redirected to Devid (a pf rule);
+   - trust for the Devid certificate authority.
+6. Downloads PHP 8.5 and nginx (both sha256-checked), unless PHP or the web server is already installed.
+7. With `--gui`, installs Devid.app into `~/Applications` (sha256-checked).
+
+To see the steps without changing anything, run `devid setup --dry-run`. To install a specific version of Devid, run `DEVID_VERSION=0.7.0 sh install.sh`.
+
+To choose PHP versions and the web server, pass options to setup. With the install script, put them after `sh -s --`:
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --php 8.3 --server caddy
+devid setup --php 8.3 --php 8.4     # several versions; the first becomes the default
+devid setup --server apache         # nginx, caddy or apache
+devid setup --no-php --no-server    # only the system parts; install PHP and a server later
+```
+
+You can add or switch PHP versions and web servers at any time later (see [PHP](/docs/php) and [Web servers and services](/docs/web-servers)).
+
+Open a new terminal after setup so that `php` and `composer` come from Devid.

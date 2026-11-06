@@ -1,0 +1,23 @@
+---
+title: PHP
+description: "PHP 8.3, 8.4 and 8.5 side by side, with Xdebug, pcov and php.ini."
+---
+
+```sh
+devid php list                 # installed versions and whether php-fpm runs
+devid php install 8.4          # add another version
+devid php use 8.4              # make it the default
+devid php ext 8.5 xdebug on    # turn Xdebug (or pcov) on/off for a version
+devid php ext list 8.4         # bundled, Xdebug/pcov, and installed catalog extensions
+```
+
+- **The `php` command** follows the folder you are in. Inside an isolated site it uses that site's version; anywhere else it uses the default. `composer` works the same way.
+- **Extensions:**
+  - Every version includes:
+    - bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pcntl;
+    - PDO with MySQL, PostgreSQL and SQLite, plus mysqli, pgsql and sqlite3;
+    - readline (for `php -a` and `artisan tinker`), redis, soap, sockets, sodium, zip, and the XML extensions.
+  - Xdebug and pcov are included but off by default. Xdebug starts in trigger mode on port 9003.
+- **Extra extensions:** see [PHP extensions](/docs/extensions).
+- **php.ini:** each version has `~/.devid/php/<version>/etc/php.ini`. Devid writes it once and never overwrites it. After editing it, run `devid restart php-8.5`. The defaults are `memory_limit = 512M`, uploads up to 64 MB, errors displayed, and JIT off.
+- **Processes:** php-fpm uses `pm = ondemand`, so idle versions use almost no memory.

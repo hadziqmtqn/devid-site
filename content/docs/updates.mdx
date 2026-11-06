@@ -1,0 +1,13 @@
+---
+title: Updates
+description: "Updating Devid, PHP, the web servers and extensions."
+---
+
+```sh
+devid self-update --check      # is there a newer devid?
+devid self-update              # install it (restarts the daemon, and updates the app if installed)
+devid update --check           # newer PHP, nginx, Caddy or catalog extensions?
+devid update                   # install them
+```
+
+Each download is checked against its sha256 before Devid uses it. The daemon also checks for updates every 20 minutes (`update_check_minutes` in `config.toml`; 0 turns it off) and shows them in `devid status`, the TUI and the app. It never installs them by itself. In the TUI, the same actions are on the Settings page.

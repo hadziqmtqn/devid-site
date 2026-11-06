@@ -1,12 +1,14 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { Logo } from '@/components/logo';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      // JSX supported
-      title: appName,
+      title: <Logo />,
+      url: '/',
     },
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
+    // Releases and issues live in devid-binaries; these docs live in devid-site.
+    githubUrl: 'https://github.com/hadziqmtqn/devid-binaries',
+    links: [{ text: 'Releases', url: 'https://github.com/hadziqmtqn/devid-binaries/releases', external: true }],
   };
 }

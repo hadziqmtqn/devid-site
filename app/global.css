@@ -2,6 +2,70 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+/* Devid's palette, from the landing page. Every text color passes 4.5:1 on its background. */
+:root {
+  --dv-accent: #34c77b;
+}
+
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --color-fd-background: #fbfafd;
+  --color-fd-foreground: #15142b;
+  --color-fd-primary: #1d7a4c;
+  --color-fd-primary-foreground: #ffffff;
+  --color-fd-border: #e4e2ec;
+  --color-fd-ring: #34c77b;
+  --color-fd-accent: #eeedf4;
+  --color-fd-accent-foreground: #15142b;
+  --color-fd-muted: #f4f3f8;
+  --color-fd-muted-foreground: #5a5870;
+  --color-fd-secondary: #eeedf4;
+  --color-fd-secondary-foreground: #15142b;
+  --color-fd-card: #ffffff;
+  --color-fd-card-foreground: #15142b;
+  --color-fd-popover: #ffffff;
+  --color-fd-popover-foreground: #15142b;
+}
+
+.dark,
+.dark #nd-sidebar {
+  --color-fd-background: #16151f;
+  --color-fd-foreground: #f4f4fa;
+  --color-fd-primary: #34c77b;
+  --color-fd-primary-foreground: #16151f;
+  --color-fd-border: #2e2d3a;
+  --color-fd-ring: #34c77b;
+  --color-fd-accent: #2a2936;
+  --color-fd-accent-foreground: #f4f4fa;
+  --color-fd-muted: #1e1d29;
+  --color-fd-muted-foreground: #a9a7ba;
+  --color-fd-secondary: #24232f;
+  --color-fd-secondary-foreground: #f4f4fa;
+  --color-fd-card: #1e1d29;
+  --color-fd-card-foreground: #f4f4fa;
+  --color-fd-popover: #1e1d29;
+  --color-fd-popover-foreground: #f4f4fa;
+}
+
+.prose :is(h1, h2, h3),
+#nd-page h1 {
+  font-family: var(--font-space-grotesk), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* The landing page's narrow layouts (container queries on its root). */
+@container dv (max-width: 760px) {
+  .dv-navlinks {
+    display: none !important;
+  }
+}
+@container dv (max-width: 640px) {
+  .dv-sidebar {
+    display: none !important;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }

@@ -1,47 +1,17 @@
 # devid-site
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+The website for [Devid](https://github.com/hadziqmtqn/devid-binaries) at https://devid.bekenweb.com: the landing page and the user docs.
 
-It is a Next.js app with [Static Export](https://nextjs.org/docs/app/guides/static-exports) configured.
+- **Stack:** Next.js with [Fumadocs](https://fumadocs.dev), exported as a static site (`output: 'export'`, search built at build time). Hosted on Vercel.
+- **Landing page:** `app/(home)/page.tsx`, ported from the "Devid Landing Page" design canvas. The copy button is `components/install-command.tsx`.
+- **Docs:** `content/docs/*.mdx`; the sidebar order is `content/docs/meta.json`. This is the one user guide for Devid: a change users can see updates these pages, merged when the Devid release ships.
+- **Theme:** Devid's palette in `app/global.css` (light and dark), fonts in `app/layout.tsx`.
+- **Icons:** `app/favicon.ico` (16, 32, 48 px), `app/icon.png` and `app/apple-icon.png`, rendered from the app icon's geometry in devid's `crates/gui/icons/render.swift`, full-bleed and with its simpler 16 and 32 px drawings.
 
-Run development server:
-
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+```sh
+npm install
+npm run dev          # http://localhost:4321 (3xxx ports are kept free for other local services)
+npm run build        # static site in out/
+npm run lint
+npm run types:check
 ```
-
-Open http://localhost:3000 with your browser to see the result.
-
-## Explore
-
-In the project, you can see:
-
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
-
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
-
-### Fumadocs MDX
-
-Collections are defined with the [Macro API](https://fumadocs.dev/docs/mdx/macro) in `lib/source.ts`.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs

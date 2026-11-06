@@ -1,0 +1,20 @@
+---
+title: HTTPS
+description: "The local certificate authority, and tools with their own trust store."
+---
+
+HTTPS needs no manual steps:
+
+- **On first start:** the daemon creates a local certificate authority, "Devid Local CA". It is name-constrained to `.test`, so it cannot be used for any other domain.
+- **During setup:** `devid setup` adds the CA to the System keychain.
+- **Per site:** each site gets a certificate when it is linked or parked. Devid renews it 30 days before it expires.
+- **Browsers:** browsers that use the macOS keychain (Safari, Chrome, Brave) trust these certificates.
+- **Devid's PHP and Composer:** they use `~/.devid/ca/cacert.pem` (the macOS bundle plus the Devid CA), so HTTP calls from one `.test` site to another work.
+
+Some tools use their own certificate store:
+
+| Tool | What to do |
+|---|---|
+| Firefox | Usually reads the macOS keychain (`security.enterprise_roots.enabled`). If it warns, import `~/.devid/ca/devid-ca.crt` under Settings → Privacy & Security → Certificates. |
+| Node.js | `export NODE_EXTRA_CA_CERTS="$HOME/.devid/ca/devid-ca.crt"` |
+| Python (requests) | `export REQUESTS_CA_BUNDLE="$HOME/.devid/ca/cacert.pem"` |

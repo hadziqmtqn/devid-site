@@ -1,0 +1,27 @@
+---
+title: Web servers and services
+description: "nginx, Caddy or Apache, and starting, stopping and logs."
+---
+
+One web server runs at a time. nginx is the default.
+
+```sh
+devid server list              # nginx, caddy, apache: installed, active, version
+devid server install caddy     # nginx/caddy come from Devid's releases; apache uses macOS's /usr/sbin/httpd
+devid server use caddy         # switch; the old server stops, the new one starts
+```
+
+Services are the web server and one php-fpm per PHP version, named `nginx`, `caddy`, `apache`, `php-8.4` and so on.
+
+```sh
+devid status                   # daemon, web server, PHP versions, ports
+devid restart nginx
+devid stop php-8.4             # stays stopped until `devid start php-8.4`
+devid stop all                 # stop everything (a daemon restart, e.g. at login, brings it back)
+devid start all
+devid autostart off            # after login, nginx and PHP wait for `devid start all` (default: on)
+devid login-item on            # open the Devid app's menu-bar icon at login (default: off)
+devid logs                     # list logs
+devid logs php85-fpm.log -n 50 --follow
+devid logs nginx-error.log --clear
+```
