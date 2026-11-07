@@ -20,4 +20,4 @@ devid php ext list 8.4         # bundled, Xdebug/pcov, and installed catalog ext
   - Xdebug and pcov are included but off by default. Xdebug starts in trigger mode on port 9003.
 - **Extra extensions:** see [PHP extensions](/docs/extensions).
 - **php.ini:** each version has `~/.devid/php/<version>/etc/php.ini`. Devid writes it once and never overwrites it. After editing it, run `devid restart php-8.5`. The defaults are `memory_limit = 512M`, uploads up to 64 MB, errors displayed, and JIT off.
-- **Processes:** php-fpm uses `pm = ondemand`, so idle versions use almost no memory.
+- **Processes:** php-fpm uses `pm = ondemand`. An idle version keeps only its master process, about 10–15 MB. Workers start on a request and exit 10 seconds after the last one.
