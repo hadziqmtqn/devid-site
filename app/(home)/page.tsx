@@ -78,7 +78,7 @@ export default function HomePage() {
     </article>
     <article style={{ background: "#FFFFFF", border: "1px solid #C4E8D4", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>No Docker, no VM</h3>
-    <p style={{ margin: "0", color: "#4A4860" }}>Native processes. Idle PHP versions use almost no memory.</p>
+    <p style={{ margin: "0", color: "#4A4860" }}>Native processes. At idle, Devid with nginx and two PHP versions uses about 30 MB.</p>
     </article>
     <article style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Made for Intel Macs</h3>
