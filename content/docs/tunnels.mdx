@@ -1,0 +1,29 @@
+---
+title: Local port and Share
+description: "Serve a site on a fixed local port for your own tunnel, or share it with a temporary public link."
+---
+
+## A local port for your own tunnel
+
+`devid app port [site] [PORT|off]` also serves a site on `http://127.0.0.1:<port>`, for any `Host`. A tunnel such as cloudflared or ngrok, or another tool, can then reach the site there, in place of `php artisan serve`.
+
+```sh
+devid app port erdbpro-saas 8000   # also on http://127.0.0.1:8000
+devid app port erdbpro-saas        # keep its port, or pick the first free one from 8000
+devid app port erdbpro-saas off
+```
+
+- Ports below 1024, Devid's own ports, another site's port and a dev server's port are refused.
+- If another program already listens on the port, Devid leaves it out and says which program holds it. Your other sites are not affected. Run the command again once the port is free.
+- A tunnel's `X-Forwarded-Host`, `X-Forwarded-Proto` and `X-Forwarded-For` headers reach your app.
+
+## Share a site
+
+`devid share [site]` gives a site a temporary `https://….trycloudflare.com` link through a Cloudflare quick tunnel, for showing your work to someone. `devid share [site] --stop` ends it.
+
+- It needs `cloudflared`. Devid uses the one on your Mac (`/usr/local/bin` or `/opt/homebrew/bin`) and does not download it. [Get cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+- The link is new each time, and anyone with it can open the site until you stop sharing or the daemon stops. A fixed address is the job of your own tunnel with a local port.
+- Devid does not touch your own Cloudflare tunnel or its routes.
+- **Links in your app:** an app that builds URLs from `APP_URL` still links to its `.test` address. An app that ignores `X-Forwarded-Proto` may link to `http://`. In Laravel, trust the proxy to fix the second: `$middleware->trustProxies(at: '*')` in `bootstrap/app.php`.
+
+The desktop app has a Share card under a site's details, with the link and a Copy button. The menu-bar icon lists shared sites with Stop sharing. In the TUI, press `h` in a site's menu.

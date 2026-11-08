@@ -16,7 +16,8 @@ devid login-item on            # show its menu-bar icon after every login (defau
 Without `--gui`, Devid installs no app.
 
 - **Gatekeeper:** the app is ad-hoc signed and not notarized. Installed by `devid setup --gui`, it opens without a prompt. If you download `Devid-darwin-x86_64.zip` in a browser instead, run `xattr -dr com.apple.quarantine Devid.app` after unzipping it.
-- **Menu bar:** the icon shows whether Devid runs, and a dot when updates are available. Its menu starts, stops and restarts everything, and opens the window or Settings.
+- **Site details:** click a site for its type and how it is served, its local port, its [commands](/docs/commands) (Start, Stop, logs, Add command) and [Share](/docs/tunnels).
+- **Menu bar:** the icon shows whether Devid runs, a dot when updates are available, and how many commands run. Its menu starts, stops and restarts everything, stops a command or a share, and opens the window or Settings.
 - **Dock:** the app is in the Dock and in Cmd+Tab only while its window is open. At other times it is a menu-bar icon (under 10 MB, no CPU at idle).
-- **Updates:** `devid self-update` updates the app together with devid once the app is installed. An open window keeps the old version until you close it.
+- **Updates:** `devid self-update` updates the app together with devid once the app is installed. An open window keeps the old version until you close it; from 0.10.1, an app with no window open moves to the new version by itself.
 - **Removal:** `devid uninstall` removes the app.

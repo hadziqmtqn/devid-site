@@ -1,0 +1,42 @@
+---
+title: Commands
+description: "Run a project's dev server, queue worker or watcher from Devid, without a terminal."
+---
+
+Save the commands you would type in a terminal for a project, then start and stop them from Devid, one by one or all at once.
+
+| Command | What it does |
+|---|---|
+| `devid cmd [list] [site]` | The site's commands with their state, and suggestions from its `package.json` (and Laravel's workers) |
+| `devid cmd add [site] <name> -- <command…>` | Saves a command; the same name again replaces it |
+| `devid cmd rm [site] <name>` | Forgets a command, stopping it first |
+| `devid cmd start [site] [name]` | Starts one command, or all of the site's |
+| `devid cmd stop [site] [name]` | Stops one command, or all of the site's |
+
+In a project's folder you can leave out the site:
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd add queue -- php artisan queue:work
+devid cmd start                 # both
+devid logs app-shop-dev.log -f  # follow one's output
+devid cmd stop dev
+```
+
+## How a command runs
+
+- In the site's folder, with your login shell's environment (`$SHELL -l`), so `~/.cargo/bin` and other paths from your profile are there.
+- Node comes from nvm: the version in the folder's `.nvmrc`, or else nvm's default. Devid's `php` and `composer` come first, so `php artisan` uses the site's PHP version.
+- Input is closed, so a command that asks a question stops with an error, and its log says why.
+- Each command gets its own process group. Stop works like Ctrl+C for the whole group, so npm, node, esbuild, cargo and a desktop window all end. A command that ignores Ctrl+C gets SIGTERM after 5 seconds and SIGKILL after 10.
+- Output goes to `~/.devid/log/app-<site>-<name>.log`, which is emptied at each start and cut to its last 1 MB once it passes 10 MB. The Logs page, `devid logs` and the app's command list show it.
+
+## When commands run
+
+- Only when you start them: never at login, and never restarted by Devid when they end.
+- Stopping the daemon stops them all. So does `devid self-update`, which restarts the daemon.
+- If the daemon crashed, the next one stops what the old one left running.
+- Dev servers use a lot of memory (often 0.5–1 GB each), so stop the ones you are not using.
+
+The desktop app shows a site's commands under its details, with Start, Stop, Start all, Stop all, Add command and each command's log. The menu-bar icon shows how many commands run, with Stop for each. In the TUI, the commands are in a site's menu.
