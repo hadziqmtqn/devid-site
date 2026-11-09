@@ -19,5 +19,5 @@ Without `--gui`, Devid installs no app.
 - **Site details:** click a site for its type and how it is served, its local port, its [commands](/docs/commands) (Start, Stop, logs, Add command) and [Share](/docs/tunnels).
 - **Menu bar:** the icon shows whether Devid runs, a dot when updates are available, and how many commands run. Its menu starts, stops and restarts everything, stops a command or a share, and opens the window or Settings.
 - **Dock:** the app is in the Dock and in Cmd+Tab only while its window is open. At other times it is a menu-bar icon (under 10 MB, no CPU at idle).
-- **Updates:** `devid self-update` updates the app together with devid once the app is installed. An open window keeps the old version until you close it; from 0.10.1, an app with no window open moves to the new version by itself.
+- **Updates:** Settings › Update Devid (from 0.12.1) downloads and installs the new version in the background, restarts the daemon, and reopens the window as the new version. Terminal opens only if the system setup needs your password. `devid self-update` in a terminal does the same and updates the app too; an app with no window open moves to the new version by itself.
 - **Removal:** `devid uninstall` removes the app.

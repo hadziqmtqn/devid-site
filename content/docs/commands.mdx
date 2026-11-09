@@ -35,7 +35,8 @@ devid cmd stop dev
 ## When commands run
 
 - Only when you start them: never at login, and never restarted by Devid when they end.
-- Stopping the daemon stops them all. So does `devid self-update`, which restarts the daemon.
+- Stopping the daemon stops them all, and so does logging out.
+- An update (`devid self-update`, or Update Devid in the app) restarts the daemon too. From 0.12.3, the commands that were running start again afterwards, and each log begins with "started again after Devid restarted for an update". Shares do not restart, because their link would change.
 - If the daemon crashed, the next one stops what the old one left running.
 - Dev servers use a lot of memory (often 0.5–1 GB each), so stop the ones you are not using.
 

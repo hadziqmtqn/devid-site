@@ -6,6 +6,7 @@ description: "Updating Devid, PHP, the web servers and extensions."
 ```sh
 devid self-update --check      # is there a newer devid?
 devid self-update              # install it (restarts the daemon, and updates the app if installed)
+devid self-update --no-sudo    # the same, without a password prompt; a step that needs sudo is reported instead
 devid update --check           # newer PHP, nginx, Caddy or catalog extensions?
 devid update                   # install them
 ```
