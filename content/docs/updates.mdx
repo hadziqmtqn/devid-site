@@ -11,3 +11,5 @@ devid update                   # install them
 ```
 
 Each download is checked against its sha256 before Devid uses it. The daemon also checks for updates every 20 minutes (`update_check_minutes` in `config.toml`; 0 turns it off) and shows them in `devid status`, the TUI and the app. It never installs them by itself. In the TUI, the same actions are on the Settings page.
+
+The newest devid is the release marked **Latest** in [devid-binaries](https://github.com/hadziqmtqn/devid-binaries/releases). A version with a suffix, such as `0.12.0-rc.1`, is a pre-release for testing: `devid self-update` never offers it, and you install it by hand.

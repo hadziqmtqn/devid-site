@@ -1,0 +1,47 @@
+---
+title: Apps and dev servers
+description: "Laravel, CodeIgniter, Node.js, Vite, Next.js and static sites: detected per site, and yours to change."
+---
+
+Devid reads a few files in each site's folder to tell what it is, and serves it to match. A site where nothing matches is served as PHP, as before.
+
+| Found in the folder | Type | Served as |
+|---|---|---|
+| `artisan`, and `laravel/framework` in `composer.json` | Laravel | PHP, from `public/` |
+| `spark` | CodeIgniter 4 | PHP |
+| `system/CodeIgniter.php` or `system/core/CodeIgniter.php` | CodeIgniter 3 | PHP |
+| `bin/console`, and `symfony/framework-bundle` | Symfony | PHP |
+| `wp-config.php` or `wp-load.php` | WordPress | PHP |
+| `composer.json`, `index.php` or `public/index.php` | PHP | PHP |
+| `next` in `package.json` | Next.js | proxy to `localhost:3000` |
+| `nuxt` | Nuxt | proxy to `localhost:3000` |
+| `express`, `fastify`, `koa` or `hono`, or a `dev` or `start` script | Node.js | proxy to `localhost:3000` |
+| `vite` | Vite | proxy to `localhost:5173` |
+| `index.html` | Static | files |
+
+A proxy site uses `PORT` from the project's `.env` when it is set. PHP is served from `public/` when that folder exists.
+
+## How a site is served
+
+- **PHP:** `.php` files go to php-fpm; other files are served as they are.
+- **Static:** files only, from the web root (`dist/` for Vite, `out/` for Next.js). With single-page app on, paths with no file load `index.html`.
+- **Proxy:** every request goes to your dev server on `localhost`, WebSockets (hot reload) included. If nothing answers there, the page says which port to start.
+
+`https://<name>.test` keeps its certificate in every mode.
+
+| Command | What it does |
+|---|---|
+| `devid app show [site]` | The type, how the site is served and what you changed (default: the site containing the current folder). |
+| `devid app set [site] --preset vite` | Picks a type; its defaults apply. |
+| `devid app set [site] --mode proxy --upstream 3010` | Changes how it is served; only the options you pass change. |
+| `devid app set [site] --root dist --spa on` | The web root (php, static) and single-page app (static). |
+| `devid app reset [site]` | Back to the detected type. The local port and the commands stay. |
+
+The desktop app has the same settings under a site's details, and the TUI in a site's menu.
+
+## Dev servers behind a proxy
+
+- Devid sends the dev server `Host: localhost:<port>`, and rewrites `Origin` when it is the site's own address. Vite's host check and Next.js's dev origin check accept that without changes to your project. The `.test` name arrives in `X-Forwarded-Host`, and `https` in `X-Forwarded-Proto`.
+- `devid app set [site] --pass-host on` sends the `.test` `Host` and `Origin` unchanged, for an app that builds links from `Host`.
+- **Express with Vite as middleware:** Vite then runs its hot-reload socket on a port of its own (24678), which an `https://` page cannot reach. The page works without hot reload. To fix it in your app, pass your HTTP server to Vite as `server.hmr.server`, so the socket shares your app's port.
+- **Laravel with Vite** stays a Laravel site. Run `npm run dev` as one of its [commands](/docs/commands); laravel-vite-plugin allows `*.test` pages to load its assets.
