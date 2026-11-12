@@ -21,6 +21,8 @@ Devid reads a few files in each site's folder to tell what it is, and serves it 
 
 A proxy site uses `PORT` from the project's `.env` when it is set. Its [commands](/docs/commands) get the port it forwards to as `PORT`. PHP is served from `public/` when that folder exists.
 
+From 0.12.5, a new proxy site whose default port another site already uses gets the next free port instead, for example 3002 for a second Next.js project. The older folder keeps the default. The new port is saved and shown as the site's dev server port in `devid app show` and the app, and its commands get it as `PORT`. Devid does this only for a site with nothing set in Devid yet and no `PORT` in `.env`, and it never changes a port you set.
+
 ## How a site is served
 
 - **PHP:** `.php` files go to php-fpm; other files are served as they are.
