@@ -8,11 +8,11 @@ const CLI_COMMAND = 'curl -fsSL https://github.com/hadziqmtqn/devid-binaries/rel
 const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
 
 export const metadata: Metadata = {
-  title: { absolute: 'Devid: local PHP development for Intel Macs' },
+  title: { absolute: 'Devid: local PHP and Node.js development for Intel Macs' },
   description:
-    'Every project gets its own https:// address. PHP 8.3 to 8.5, nginx, Caddy or Apache, with no Homebrew, Docker or VM.',
+    'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM.',
   openGraph: {
-    title: 'Devid: local PHP development for Intel Macs',
+    title: 'Devid: local PHP and Node.js development for Intel Macs',
     url: '/',
     siteName: 'Devid',
     type: 'website',
@@ -45,7 +45,7 @@ export default function HomePage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
     <span style={{ alignSelf: "flex-start", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "14px", color: "var(--dv-accent)", border: "1px solid #3A3948", borderRadius: "999px", padding: "6px 14px" }}>For Intel Macs · no Homebrew</span>
     <h1 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(38px, 4.5cqi, 64px)", lineHeight: "1.06", fontWeight: "600", letterSpacing: "-0.03em" }}>Every project gets its own <span style={{ color: "var(--dv-accent)" }}>https://</span> address.</h1>
-    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local PHP development for Intel Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
+    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
     <div style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
     <a href="#install" style={{ display: "inline-flex", alignItems: "center", gap: "10px", minHeight: "52px", padding: "0 26px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"></path></svg>
@@ -60,7 +60,7 @@ export default function HomePage() {
     <span aria-hidden="true" style={{ width: "12px", height: "12px", borderRadius: "6px", background: "#FEBC2E" }}></span>
     <span aria-hidden="true" style={{ width: "12px", height: "12px", borderRadius: "6px", background: "#28C840" }}></span>
     </div>
-    <pre style={{ margin: "0", padding: "clamp(18px, 1.7cqi, 24px)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "clamp(13px, 1.05cqi, 15px)", lineHeight: "1.75", color: "#E4E3EE", whiteSpace: "pre", overflowX: "auto" }}><span style={{ color: "var(--dv-accent)" }}>❯</span> devid park ~/Projects{'\n'}<span style={{ color: "#A9A7BA" }}>  # every subfolder becomes &lt;folder&gt;.test</span>{'\n'}{'\n'}<span style={{ color: "var(--dv-accent)" }}>❯</span> devid isolate 8.4{'\n'}<span style={{ color: "#A9A7BA" }}>  # pin this site to PHP 8.4</span>{'\n'}{'\n'}<span style={{ color: "var(--dv-accent)" }}>❯</span> devid sites{'\n'}  https://shop.test   PHP 8.4   ~/Projects/shop{'\n'}  https://blog.test   PHP 8.5   ~/Projects/blog</pre>
+    <pre style={{ margin: "0", padding: "clamp(18px, 1.7cqi, 24px)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "clamp(13px, 1.05cqi, 15px)", lineHeight: "1.75", color: "#E4E3EE", whiteSpace: "pre", overflowX: "auto" }}><span style={{ color: "var(--dv-accent)" }}>❯</span> devid park ~/Projects{'\n'}<span style={{ color: "#A9A7BA" }}>  # every subfolder becomes &lt;folder&gt;.test</span>{'\n'}{'\n'}<span style={{ color: "var(--dv-accent)" }}>❯</span> devid cmd add app dev -- npm run dev{'\n'}<span style={{ color: "#A9A7BA" }}>  # Devid starts and stops your dev server</span>{'\n'}{'\n'}<span style={{ color: "var(--dv-accent)" }}>❯</span> devid sites{'\n'}  https://shop.test   Laravel   PHP 8.4{'\n'}  https://app.test    Vite      proxy :5173</pre>
     </div>
     </section>
     </header>
@@ -100,6 +100,10 @@ export default function HomePage() {
     <p style={{ margin: "0", color: "#5A5870" }}>Side by side, pinned per site. Xdebug and pcov included.</p>
     </article>
     <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "20px", fontWeight: "600" }}>Node.js, Vite, Next.js</h3>
+    <p style={{ margin: "0", color: "#5A5870" }}>Detected per folder and proxied to your dev server, hot reload included. Node is yours, e.g. from nvm.</p>
+    </article>
+    <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "20px", fontWeight: "600" }}>Extensions, prebuilt</h3>
     <p style={{ margin: "0", color: "#5A5870" }}>imagick, mongodb, swoole and more. Nothing to compile.</p>
     </article>
@@ -108,8 +112,12 @@ export default function HomePage() {
     <p style={{ margin: "0", color: "#5A5870" }}>nginx by default. Switch with one command.</p>
     </article>
     <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "20px", fontWeight: "600" }}>Dev servers, started for you</h3>
+    <p style={{ margin: "0", color: "#5A5870" }}>Save <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "15px" }}>npm run dev</span> or a queue worker per site, then start and stop it from Devid.</p>
+    </article>
+    <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "20px", fontWeight: "600" }}>Park or link</h3>
-    <p style={{ margin: "0", color: "#5A5870" }}>A whole folder of projects, or just one. Laravel’s public/ just works.</p>
+    <p style={{ margin: "0", color: "#5A5870" }}>A whole folder of projects, or just one. Laravel, WordPress or Vite: each is detected and served to match.</p>
     </article>
     <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "20px", fontWeight: "600" }}>CLI, TUI, menu-bar app</h3>
@@ -142,25 +150,25 @@ export default function HomePage() {
     <thead>
     <tr style={{ background: "#F7F6FA", color: "#5A5870", textAlign: "left" }}>
     <th style={{ padding: "10px 14px", fontWeight: "500" }}>Site</th>
-    <th style={{ padding: "10px 14px", fontWeight: "500" }}>PHP</th>
+    <th style={{ padding: "10px 14px", fontWeight: "500" }}>Served as</th>
     <th style={{ padding: "10px 14px", fontWeight: "500" }}>Folder</th>
     </tr>
     </thead>
     <tbody>
     <tr style={{ borderTop: "1px solid #E4E2EC" }}>
     <td style={{ padding: "11px 14px", fontFamily: "var(--font-jetbrains-mono), monospace" }}>shop.test</td>
-    <td style={{ padding: "11px 14px" }}>8.4 <span style={{ color: "#5A5870" }}>· isolated</span></td>
+    <td style={{ padding: "11px 14px" }}>PHP 8.4 <span style={{ color: "#5A5870" }}>· Laravel</span></td>
     <td style={{ padding: "11px 14px", color: "#5A5870" }}>~/Projects/shop</td>
     </tr>
     <tr style={{ borderTop: "1px solid #E4E2EC" }}>
     <td style={{ padding: "11px 14px", fontFamily: "var(--font-jetbrains-mono), monospace" }}>blog.test</td>
-    <td style={{ padding: "11px 14px" }}>8.5 <span style={{ color: "#5A5870" }}>· default</span></td>
+    <td style={{ padding: "11px 14px" }}>PHP 8.5 <span style={{ color: "#5A5870" }}>· WordPress</span></td>
     <td style={{ padding: "11px 14px", color: "#5A5870" }}>~/Projects/blog</td>
     </tr>
     <tr style={{ borderTop: "1px solid #E4E2EC" }}>
-    <td style={{ padding: "11px 14px", fontFamily: "var(--font-jetbrains-mono), monospace" }}>api.test</td>
-    <td style={{ padding: "11px 14px" }}>8.3 <span style={{ color: "#5A5870" }}>· isolated</span></td>
-    <td style={{ padding: "11px 14px", color: "#5A5870" }}>~/Code/api</td>
+    <td style={{ padding: "11px 14px", fontFamily: "var(--font-jetbrains-mono), monospace" }}>app.test</td>
+    <td style={{ padding: "11px 14px" }}>Proxy :5173 <span style={{ color: "#5A5870" }}>· Vite</span></td>
+    <td style={{ padding: "11px 14px", color: "#5A5870" }}>~/Projects/app</td>
     </tr>
     </tbody>
     </table>
@@ -184,7 +192,7 @@ export default function HomePage() {
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Ports</dt>
     <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>80 and 443 free (stop Valet first)</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Not included</dt>
-    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Databases (use e.g. DBngin)</dd>
+    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Databases (use e.g. DBngin), and Node.js: Devid uses yours</dd>
     </dl>
     </div>
     </section>
