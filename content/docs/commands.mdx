@@ -28,6 +28,7 @@ devid cmd stop dev
 
 - In the site's folder, with your login shell's environment (`$SHELL -l`), so `~/.cargo/bin` and other paths from your profile are there.
 - Node comes from nvm: the version in the folder's `.nvmrc`, or else nvm's default. Devid's `php` and `composer` come first, so `php artisan` uses the site's PHP version.
+- From 0.12.4, a proxy site's commands get `PORT` set to its dev server port ("Forward to"). Next.js, Express and other servers that read `PORT` then listen where Devid forwards. A `PORT=` in the command itself still wins (`PORT=4000 npm run api`), so a second server in the same project can use another port. Vite ignores `PORT`: pass `--port <n> --strictPort`. A running command keeps the port it started with, so restart it after changing "Forward to".
 - Input is closed, so a command that asks a question stops with an error, and its log says why.
 - Each command gets its own process group. Stop works like Ctrl+C for the whole group, so npm, node, esbuild, cargo and a desktop window all end. A command that ignores Ctrl+C gets SIGTERM after 5 seconds and SIGKILL after 10.
 - Output goes to `~/.devid/log/app-<site>-<name>.log`, which is emptied at each start and cut to its last 1 MB once it passes 10 MB. The Logs page, `devid logs` and the app's command list show it.
