@@ -7,6 +7,6 @@ export function GET() {
   return renderOG({
     title: 'Every project gets its own https:// address.',
     accent: 'https://',
-    description: 'Local PHP development for Intel Macs. No Homebrew, Docker or VM.',
+    description: 'Local PHP and Node.js development for Intel Macs. No Homebrew, Docker or VM.',
   });
 }

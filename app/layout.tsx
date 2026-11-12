@@ -10,7 +10,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], weight: ['500', '700'
 export const metadata: Metadata = {
   metadataBase: new URL('https://devid.bekenweb.com'),
   title: { default: 'Devid', template: '%s | Devid' },
-  description: 'Local PHP development for Intel Macs, with no Homebrew, Docker or VM.',
+  description: 'Local PHP and Node.js development for Intel Macs, with no Homebrew, Docker or VM.',
   openGraph: { siteName: 'Devid', type: 'website' },
   twitter: { card: 'summary_large_image' },
 };

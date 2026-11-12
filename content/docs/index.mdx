@@ -1,9 +1,9 @@
 ---
 title: Introduction
-description: Local PHP development for Intel Macs. Every project gets its own https:// address.
+description: Local PHP and Node.js development for Intel Macs. Every project gets its own https:// address.
 ---
 
-Devid is a local PHP development environment for macOS. Every folder you link or park is served at `https://<name>.test` with a trusted certificate. Devid runs PHP 8.3, 8.4 and 8.5 side by side, and nginx, Caddy or Apache as the web server. It needs no Homebrew, no Docker and no virtual machine. You use it from the command line, from a terminal UI (TUI) or from the desktop app.
+Devid is a local development environment for PHP and Node.js apps on macOS. Every folder you link or park is served at `https://<name>.test` with a trusted certificate. Devid runs PHP 8.3, 8.4 and 8.5 side by side, and nginx, Caddy or Apache as the web server. Node.js, Vite and Next.js apps are served through your own dev server, which Devid can start and stop for you. It needs no Homebrew, no Docker and no virtual machine. You use it from the command line, from a terminal UI (TUI) or from the desktop app.
 
 <Callout type="warn" title="A personal project, provided as is">
   Devid runs on Intel Macs only and is tested on macOS 14. `devid setup` asks for your password once and changes system settings: it adds `/etc/resolver/test`, trusts Devid's certificate authority and forwards ports 80 and 443. `devid uninstall` undoes all of it. The builds are ad-hoc signed and not notarized.
