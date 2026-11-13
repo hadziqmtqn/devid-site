@@ -54,10 +54,70 @@
   letter-spacing: -0.02em;
 }
 
-/* The landing page's narrow layouts (container queries on its root). */
+/* The landing page's narrow layouts (container queries on its root), as in the design canvas's revised boards. */
+.dv-menubtn,
+.dv-mobilemenu {
+  display: none;
+}
+@container dv (max-width: 1000px) {
+  .dv-split {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .dv-footlinks {
+    flex-basis: 100% !important;
+    margin-left: 0 !important;
+  }
+  .dv-feat {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+/* Tablet only: the Web server card spans the row, text left and the switch right. */
+@container dv (min-width: 701px) and (max-width: 1000px) {
+  .dv-ws {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 28px !important;
+    align-items: center;
+  }
+  .dv-wsctl {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}
 @container dv (max-width: 760px) {
   .dv-navlinks {
     display: none !important;
+  }
+  .dv-menubtn {
+    display: inline-flex !important;
+  }
+  .dv-mobilemenu {
+    display: flex !important;
+  }
+}
+/* The site URLs in the Sites card go to two lines whenever their box is too narrow for one. */
+.dv-urls {
+  container-type: inline-size;
+  container-name: dvurls;
+}
+@container dvurls (max-width: 360px) {
+  .dv-urlrow {
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+  }
+  .dv-urlmeta {
+    flex-basis: 100% !important;
+    margin-left: 24px !important;
+    font-size: 13px !important;
+  }
+}
+@container dv (max-width: 700px) {
+  .dv-grid3 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .dv-span2 {
+    grid-column: auto !important;
   }
 }
 @container dv (max-width: 640px) {
