@@ -52,6 +52,7 @@ export default function HomePage() {
     Install for Mac</a>
     <a href="https://github.com/hadziqmtqn/devid" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 26px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>Source on GitHub</a>
     </div>
+    <p style={{ margin: "0", fontSize: "14px", color: "#A9A7BA" }}>Open source on GitHub: <a href="https://github.com/hadziqmtqn/devid" style={{ color: "#E4E3EE" }}>devid</a> holds the source (AGPL-3.0), <a href="https://github.com/hadziqmtqn/devid-binaries" style={{ color: "#E4E3EE" }}>devid-binaries</a> the builds and releases.</p>
     </div>
     
     <div style={{ background: "#0E0D15", border: "1px solid #2E2D3A", borderRadius: "16px", overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.45)" }}>
