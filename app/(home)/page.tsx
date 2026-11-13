@@ -10,7 +10,7 @@ const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
 export const metadata: Metadata = {
   title: { absolute: 'Devid: local PHP and Node.js development for Intel Macs' },
   description:
-    'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM.',
+    'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.',
   openGraph: {
     title: 'Devid: local PHP and Node.js development for Intel Macs',
     url: '/',
@@ -43,14 +43,14 @@ export default function HomePage() {
     
     <section id="top" style={{ maxWidth: "1200px", margin: "0 auto", padding: "clamp(32px, 4.4cqi, 64px) 24px clamp(48px, 5.6cqi, 80px)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 460px), 1fr))", gap: "48px", alignItems: "center" }}>
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-    <span style={{ alignSelf: "flex-start", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "14px", color: "var(--dv-accent)", border: "1px solid #3A3948", borderRadius: "999px", padding: "6px 14px" }}>For Intel Macs · no Homebrew</span>
+    <span style={{ alignSelf: "flex-start", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "14px", color: "var(--dv-accent)", border: "1px solid #3A3948", borderRadius: "999px", padding: "6px 14px" }}>Open source · for Intel Macs</span>
     <h1 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(38px, 4.5cqi, 64px)", lineHeight: "1.06", fontWeight: "600", letterSpacing: "-0.03em" }}>Every project gets its own <span style={{ color: "var(--dv-accent)" }}>https://</span> address.</h1>
     <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
     <div style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
     <a href="#install" style={{ display: "inline-flex", alignItems: "center", gap: "10px", minHeight: "52px", padding: "0 26px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"></path></svg>
     Install for Mac</a>
-    <a href="https://github.com/hadziqmtqn/devid-binaries" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 26px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>View on GitHub</a>
+    <a href="https://github.com/hadziqmtqn/devid" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 26px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>Source on GitHub</a>
     </div>
     </div>
     
@@ -82,7 +82,7 @@ export default function HomePage() {
     </article>
     <article style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Made for Intel Macs</h3>
-    <p style={{ margin: "0", color: "#C9C7D6" }}>macOS 12 or newer (tested on 14), x86_64. Apple silicon is planned, not built yet.</p>
+    <p style={{ margin: "0", color: "#C9C7D6" }}>macOS 12 or newer (tested on 14), x86_64. Planned: tests on macOS 15 and later, Apple silicon, Linux and Windows.</p>
     </article>
     </div>
     </div>
@@ -210,7 +210,7 @@ export default function HomePage() {
     <InstallCommand command={CLI_COMMAND} copyLabel="Copy the install command without the app" />
     </div>
     </div>
-    <p style={{ margin: "0", maxWidth: "720px", fontSize: "15px", color: "#A9A7BA" }}>A personal project, provided as is. Builds are ad-hoc signed and not notarized; the command installs them without a Gatekeeper prompt. Setup asks for your password once for .test DNS, Devid’s CA and ports 80/443, and <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#E4E3EE" }}>devid uninstall</span> undoes it.</p>
+    <p style={{ margin: "0", maxWidth: "720px", fontSize: "15px", color: "#A9A7BA" }}>An open-source personal project, provided as is. Builds are ad-hoc signed and not notarized; the command installs them without a Gatekeeper prompt. Setup asks for your password once for .test DNS, Devid’s CA and ports 80/443, and <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#E4E3EE" }}>devid uninstall</span> undoes it.</p>
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px" }}>
     <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 28px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>Releases on GitHub</a>
     <Link href="/docs" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 28px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>Read the guide</Link>
@@ -220,9 +220,10 @@ export default function HomePage() {
     <footer style={{ borderTop: "1px solid #2E2D3A" }}>
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px", display: "flex", flexWrap: "wrap", gap: "12px 28px", alignItems: "center", fontSize: "14px", color: "#A9A7BA" }}>
     <span style={{ fontFamily: "var(--font-space-grotesk), sans-serif", fontWeight: "600", color: "#F4F4FA", fontSize: "18px", letterSpacing: "-0.03em" }}>devid</span>
-    <span>© 2026 Devid by <a href="https://bekenweb.com" style={{ color: "#C9C7D6" }}>Bekenweb</a> · a personal project, provided as is</span>
+    <span>© 2026 Devid by <a href="https://bekenweb.com" style={{ color: "#C9C7D6" }}>Bekenweb</a> · open source under the <a href="https://github.com/hadziqmtqn/devid/blob/main/LICENSE" style={{ color: "#C9C7D6" }}>AGPL-3.0</a>, provided as is</span>
     <Link href="/docs" style={{ color: "#C9C7D6", marginLeft: "auto" }}>Docs</Link>
-    <a href="https://github.com/hadziqmtqn/devid-binaries" style={{ color: "#C9C7D6" }}>GitHub</a>
+    <a href="https://github.com/hadziqmtqn/devid" style={{ color: "#C9C7D6" }}>Source</a>
+    <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ color: "#C9C7D6" }}>Releases</a>
     <a href="https://github.com/hadziqmtqn/devid-binaries/issues" style={{ color: "#C9C7D6" }}>Issues</a>
     </div>
     </footer>

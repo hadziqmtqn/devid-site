@@ -1,6 +1,6 @@
 # devid-site
 
-The website for [Devid](https://github.com/hadziqmtqn/devid-binaries) at https://devid.bekenweb.com: the landing page and the user docs.
+The website for [Devid](https://github.com/hadziqmtqn/devid) at https://devid.bekenweb.com: the landing page and the user docs.
 
 - **Stack:** Next.js with [Fumadocs](https://fumadocs.dev), exported as a static site (`output: 'export'`, search built at build time). Hosted on Vercel.
 - **Landing page:** `app/(home)/page.tsx`, ported from the "Devid Landing Page" design canvas. The copy button is `components/install-command.tsx`.
