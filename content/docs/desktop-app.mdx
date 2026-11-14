@@ -3,7 +3,7 @@ title: The desktop app
 description: "Devid.app: a menu-bar icon with the same pages as the TUI."
 ---
 
-Devid.app is a menu-bar icon with a window that has the same pages as the TUI: Sites, PHP, Server, Logs and Settings. It is optional: your sites run without it.
+Devid.app is a menu-bar icon with a window that has the same pages as the TUI: Sites, PHP, Web Server, Logs and Settings. It is optional: your sites run without it.
 
 ```sh
 # at the first install, in one command (no sudo for the app itself):
@@ -16,8 +16,11 @@ devid login-item on            # show its menu-bar icon after every login (defau
 Without `--gui`, Devid installs no app.
 
 - **Gatekeeper:** the app is ad-hoc signed and not notarized. Installed by `devid setup --gui`, it opens without a prompt. If you download `Devid-darwin-x86_64.zip` in a browser instead, run `xattr -dr com.apple.quarantine Devid.app` after unzipping it.
+- **Sites:** a table with each site's type, what serves it (its PHP version, Static, or the port it is proxied to) and its running commands. The filter on the Sites line switches between served sites and parked sites you removed. **+** at the top links a folder from anywhere: after you choose it, Devid shows its domain and app type, and lets you pick its PHP version or, for a Node.js app, the dev server port, before you link it. **Add folder** parks a folder, so every project inside is served.
 - **Site details:** click a site for its type and how it is served, its local port, its [commands](/docs/commands) (Start, Stop, logs, Add command) and [Share](/docs/tunnels).
+- **Quick menu:** **⋯** on the web server card, at the bottom of the sidebar, lists the sites with their PHP versions, stops or restarts everything, switches the default PHP, and opens Settings or quits Devid.
+- **Logs:** the sources are on the left, grouped as web server, PHP and each site's commands. The log is on the right, with All, Warnings and Errors, search and Follow. A red count marks errors that arrive while the page is open. **⋯** shows the file in Finder or copies its path. Colors and progress bars written for a terminal are shown as plain text.
 - **Menu bar:** the icon shows whether Devid runs, a dot when updates are available, and how many commands run. Its menu starts, stops and restarts everything, stops a command or a share, and opens the window or Settings.
 - **Dock:** the app is in the Dock and in Cmd+Tab only while its window is open. At other times it is a menu-bar icon (under 10 MB, no CPU at idle).
-- **Updates:** Settings › Update Devid (from 0.12.1) downloads and installs the new version in the background, restarts the daemon, and reopens the window as the new version. Terminal opens only if the system setup needs your password. `devid self-update` in a terminal does the same and updates the app too; an app with no window open moves to the new version by itself.
+- **Updates:** Settings › Update Devid (from 0.12.1) downloads and installs the new version in the background, restarts the daemon, and reopens the window as the new version. From 0.13.0, Settings shows each update's progress: the step, the percentage, the megabytes downloaded, the speed and the time left, for Devid itself and for PHP, the web servers and extensions; the sidebar shows the percentage too. A failed update says which step stopped. **Try again** runs it again; for PHP and the web servers it picks up from the one that failed. The update from an older version to 0.13.0 shows no progress yet, because the older app runs it. Terminal opens only if the system setup needs your password. `devid self-update` in a terminal does the same and updates the app too; an app with no window open moves to the new version by itself.
 - **Removal:** `devid uninstall` removes the app.
