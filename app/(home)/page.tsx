@@ -291,7 +291,7 @@ export default function HomePage() {
     <Link href="/docs" style={{ color: "#C9C7D6" }}>Docs</Link>
     <a href="https://github.com/hadziqmtqn/devid" style={{ color: "#C9C7D6" }}>Source</a>
     <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ color: "#C9C7D6" }}>Releases</a>
-    <a href="https://github.com/hadziqmtqn/devid-binaries/issues" style={{ color: "#C9C7D6" }}>Issues</a>
+    <a href="https://github.com/hadziqmtqn/devid/issues" style={{ color: "#C9C7D6" }}>Issues</a>
     </div>
     </div>
     </footer>
