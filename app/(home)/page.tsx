@@ -70,7 +70,7 @@ export default function HomePage() {
     </article>
     <article style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Made for Intel Macs</h3>
-    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested on macOS 14 Sonoma (Intel). Next: macOS 15 up to the latest macOS, as far as GitHub’s runners allow, then Debian-based Linux and Windows.</p>
+    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested on macOS 14 Sonoma (Intel). Next: Apple silicon, and macOS 15 up to the latest macOS as far as GitHub’s runners allow. Then Debian-based Linux, then Windows.</p>
     </article>
     </div>
     </div>
@@ -225,6 +225,7 @@ export default function HomePage() {
     <div style={{ border: "1px solid #16151F", background: "#16151F", color: "#F4F4FA", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
     <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#16151F", background: "var(--dv-accent)", borderRadius: "999px", padding: "4px 12px" }}>Next</span>
     <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
+    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Apple silicon</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>Built for arm64 and tested on GitHub’s Apple silicon runners.</span></li>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>macOS 15 up to the latest macOS</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Intel, tested as far as GitHub’s macOS runners allow.</span></li>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>A shorter install command</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Devid’s own domain.</span></li>
     </ul>
@@ -233,8 +234,7 @@ export default function HomePage() {
     <div style={{ border: "1px solid #E4E2EC", background: "#FBFAFD", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
     <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#3F3D52", background: "#EEEDF4", borderRadius: "999px", padding: "4px 12px" }}>Later</span>
     <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Linux (Debian-based) and Windows</span><span style={{ color: "#5A5870", fontSize: "15px" }}>Windows is the largest effort: its own PHP builds, no php-fpm.</span></li>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Apple silicon</span><span style={{ color: "#5A5870", fontSize: "15px" }}>The build pipeline can already produce arm64.</span></li>
+    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Linux (Debian-based), then Windows</span><span style={{ color: "#5A5870", fontSize: "15px" }}>One platform at a time. Windows is the largest effort: its own PHP builds, no php-fpm.</span></li>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Developer tools</span><span style={{ color: "#5A5870", fontSize: "15px" }}>A mail catcher and a dump viewer.</span></li>
     </ul>
     </div>
