@@ -1,0 +1,79 @@
+---
+title: Mail
+description: "Catch the mail your apps send in an inbox on your Mac, and read it in the desktop app."
+---
+
+Mail catches the email your apps send. Password resets, invoices and notifications land in an inbox on your Mac instead of real mailboxes. Devid runs [Mailpit](https://mailpit.axllent.org) for it, and the desktop app shows the inbox. Mail is off until you turn it on.
+
+## Turn it on
+
+```sh
+devid mail on     # the first time, downloads Mailpit (11 MB)
+devid mail        # its state, ports and counts
+devid mail off    # the mail it caught stays
+```
+
+In the desktop app: **Mail** › **Turn on Mail**.
+
+- Mail listens on `127.0.0.1` only: SMTP on port 2525, and its inbox on the next port.
+- At rest it uses about 16 MB of memory and no CPU. With Mail off, nothing runs.
+- Nothing is sent on to a real mailbox.
+
+## Send mail from your app
+
+For Laravel, put these lines in the app's `.env`:
+
+```ini
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+```
+
+- Any user name and password work, or none. There is no TLS.
+- For other apps: SMTP on `127.0.0.1:2525`.
+- **PHP's `mail()`:** while Mail is on, Devid's PHP sends `mail()` to it too, for WordPress and plain PHP. `devid mail php-mail off` stops that.
+- `devid mail test` sends a test email.
+
+## Read it in the app
+
+The desktop app's Mail page is the inbox.
+
+- The messages, newest first, with search and an Unread filter.
+- Each message with its HTML, its text, its headers and its source.
+- Its attachments below it; each one saves to your Downloads folder.
+- **Mark as unread** and **Delete** for one message. **⋯** has **Mark all as read**, **Mail settings** and **Delete all**.
+- **Open in Mailpit** shows the message on Mailpit's own page in your browser, with its HTML checks.
+
+New mail shows up within two seconds. **Notify on new mail** in Mail settings also posts a macOS notification with the sender and the subject. The first time, macOS asks: choose **Options**, then **Allow**.
+
+An email shows without its scripts, and its links open in your browser. Each email shows its normal (light) design, also when your Mac is in dark mode.
+
+## From the terminal
+
+```sh
+devid mail list                    # the newest 20
+devid mail list invoice --unread   # search, unread only
+devid mail show <id>               # one message, with its attachments
+devid mail save <id> <part>        # an attachment to ~/Downloads
+devid mail delete <id>
+devid mail open                    # Mailpit's inbox in the browser
+devid mail clear                   # delete all mail
+```
+
+The search is Mailpit's: words, `from:`, `to:`, `subject:`, `has:attachment` and more.
+
+In the TUI, the Mail page is key `4`: `m` turns Mail on or off, `t` sends a test email, `o` opens the inbox in the browser, `c` copies the `.env` lines, `p` switches PHP's `mail()`, and `X` deletes all mail.
+
+## Settings
+
+| Setting | Command | Default |
+|---|---|---|
+| SMTP port; the inbox takes the next one | `devid mail port 2525` | 2525 |
+| Messages to keep; the oldest go first | `devid mail keep 1000` | 500 |
+| PHP's `mail()` goes to Mail | `devid mail php-mail on` | on |
+| A notification for new mail (desktop app) | `devid mail notify on` | off |
+
+- The mail is kept in `~/.devid/mail`.
+- Devid refuses a port that it or one of your sites uses, and names the program that holds a port.
+- Running Mailpit yourself? It can keep running on its own ports (1025 and 8025).
+- The first time you save an attachment, macOS may ask whether `devid` may use your Downloads folder.

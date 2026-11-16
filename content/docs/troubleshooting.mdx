@@ -12,7 +12,8 @@ Start with `devid doctor`. It checks every part of the installation and prints a
 - whether ports 80/443 really reach the web server;
 - `.test` resolving;
 - the CA;
-- Valet.
+- Valet;
+- Mail, when it is on.
 
 | Symptom | Fix |
 |---|---|
@@ -22,5 +23,7 @@ Start with `devid doctor`. It checks every part of the installation and prints a
 | Sites stop answering on 80/443 after Docker, OrbStack or UTM starts. `devid doctor` says ports 80/443 do not reach the web server; since 0.14, the app shows a banner and the menu-bar icon turns red. | Another app switched pf off on loopback: macOS Internet Sharing does this when a VM network starts. Run `devid helper install`. Since 0.14 it turns pf back on for loopback. |
 | A site shows the wrong PHP version | Run `devid sites` to see each site's version, then `devid isolate <version>` inside the project. |
 | The certificate is not trusted | Run `devid helper install` to trust the CA again, then restart the browser. |
+| Mail does not start: its port is in use | `devid mail` names the program that holds it. Pick another port with `devid mail port <port>`, and set `MAIL_PORT` in your apps' `.env` to match. |
+| An app's mail does not show up | Check that Mail runs (`devid mail`) and that the app's `.env` has `MAIL_HOST=127.0.0.1` and Devid's `MAIL_PORT`. `devid mail test` sends a test email. |
 
 **Reporting a bug:** open a [Bug report](https://github.com/hadziqmtqn/devid/issues/new/choose) with your `devid --version`, macOS version and `devid doctor` output.
