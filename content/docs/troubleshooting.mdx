@@ -9,6 +9,7 @@ Start with `devid doctor`. It checks every part of the installation and prints a
 - the LaunchAgent;
 - the daemon, DNS, the web server and PHP;
 - the system setup;
+- whether ports 80/443 really reach the web server;
 - `.test` resolving;
 - the CA;
 - Valet.
@@ -18,6 +19,7 @@ Start with `devid doctor`. It checks every part of the installation and prints a
 | `php` is still Homebrew's or another one | Open a new terminal (or `exec zsh`). `~/.devid/bin` must come first on `PATH`. |
 | "daemon is not running" | Run `devid setup` again. It is safe to repeat. Logs: `~/.devid/log/daemon.log`. |
 | `.test` does not resolve, or ports 80/443 do not answer | Run `devid helper status`, then `devid helper install`. |
+| Sites stop answering on 80/443 after Docker, OrbStack or UTM starts. `devid doctor` says ports 80/443 do not reach the web server; since 0.14, the app shows a banner and the menu-bar icon turns red. | Another app switched pf off on loopback: macOS Internet Sharing does this when a VM network starts. Run `devid helper install`. Since 0.14 it turns pf back on for loopback. |
 | A site shows the wrong PHP version | Run `devid sites` to see each site's version, then `devid isolate <version>` inside the project. |
 | The certificate is not trusted | Run `devid helper install` to trust the CA again, then restart the browser. |
 

@@ -9,11 +9,11 @@ const CLI_COMMAND = 'curl -fsSL https://github.com/hadziqmtqn/devid-binaries/rel
 const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
 
 export const metadata: Metadata = {
-  title: { absolute: 'Devid: local PHP and Node.js development for Intel Macs' },
+  title: { absolute: 'Devid: local PHP and Node.js development for Macs' },
   description:
     'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.',
   openGraph: {
-    title: 'Devid: local PHP and Node.js development for Intel Macs',
+    title: 'Devid: local PHP and Node.js development for Macs',
     url: '/',
     siteName: 'Devid',
     type: 'website',
@@ -32,7 +32,7 @@ export default function HomePage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
     <span style={{ alignSelf: "flex-start", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "14px", color: "var(--dv-accent)", border: "1px solid #3A3948", borderRadius: "999px", padding: "6px 14px" }}>No Homebrew? No problem.</span>
     <h1 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(38px, 4.5cqi, 64px)", lineHeight: "1.06", fontWeight: "600", letterSpacing: "-0.03em" }}>Every project gets its own <span style={{ color: "var(--dv-accent)" }}>https://</span> address.</h1>
-    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
+    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel and Apple silicon Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
     <div style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
     <a href="#install" style={{ display: "inline-flex", alignItems: "center", gap: "10px", minHeight: "52px", padding: "0 26px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"></path></svg>
@@ -69,8 +69,8 @@ export default function HomePage() {
     <p style={{ margin: "0", color: "#4A4860" }}>Native processes. At idle, Devid with nginx and two PHP versions uses about 30 MB.</p>
     </article>
     <article style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
-    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Made for Intel Macs</h3>
-    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested on macOS 14 Sonoma (Intel). Next: Apple silicon, and macOS 15 up to the latest macOS as far as GitHub’s runners allow. Then Debian-based Linux, then Windows.</p>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Intel and Apple silicon</h3>
+    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested by hand on macOS 14 Sonoma (Intel). Apple silicon is tested on GitHub’s runners only. Next: macOS 15 up to the latest macOS as far as GitHub’s runners allow, then Debian-based Linux, then Windows.</p>
     </article>
     </div>
     </div>
@@ -219,13 +219,13 @@ export default function HomePage() {
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Node.js projects and dev servers</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Share a site through a Cloudflare tunnel</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>CLI, TUI and menu-bar app</span></li>
+    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Apple silicon (arm64), tested on GitHub’s runners</span></li>
     </ul>
     </div>
     
     <div style={{ border: "1px solid #16151F", background: "#16151F", color: "#F4F4FA", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
     <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#16151F", background: "var(--dv-accent)", borderRadius: "999px", padding: "4px 12px" }}>Next</span>
     <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Apple silicon</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>Built for arm64 and tested on GitHub’s Apple silicon runners.</span></li>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>macOS 15 up to the latest macOS</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Intel, tested as far as GitHub’s macOS runners allow.</span></li>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>A shorter install command</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Devid’s own domain.</span></li>
     </ul>
@@ -252,7 +252,7 @@ export default function HomePage() {
     </div>
     <dl style={{ margin: "0", display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(0, 5fr)", columnGap: "16px", borderTop: "1px solid #D9D6E3" }}>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>System</dt>
-    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Intel Mac, macOS 12 or newer (tested on 14 Sonoma)</dd>
+    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Intel or Apple silicon Mac, macOS 12 or newer (tested by hand on Intel with 14 Sonoma; Apple silicon on GitHub’s runners only)</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Setup</dt>
     <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Admin password, once: .test DNS, Devid’s CA and ports 80/443</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Ports</dt>
