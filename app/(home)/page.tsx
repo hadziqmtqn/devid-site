@@ -207,6 +207,7 @@ export default function HomePage() {
     <span style={{ padding: "6px 10px", borderRadius: "7px", background: "#E4E2EC", fontWeight: "600" }}>Sites</span>
     <span style={{ padding: "6px 10px", color: "#3F3D52" }}>PHP</span>
     <span style={{ padding: "6px 10px", color: "#3F3D52" }}>Server</span>
+    <span style={{ padding: "6px 10px", color: "#3F3D52" }}>Mail</span>
     <span style={{ padding: "6px 10px", color: "#3F3D52" }}>Logs</span>
     <span style={{ padding: "6px 10px", color: "#3F3D52" }}>Settings</span>
     </div>
@@ -216,6 +217,28 @@ export default function HomePage() {
     <div style={{ display: "flex", gap: "10px", padding: "7px 0", borderTop: "1px solid #E4E2EC" }}><span style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>blog.test</span><span style={{ marginLeft: "auto", color: "#5A5870" }}>PHP 8.5 · WordPress</span></div>
     <div style={{ display: "flex", gap: "10px", padding: "7px 0", borderTop: "1px solid #E4E2EC" }}><span style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>app.test</span><span style={{ marginLeft: "auto", color: "#5A5870" }}>Proxy :5173 · Vite</span></div>
     </div>
+    </div>
+    </div>
+    </article>
+    
+    <article className="dv-split" style={{ gridColumn: "1 / -1", background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "18px", padding: "28px", display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(0, 3fr)", gap: "28px", alignItems: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#1D6B44" }}>Mail</span>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "26px", lineHeight: "1.2", fontWeight: "600" }}>Every email your apps send, caught</h3>
+    <p style={{ margin: "0", color: "#5A5870" }}>Password resets and invoices land in an inbox on your Mac, not in real mailboxes. Turn it on with <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "15px", whiteSpace: "nowrap" }}>devid mail on</span> and read each message in the app. Devid runs Mailpit for it.</p>
+    </div>
+    <div aria-hidden="true" style={{ background: "#F7F6FA", border: "1px solid #E4E2EC", borderRadius: "14px", padding: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "14px" }}>
+    <div style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "2px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ flex: "0 0 auto", width: "8px", height: "8px", borderRadius: "4px", background: "#2563EB" }}></span><span style={{ fontWeight: "600" }}>Shop</span><span style={{ marginLeft: "auto", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#5A5870" }}>09:41</span></div>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingLeft: "16px", minWidth: "0", color: "#3F3D52" }}><span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Reset Password Notification</span></div>
+    </div>
+    <div style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "2px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ flex: "0 0 auto", width: "8px", height: "8px", borderRadius: "4px", background: "#2563EB" }}></span><span style={{ fontWeight: "600" }}>Shop</span><span style={{ marginLeft: "auto", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#5A5870" }}>09:38</span></div>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingLeft: "16px", minWidth: "0", color: "#3F3D52" }}><span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Your invoice #1042</span><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#5A5870" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "0 0 auto" }}><path d="M10.5 5.5 6 10a1.4 1.4 0 0 0 2 2l5-5a2.8 2.8 0 0 0-4-4L4 8a4.2 4.2 0 0 0 6 6l3.5-3.5"></path></svg></div>
+    </div>
+    <div style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "2px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ flex: "0 0 auto", width: "8px", height: "8px", borderRadius: "4px", background: "transparent" }}></span><span style={{ fontWeight: "500" }}>Blog</span><span style={{ marginLeft: "auto", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#5A5870" }}>09:12</span></div>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingLeft: "16px", minWidth: "0", color: "#3F3D52" }}><span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>New comment on “Hello world”</span></div>
     </div>
     </div>
     </article>
@@ -239,6 +262,7 @@ export default function HomePage() {
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>nginx, Caddy, Apache; automatic HTTPS</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Node.js projects and dev servers</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Share a site through a Cloudflare tunnel</span></li>
+    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Mail: an inbox for the mail your apps send</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>CLI, TUI and menu-bar app</span></li>
     <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Apple silicon (arm64), tested on GitHub’s runners</span></li>
     </ul>
@@ -256,7 +280,7 @@ export default function HomePage() {
     <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#3F3D52", background: "#EEEDF4", borderRadius: "999px", padding: "4px 12px" }}>Later</span>
     <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
     <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Linux (Debian-based), then Windows</span><span style={{ color: "#5A5870", fontSize: "15px" }}>One platform at a time. Windows is the largest effort: its own PHP builds, no php-fpm.</span></li>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Developer tools</span><span style={{ color: "#5A5870", fontSize: "15px" }}>A mail catcher and a dump viewer.</span></li>
+    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Developer tools</span><span style={{ color: "#5A5870", fontSize: "15px" }}>A dump viewer.</span></li>
     </ul>
     </div>
     
