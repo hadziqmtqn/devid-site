@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { InstallCommand } from '@/components/install-command';
 import { ErdPromo } from '@/components/erd-promo';
 import { LandingNav } from '@/components/landing-nav';
+import { LandingFooter } from '@/components/landing-footer';
+import { latest, next } from '@/lib/roadmap';
 import { siteUrl } from '@/lib/shared';
 
 // Ported from the "Devid Landing Page" design canvas. The canvas is the design reference; this file is the source.
@@ -246,46 +248,26 @@ export default function HomePage() {
     </div>
     </section>
     
-    <section id="roadmap" style={{ background: "#FFFFFF", borderTop: "1px solid #E4E2EC" }}>
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "clamp(48px, 5.6cqi, 80px) 24px", display: "flex", flexDirection: "column", gap: "32px" }}>
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "760px" }}>
-    <h2 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(30px, 3.1cqi, 44px)", lineHeight: "1.12", fontWeight: "600", letterSpacing: "-0.02em" }}>Roadmap</h2>
-    <p style={{ margin: "0", color: "#5A5870", fontSize: "clamp(17px, 1.35cqi, 19px)" }}>No dates yet. New macOS versions are added as GitHub’s macOS runners make testing possible.</p>
+    <section id="roadmap" aria-labelledby="roadmap-title" style={{ background: "#FFFFFF", borderTop: "1px solid #E4E2EC", borderBottom: "1px solid #E4E2EC" }}>
+    <div className="rb-split" style={{ maxWidth: "1200px", margin: "0 auto", padding: "clamp(40px, 4.4cqi, 64px) 24px", display: "grid", gridTemplateColumns: "minmax(0, 4fr) minmax(0, 7fr)", gap: "24px 48px", alignItems: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" }}>
+    <h2 id="roadmap-title" style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(30px, 3.1cqi, 44px)", lineHeight: "1.12", fontWeight: "600", letterSpacing: "-0.02em" }}>Roadmap</h2>
+    <p style={{ margin: "0", color: "#5A5870" }}>Every release and what it added, and what comes next. No dates yet.</p>
+    <Link href="/roadmap" style={{ display: "inline-flex", alignItems: "center", minHeight: "48px", padding: "0 22px", borderRadius: "12px", background: "#16151F", color: "#F4F4FA", fontWeight: "600", textDecoration: "none" }}>See the roadmap →</Link>
     </div>
-    <div className="dv-grid3" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-    
-    <div style={{ border: "1px solid #C4E8D4", background: "#F4FBF7", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
-    <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#1D6B44", background: "#E3F6EC", borderRadius: "999px", padding: "4px 12px" }}>Shipped</span>
-    <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>*.test sites: park, link, PHP per site</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>PHP 8.3–8.5, extension catalog</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>nginx, Caddy, Apache; automatic HTTPS</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Node.js projects and dev servers</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Share a site through a Cloudflare tunnel</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Mail: an inbox for the mail your apps send</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>CLI, TUI and menu-bar app</span></li>
-    <li style={{ display: "flex", gap: "10px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flex: "0 0 auto", marginTop: "4px" }}><path d="M5 12l5 5L19 7"></path></svg><span>Apple silicon (arm64), tested on GitHub’s runners</span></li>
-    </ul>
+    <div className="rb-two" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "16px" }}>
+    <div style={{ border: "1px solid #C4E8D4", background: "#F4FBF7", borderRadius: "18px", padding: "24px", display: "flex", flexDirection: "column", gap: "10px" }}>
+    <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#1D6B44", background: "#E3F6EC", borderRadius: "999px", padding: "4px 12px" }}>Latest · <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>{latest.version}</span></span>
+    <span style={{ fontWeight: "600" }}>{latest.title}</span>
+    <span style={{ color: "#5A5870", fontSize: "15px" }}>{latest.note}</span>
     </div>
-    
-    <div style={{ border: "1px solid #16151F", background: "#16151F", color: "#F4F4FA", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "18px", padding: "24px", display: "flex", flexDirection: "column", gap: "10px" }}>
     <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#16151F", background: "var(--dv-accent)", borderRadius: "999px", padding: "4px 12px" }}>Next</span>
-    <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>macOS 15 up to the latest macOS</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Intel, tested as far as GitHub’s macOS runners allow.</span></li>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>A shorter install command</span><span style={{ color: "#C9C7D6", fontSize: "15px" }}>On Devid’s own domain.</span></li>
+    <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
+    {next.map((p) => <li key={p.title} style={{ fontWeight: "600" }}>{p.title}</li>)}
     </ul>
     </div>
-    
-    <div style={{ border: "1px solid #E4E2EC", background: "#FBFAFD", borderRadius: "18px", padding: "26px", display: "flex", flexDirection: "column", gap: "16px" }}>
-    <span style={{ alignSelf: "flex-start", fontSize: "13px", fontWeight: "600", color: "#3F3D52", background: "#EEEDF4", borderRadius: "999px", padding: "4px 12px" }}>Later</span>
-    <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Linux (Debian-based), then Windows</span><span style={{ color: "#5A5870", fontSize: "15px" }}>One platform at a time. Windows is the largest effort: its own PHP builds, no php-fpm.</span></li>
-    <li style={{ display: "flex", flexDirection: "column", gap: "2px" }}><span style={{ fontWeight: "600" }}>Developer tools</span><span style={{ color: "#5A5870", fontSize: "15px" }}>A dump viewer.</span></li>
-    </ul>
     </div>
-    
-    </div>
-    <p style={{ margin: "0", fontSize: "15px", color: "#5A5870" }}>Out of scope: databases (use a tool such as DBngin) and Docker- or VM-based setups.</p>
     </div>
     </section>
     
@@ -328,18 +310,7 @@ export default function HomePage() {
     </div>
     <ErdPromo placement="landing" />
     </div>
-    <footer style={{ borderTop: "1px solid #2E2D3A" }}>
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px", display: "flex", flexWrap: "wrap", gap: "12px 28px", alignItems: "center", fontSize: "14px", color: "#A9A7BA" }}>
-    <span style={{ fontFamily: "var(--font-space-grotesk), sans-serif", fontWeight: "600", color: "#F4F4FA", fontSize: "18px", letterSpacing: "-0.03em" }}>devid</span>
-    <span>© 2026 Devid by <a href="https://bekenweb.com" style={{ color: "#C9C7D6" }}>Bekenweb</a> · open source under the <a href="https://github.com/hadziqmtqn/devid/blob/main/LICENSE" style={{ color: "#C9C7D6" }}>AGPL-3.0</a>, provided as is</span>
-    <div className="dv-footlinks" style={{ display: "flex", flexWrap: "wrap", gap: "12px 28px", marginLeft: "auto" }}>
-    <Link href="/docs" style={{ color: "#C9C7D6" }}>Docs</Link>
-    <a href="https://github.com/hadziqmtqn/devid" style={{ color: "#C9C7D6" }}>Source</a>
-    <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ color: "#C9C7D6" }}>Releases</a>
-    <a href="https://github.com/hadziqmtqn/devid/issues" style={{ color: "#C9C7D6" }}>Issues</a>
-    </div>
-    </div>
-    </footer>
+    <LandingFooter />
     </section>
     
     </div>
