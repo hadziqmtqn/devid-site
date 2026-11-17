@@ -3,15 +3,19 @@ import Link from 'next/link';
 import { InstallCommand } from '@/components/install-command';
 import { ErdPromo } from '@/components/erd-promo';
 import { LandingNav } from '@/components/landing-nav';
+import { siteUrl } from '@/lib/shared';
 
 // Ported from the "Devid Landing Page" design canvas. The canvas is the design reference; this file is the source.
 const CLI_COMMAND = 'curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh';
 const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
 
+const DESCRIPTION =
+  'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.';
+
 export const metadata: Metadata = {
   title: { absolute: 'Devid: local PHP and Node.js development for Macs' },
-  description:
-    'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.',
+  description: DESCRIPTION,
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Devid: local PHP and Node.js development for Macs',
     url: '/',
@@ -21,9 +25,26 @@ export const metadata: Metadata = {
   },
 };
 
+// Search engines read what the app is from this (schema.org SoftwareApplication).
+const JSON_LD = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Devid',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS 12 or later',
+  description: DESCRIPTION,
+  url: siteUrl,
+  downloadUrl: 'https://github.com/hadziqmtqn/devid-binaries/releases/latest',
+  license: 'https://www.gnu.org/licenses/agpl-3.0.html',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@type': 'Organization', name: 'Bekenweb', url: 'https://bekenweb.com' },
+}).replace(/</g, '\\u003c');
+
 export default function HomePage() {
   return (
     <div style={{ containerType: "inline-size", containerName: "dv", background: "#FBFAFD", color: "#15142B", fontFamily: "var(--font-inter), system-ui, sans-serif", fontSize: "clamp(16px, 1.2cqi, 17px)", lineHeight: "1.6" }}>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON_LD }} />
     
     <header style={{ background: "#16151F", color: "#F4F4FA" }}>
     <LandingNav />
