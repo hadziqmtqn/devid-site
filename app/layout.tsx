@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { Provider } from '@/components/provider';
+import { siteUrl } from '@/lib/shared';
 import './global.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -8,7 +9,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['500', '600', 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-jetbrains-mono' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://devid.bekenweb.com'),
+  metadataBase: new URL(siteUrl),
   title: { default: 'Devid', template: '%s | Devid' },
   description: 'Local PHP and Node.js development for Intel and Apple silicon Macs, with no Homebrew, Docker or VM.',
   openGraph: { siteName: 'Devid', type: 'website' },

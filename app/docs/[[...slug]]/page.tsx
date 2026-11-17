@@ -12,7 +12,8 @@ import { getMDXComponents } from '@/components/mdx';
 import { ErdPromo } from '@/components/erd-promo';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
+import { appName, getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
+import { ogSize } from '@/lib/og';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -57,8 +58,13 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   return {
     title: page.data.title,
     description: page.data.description,
+    alternates: { canonical: page.url },
+    // A page's openGraph replaces the layout's, so it repeats the site's own fields.
     openGraph: {
-      images: getPageImageUrl(page).url,
+      url: page.url,
+      siteName: appName,
+      type: 'article',
+      images: { url: getPageImageUrl(page).url, ...ogSize, alt: page.data.title },
     },
   };
 }
