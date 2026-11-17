@@ -4,7 +4,7 @@ import { siteUrl } from '@/lib/shared';
 
 export const revalidate = false;
 
-// The landing page and every docs page.
+// The landing page, the roadmap and every docs page.
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: siteUrl }, ...source.getPages().map((page) => ({ url: `${siteUrl}${page.url}` }))];
+  return [{ url: siteUrl }, { url: `${siteUrl}/roadmap` }, ...source.getPages().map((page) => ({ url: `${siteUrl}${page.url}` }))];
 }
