@@ -17,16 +17,25 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.15',
-  title: 'Mail',
-  note: 'An inbox for the mail your apps send, in the desktop app.',
+  version: '0.16',
+  title: 'Terminal commands',
+  note: 'Devid’s PHP versions, nginx, Caddy and Mailpit by name in any shell, with Add to PATH in the desktop app.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
   {
+    version: '0.16',
+    date: '20 November 2026',
+    items: [
+      'Terminal commands: `php8.4`, `nginx -t`, `mailpit` and the rest from any shell, editor or script',
+      'Add to PATH in the desktop app’s Settings, or `devid path on`',
+      'Share with a cloudflared in `~/.local/bin`, without Homebrew',
+    ],
+  },
+  {
     version: '0.15',
-    date: 'November 2026',
+    date: '17 November 2026',
     items: ['Mail: an inbox for the mail your apps send, in the desktop app', 'A notification for new mail, with the sender and the subject'],
   },
   {
