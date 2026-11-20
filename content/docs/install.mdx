@@ -17,8 +17,8 @@ curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-
 
 The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it:
 
-1. Copies `devid` to `~/.devid/bin`, and adds the `php` and `composer` commands there.
-2. Puts `~/.devid/bin` first on your `PATH` in `~/.zshrc`.
+1. Copies `devid` to `~/.devid/bin`, and adds the `php`, `composer`, `php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` commands there (see [Terminal commands](/docs/terminal)).
+2. Puts `~/.devid/bin` first on your `PATH` in `~/.zshenv` and `~/.zshrc`.
 3. Runs the Devid daemon as a LaunchAgent, so it starts at every login.
 4. Downloads `composer.phar` and checks it.
 5. Asks for your password **once** for the system setup:
@@ -41,4 +41,4 @@ devid setup --no-php --no-server    # only the system parts; install PHP and a s
 
 You can add or switch PHP versions and web servers at any time later (see [PHP](/docs/php) and [Web servers and services](/docs/web-servers)).
 
-Open a new terminal after setup so that `php` and `composer` come from Devid.
+Open a new terminal after setup so that `php`, `composer` and the other commands come from Devid. Settings › Terminal in the app, or `devid path on`, adds the `PATH` line again if you removed it.

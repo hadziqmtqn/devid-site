@@ -7,7 +7,7 @@ Everything lives in `~/.devid`:
 
 | Path | Contents |
 |---|---|
-| `bin/` | `devid`, plus `php` and `composer` (hard links to `devid`) |
+| `bin/` | `devid`, plus `php`, `composer`, `php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` (hard links to `devid`; see [Terminal commands](/docs/terminal)) |
 | `config.toml` | Settings: `.test` domain, web server, default PHP, ports (8088/8443 behind pf, DNS 53535), parked folders, links, isolated and ignored sites, `autostart`, `update_check_minutes`, and per site under `[apps.<site>]` its type changes, local port and commands. Prefer the commands to editing it. |
 | `php/<version>/` | PHP binaries, `etc/php.ini` (yours to edit), `etc/conf.d/` (switches for Xdebug, pcov and catalog extensions) |
 | `php-ext/<version>/` | Catalog extensions (`devid php ext install`), one folder each |
