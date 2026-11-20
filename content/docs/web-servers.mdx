@@ -23,5 +23,6 @@ devid autostart off            # after login, nginx and PHP wait for `devid star
 devid login-item on            # open the Devid app's menu-bar icon at login (default: off)
 devid logs                     # list logs
 devid logs php85-fpm.log -n 50 --follow
+nginx -t                       # test Devid's nginx config (see Terminal commands)
 devid logs nginx-error.log --clear
 ```
