@@ -21,7 +21,13 @@ devid app port erdbpro-saas off
 
 `devid share [site]` gives a site a temporary `https://….trycloudflare.com` link through a Cloudflare quick tunnel, for showing your work to someone. `devid share [site] --stop` ends it.
 
-- It needs `cloudflared`. Devid uses the one on your Mac (`/usr/local/bin` or `/opt/homebrew/bin`) and does not download it. [Get cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+- It needs `cloudflared`. Devid uses the one on your Mac and does not download it. [Get cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+  - Devid looks in `/usr/local/bin` and `/opt/homebrew/bin` (Homebrew). From 0.16 it also looks in `~/.local/bin` and `~/bin`, so the official macOS download works without Homebrew or sudo:
+
+    ```sh
+    tar -xzf cloudflared-darwin-arm64.tgz      # cloudflared-darwin-amd64.tgz on Intel
+    mkdir -p ~/.local/bin && mv cloudflared ~/.local/bin/
+    ```
 - The link is new each time, and anyone with it can open the site until you stop sharing or the daemon stops. A fixed address is the job of your own tunnel with a local port.
 - Devid does not touch your own Cloudflare tunnel or its routes.
 - **Links in your app:** an app that builds URLs from `APP_URL` still links to its `.test` address. An app that ignores `X-Forwarded-Proto` may link to `http://`. In Laravel, trust the proxy to fix the second: `$middleware->trustProxies(at: '*')` in `bootstrap/app.php`.
