@@ -1,0 +1,61 @@
+---
+title: Laravel and Vite
+description: "Vite started from Devid serves HTTPS with the site's certificate, so a Laravel page loads its scripts and CSS in Safari too."
+---
+
+From 0.18.0, a Laravel site's Vite dev server serves HTTPS with the site's certificate when Devid starts it. Safari then loads the page's scripts and CSS from Vite, with hot reload.
+
+laravel-vite-plugin writes Vite's address to `public/hot`, and Laravel's `@vite` tags load the page's scripts and CSS from there. Without a certificate that address is plain HTTP, such as `http://[::1]:5173`. Chrome and Firefox let an `https://` page load from it, because it is on your Mac. Safari blocks it, so the page shows up without scripts and CSS.
+
+## Set it up
+
+Name the site in the project's `.env`:
+
+```sh
+APP_URL=https://shop.test
+```
+
+Then run Vite as one of the site's [commands](/docs/commands):
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd start dev
+```
+
+When `APP_URL` names the site (`https://shop.test`, or `http://shop.test`, with no port), each command of the site gets two variables. `VITE_DEV_SERVER_KEY` and `VITE_DEV_SERVER_CERT` point at the site's key and certificate in `~/.devid/certs`. laravel-vite-plugin then serves Vite at `https://shop.test:5173`, writes that address to `public/hot` and connects hot reload to it.
+
+- `devid cmd` says `vite: started from Devid, it serves HTTPS with this site's certificate`.
+- `composer run dev`, which starts Vite among other processes, works the same way. Queue workers and other commands ignore the two variables.
+- Devid reads `.env` when a command starts, so restart Vite after you change `APP_URL`.
+
+## When APP_URL names another address
+
+With `APP_URL=http://localhost:8000`, for example, Devid starts Vite as before, on plain HTTP: with the site's certificate and that address, Vite would not start. `devid cmd`, the TUI's site menu and the desktop app's Commands card show a note instead:
+
+```text
+vite: plain HTTP, which Safari blocks; set APP_URL=https://shop.test in .env (now http://localhost:8000) and restart Vite
+```
+
+Devid does not set `APP_URL` for you. Laravel lets a variable win over `.env`, so queue workers, and Vite plugins that call `artisan`, would see another address than your app.
+
+Like Vite, Devid reads `APP_URL` from `.env`, `.env.local`, `.env.development` and `.env.development.local`, with the later file winning.
+
+## Vite started in your own terminal
+
+`npm run dev` in a terminal of your own gets nothing from Devid. For it, add the two lines to `.env` with full paths, since the plugin does not expand `~`:
+
+```sh
+VITE_DEV_SERVER_KEY=/Users/<you>/.devid/certs/shop.test.key
+VITE_DEV_SERVER_CERT=/Users/<you>/.devid/certs/shop.test.crt
+```
+
+`APP_URL` must still name the site. Devid's own commands then use your lines.
+
+## Things to know
+
+- A project that sets `VITE_DEV_SERVER_KEY` or `VITE_DEV_SERVER_CERT` itself keeps its own.
+- Devid renews a site's certificate at the same path. A Vite that runs across a renewal keeps the old certificate until it restarts.
+- Vite cannot start [on demand](/docs/on-demand) for a Laravel site: the browser talks to Vite directly, not through the site.
+- **Sharing:** a visitor's page would still load its scripts from the Vite on your Mac. Before you [share](/docs/tunnels) the site, stop Vite, which removes `public/hot`, and run `npm run build`.
+- Devid looks only for laravel-vite-plugin in `package.json`. Vite in a Symfony or WordPress project reads its own settings.

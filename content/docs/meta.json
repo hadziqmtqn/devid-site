@@ -10,6 +10,7 @@
     "apps",
     "commands",
     "on-demand",
+    "laravel-vite",
     "tunnels",
     "mail",
     "php",
