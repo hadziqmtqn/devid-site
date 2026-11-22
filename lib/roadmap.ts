@@ -17,13 +17,21 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.17',
-  title: 'Dev servers on demand',
-  note: 'A site’s first visit starts its dev server, and Devid stops it when the site has been idle, on nginx, Caddy and Apache.',
+  version: '0.18',
+  title: 'Laravel and Vite over HTTPS',
+  note: 'Vite started from Devid serves HTTPS with the site’s certificate, so a Laravel page loads its scripts and CSS in Safari too.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.18',
+    date: '22 November 2026',
+    items: [
+      'Laravel and Vite: Vite started from Devid serves HTTPS with the site’s certificate, so Safari loads it, hot reload included',
+      'When `APP_URL` names another address, `devid cmd`, the TUI and the desktop app say what to set',
+    ],
+  },
   {
     version: '0.17',
     date: '22 November 2026',

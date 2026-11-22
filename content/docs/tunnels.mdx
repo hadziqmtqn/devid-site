@@ -31,5 +31,6 @@ devid app port erdbpro-saas off
 - The link is new each time, and anyone with it can open the site until you stop sharing or the daemon stops. A fixed address is the job of your own tunnel with a local port.
 - Devid does not touch your own Cloudflare tunnel or its routes.
 - **Links in your app:** an app that builds URLs from `APP_URL` still links to its `.test` address. An app that ignores `X-Forwarded-Proto` may link to `http://`. In Laravel, trust the proxy to fix the second: `$middleware->trustProxies(at: '*')` in `bootstrap/app.php`.
+- **Laravel with Vite:** while Vite runs, a visitor's page loads its scripts and CSS from the Vite on your Mac, which they cannot reach. Stop Vite, which removes `public/hot`, and run `npm run build` before you share. See [Laravel and Vite](/docs/laravel-vite).
 
 The desktop app has a Share card under a site's details, with the link and a Copy button. The menu-bar icon lists shared sites with Stop sharing. In the TUI, press `h` in a site's menu.
