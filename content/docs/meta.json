@@ -9,6 +9,7 @@
     "sites",
     "apps",
     "commands",
+    "on-demand",
     "tunnels",
     "mail",
     "php",

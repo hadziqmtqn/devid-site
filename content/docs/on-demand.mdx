@@ -1,0 +1,48 @@
+---
+title: Dev servers on demand
+description: "A site's first visit starts its dev server, and Devid stops it when the site has been idle."
+---
+
+From 0.17.0, a proxy site can name one of its [commands](/docs/commands) that starts with the site's first visit. Devid stops it again once the site has been idle, so a dev server uses memory only while you work on it. A Next.js dev server often holds 0.5–1 GB.
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd on-demand dev              # stops after 10 min idle
+devid cmd on-demand dev --idle 30    # after 30 min; --idle 0 never stops it
+devid cmd on-demand off
+```
+
+| Where | How |
+|---|---|
+| CLI | `devid cmd on-demand [site] <name> [--idle <minutes>]`, or `off` |
+| Desktop app | a site's details › **On demand**: the switch, the command and **Stop when idle** |
+| TUI | a site's menu › `z` On demand… |
+
+It works for proxy sites, such as Next.js, Nuxt, Vite and Node.js servers (see [Apps](/docs/apps)), with nginx, Caddy and Apache.
+
+## The first visit
+
+- The request waits while Devid starts the command, then goes to the dev server. In Devid's checks, a warm Next.js dev server answered its first page in 1.5 to 5 s.
+- A page still waiting after 5 s shows a Starting page with the end of the command's log, and opens by itself when the dev server answers. Other requests, such as `fetch` or an API call, wait up to 60 s.
+- If the command exits before its port answers, the page shows its exit code and log. The next visit tries again.
+- Requests that arrive together start the command once, and a POST keeps its body.
+- With Apache, the browser sends the first request again once the dev server answers (a 307 to the same address). A WebSocket opened while the site sleeps fails once; hot reload connects again by itself.
+
+## When it stops
+
+- After the set minutes with no requests and no open connection to the dev server. An open tab keeps its hot-reload WebSocket open, so the site stays awake while you have it open. The check runs every 30 s, so the stop can come up to 30 s later.
+- **Stop** (`devid cmd stop`, the app or the TUI) puts it to sleep at once; the next visit starts it again.
+- It never starts at login. An update's restart leaves it asleep, while other running commands start again.
+- `devid cmd`, `devid sites` and `devid status` say whether it sleeps or runs, and the menu-bar icon counts sleeping sites.
+
+## Things to know
+
+- The command must listen on the site's port. A proxy site's commands get it as `PORT` ([Commands](/docs/commands)); for Vite, pass `--port <n> --strictPort`.
+- **Next.js 16 with fumadocs-mdx:** each stop of `next dev` can leave a `next/dist/telemetry/detached-flush.js` process running, because the telemetry flush loads `next.config` and `createMDX()` starts a file watcher there. On demand stops often, so skip `createMDX()` in that process:
+
+```js
+// next.config.mjs
+const flushing = process.argv.some((arg) => arg.endsWith('detached-flush.js'));
+export default flushing ? config : createMDX()(config);
+```

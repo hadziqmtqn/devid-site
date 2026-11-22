@@ -35,10 +35,10 @@ devid cmd stop dev
 
 ## When commands run
 
-- Only when you start them: never at login, and never restarted by Devid when they end.
+- Only when you start them, or with a site's first visit when the command is [on demand](/docs/on-demand): never at login, and never restarted by Devid when they end.
 - Stopping the daemon stops them all, and so does logging out.
-- An update (`devid self-update`, or Update Devid in the app) restarts the daemon too. From 0.12.3, the commands that were running start again afterwards, and each log begins with "started again after Devid restarted for an update". Shares do not restart, because their link would change.
+- An update (`devid self-update`, or Update Devid in the app) restarts the daemon too. From 0.12.3, the commands that were running start again afterwards (an on-demand one sleeps until the next visit), and each log begins with "started again after Devid restarted for an update". Shares do not restart, because their link would change.
 - If the daemon crashed, the next one stops what the old one left running.
-- Dev servers use a lot of memory (often 0.5–1 GB each), so stop the ones you are not using.
+- Dev servers use a lot of memory (often 0.5–1 GB each), so stop the ones you are not using, or let [on demand](/docs/on-demand) stop them when the site is idle.
 
-The desktop app shows a site's commands under its details, with Start, Stop, Start all, Stop all, Add command and each command's log. The menu-bar icon shows how many commands run, with Stop for each. In the TUI, the commands are in a site's menu.
+The desktop app shows a site's commands under its details, with Start, Stop, Start all, Stop all, Add command and each command's log. The menu-bar icon shows how many commands run, with Stop for each, and the sleeping on-demand sites. In the TUI, the commands are in a site's menu.

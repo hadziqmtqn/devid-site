@@ -17,13 +17,22 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.16',
-  title: 'Terminal commands',
-  note: 'Devid’s PHP versions, nginx, Caddy and Mailpit by name in any shell, with Add to PATH in the desktop app.',
+  version: '0.17',
+  title: 'Dev servers on demand',
+  note: 'A site’s first visit starts its dev server, and Devid stops it when the site has been idle, on nginx, Caddy and Apache.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.17',
+    date: '22 November 2026',
+    items: [
+      'Dev servers on demand: a site’s first visit starts its dev server, and Devid stops it when the site has been idle',
+      'In the desktop app, the TUI and `devid cmd on-demand`; the menu bar counts sleeping sites',
+      'Apache keeps hot-reload WebSockets open and no longer stalls after a config change',
+    ],
+  },
   {
     version: '0.16',
     date: '20 November 2026',
