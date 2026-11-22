@@ -161,7 +161,7 @@ export default function HomePage() {
     <div style={{ display: "flex", gap: "10px" }}><span>app</span><span style={{ color: "#A9A7BA" }}>npm run dev</span><span style={{ marginLeft: "auto", color: "var(--dv-accent)" }}>running</span></div>
     <div style={{ display: "flex", gap: "10px" }}><span>shop</span><span style={{ color: "#A9A7BA" }}>queue worker</span><span style={{ marginLeft: "auto", color: "var(--dv-accent)" }}>running</span></div>
     </div>
-    <p style={{ margin: "0", color: "#5A5870" }}>Save a command per site once, then start and stop it from Devid.</p>
+    <p style={{ margin: "0", color: "#5A5870" }}>Save a command per site once, then start and stop it from Devid, or let a site’s first visit start it.</p>
     </article>
     
     <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "18px", padding: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>

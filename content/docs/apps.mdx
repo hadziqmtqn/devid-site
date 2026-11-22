@@ -27,7 +27,7 @@ From 0.12.5, a new proxy site whose default port another site already uses gets 
 
 - **PHP:** `.php` files go to php-fpm; other files are served as they are.
 - **Static:** files only, from the web root (`dist/` for Vite, `out/` for Next.js). With single-page app on, paths with no file load `index.html`.
-- **Proxy:** every request goes to your dev server on `localhost`, WebSockets (hot reload) included. If nothing answers there, the page says which port to start.
+- **Proxy:** every request goes to your dev server on `localhost`, WebSockets (hot reload) included. If nothing answers there, the page says which port to start, or, [on demand](/docs/on-demand), Devid starts the dev server.
 
 `https://<name>.test` keeps its certificate in every mode.
 
