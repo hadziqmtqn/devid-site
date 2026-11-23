@@ -15,7 +15,9 @@ Without it (the CLI and TUI only):
 curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
 ```
 
-The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it:
+On Linux, install `curl` and `libnss3-tools` first and leave out `--gui`; [Linux](/docs/linux) lists what setup does there.
+
+The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it. On macOS:
 
 1. Copies `devid` to `~/.devid/bin`, and adds the `php`, `composer`, `php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` commands there (see [Terminal commands](/docs/terminal)).
 2. Puts `~/.devid/bin` first on your `PATH` in `~/.zshenv` and `~/.zshrc`.
@@ -35,7 +37,7 @@ To choose PHP versions and the web server, pass options to setup. With the insta
 ```sh
 curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --php 8.3 --server caddy
 devid setup --php 8.3 --php 8.4     # several versions; the first becomes the default
-devid setup --server apache         # nginx, caddy or apache
+devid setup --server apache         # nginx, caddy or apache (macOS only)
 devid setup --no-php --no-server    # only the system parts; install PHP and a server later
 ```
 

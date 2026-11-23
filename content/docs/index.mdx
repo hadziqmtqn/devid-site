@@ -1,14 +1,14 @@
 ---
 title: Introduction
-description: Local PHP and Node.js development for Intel and Apple silicon Macs. Every project gets its own https:// address.
+description: Local PHP and Node.js development for Intel and Apple silicon Macs and for Ubuntu Linux. Every project gets its own https:// address.
 ---
 
-Devid is a local development environment for PHP and Node.js apps on macOS. Every folder you link or park is served at `https://<name>.test` with a trusted certificate. Devid runs PHP 8.3, 8.4 and 8.5 side by side, and nginx, Caddy or Apache as the web server. Node.js, Vite and Next.js apps are served through your own dev server, which Devid can start and stop for you. Devid can also catch the mail your apps send, in an inbox on your Mac. It needs no Homebrew, no Docker and no virtual machine. You use it from the command line, from a terminal UI (TUI) or from the desktop app.
+Devid is a local development environment for PHP and Node.js apps on macOS and on Linux (Ubuntu). Every folder you link or park is served at `https://<name>.test` with a trusted certificate. Devid runs PHP 8.3, 8.4 and 8.5 side by side, and nginx, Caddy or Apache as the web server. Node.js, Vite and Next.js apps are served through your own dev server, which Devid can start and stop for you. Devid can also catch the mail your apps send, in an inbox on your computer. It needs no Homebrew, no Docker and no virtual machine. You use it from the command line, from a terminal UI (TUI) or, on macOS, from the desktop app.
 
 Devid is open source under the [GNU AGPL v3](https://github.com/hadziqmtqn/devid/blob/main/LICENSE). The source is in [hadziqmtqn/devid](https://github.com/hadziqmtqn/devid); the releases are in [devid-binaries](https://github.com/hadziqmtqn/devid-binaries), and bug reports go to [devid's issues](https://github.com/hadziqmtqn/devid/issues/new/choose).
 
 <Callout type="warn" title="A personal project, provided as is">
-  Devid runs on Intel and Apple silicon Macs. It is tested by hand on Intel with macOS 14; Apple silicon is tested on GitHub's runners only. `devid setup` asks for your password once and changes system settings: it adds `/etc/resolver/test`, trusts Devid's certificate authority and forwards ports 80 and 443. `devid uninstall` undoes all of it. The builds are ad-hoc signed and not notarized.
+  Devid runs on Intel and Apple silicon Macs, and on Ubuntu 24.04 and 26.04 (x86_64). It is tested by hand on an M1 with macOS 26, on Intel with macOS 14 and on Ubuntu 24.04. `devid setup` asks for your password once and changes system settings: it sends `.test` lookups to Devid, trusts Devid's certificate authority and forwards ports 80 and 443. `devid uninstall` undoes all of it. The macOS builds are ad-hoc signed and not notarized.
 </Callout>
 
 ## Install
@@ -25,6 +25,13 @@ Without it (the CLI and TUI only):
 curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
 ```
 
+On Linux, install curl and certutil first (see [Linux](/docs/linux)):
+
+```sh
+sudo apt install curl libnss3-tools
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
 Then open a new terminal and serve your projects:
 
 ```sh
@@ -34,6 +41,7 @@ devid doctor
 
 <Cards>
   <Card title="Install" href="/docs/install" description="Every setup step and option." />
+  <Card title="Linux" href="/docs/linux" description="Ubuntu: what to install first, and the browsers." />
   <Card title="Sites" href="/docs/sites" description="Park, link, and PHP per site." />
   <Card title="PHP extensions" href="/docs/extensions" description="imagick, mongodb, swoole and more, prebuilt." />
   <Card title="The desktop app" href="/docs/desktop-app" description="The menu-bar icon and its window." />

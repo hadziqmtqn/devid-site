@@ -10,3 +10,5 @@ devid uninstall --purge        # also delete ~/.devid
 ```
 
 Uninstall undoes the system setup (with sudo), removes the LaunchAgents, the `PATH` lines (in `~/.zshenv` and `~/.zshrc`) and Devid.app, and deletes `~/.devid/bin`.
+
+On Linux it also undoes the system setup with sudo. It then removes Devid's certificate authority from Chrome's database and from each Firefox profile, the systemd user unit, and the `PATH` lines (in `~/.bashrc` and `~/.profile`), and deletes `~/.devid/bin`.
