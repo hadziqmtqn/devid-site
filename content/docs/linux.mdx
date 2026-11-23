@@ -1,0 +1,54 @@
+---
+title: Linux
+description: "Devid on Ubuntu: what to install first, what setup changes, and the browsers."
+---
+
+From version 0.19, Devid runs on Ubuntu 24.04 and 26.04 on x86_64 (64-bit Intel or AMD). On Linux you use it from the command line and the [TUI](/docs/tui); the desktop app is for macOS only.
+
+## Install
+
+Ubuntu Desktop comes without curl, and Devid needs `certutil` (from `libnss3-tools`) for the browsers. Install both, then run the install command:
+
+```sh
+sudo apt install curl libnss3-tools
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
+Open Firefox once before you install, so it has a profile for setup to add Devid's certificate authority to. If you open it for the first time later, run `devid setup` again.
+
+Setup takes the same options as on macOS (see [Install](/docs/install)), except `--gui` and `--server apache`.
+
+## What setup changes
+
+As you, in your home folder:
+
+- `~/.devid`, with the `devid`, `php`, `composer` and other [terminal commands](/docs/terminal) in `~/.devid/bin`.
+- The `PATH` line in `~/.bashrc` and `~/.profile` (with zsh, in `~/.zshenv` and `~/.zshrc`). Open a new terminal to use it. Apps you start from the desktop's menu see it after you log in again.
+- The daemon, as a systemd user unit: `~/.config/systemd/user/devid.service`. It starts when you log in and stops when you log out.
+- Devid's certificate authority in the browsers' own databases, with `certutil` (see [Browsers](#browsers)).
+
+With your password, once (sudo):
+
+- `/etc/systemd/resolved.conf.d/devid.conf`: systemd-resolved sends `.test` lookups to Devid, and nothing else.
+- `/etc/devid-ports.nft` and `devid-ports.service`: ports 80 and 443 on `127.0.0.1` go to Devid's web server. The unit loads the rule at every boot.
+- The certificate authority in the system store (`/usr/local/share/ca-certificates`), for curl, PHP and other tools.
+
+`devid setup --dry-run` lists the steps without changing anything, and `devid uninstall` takes all of them back (see [Uninstall](/docs/uninstall)).
+
+## Browsers
+
+On Linux, browsers keep their own certificate databases and do not read the system store. Setup adds Devid's certificate authority to each one:
+
+| Browser | Where the CA goes |
+|---|---|
+| Chrome, Chromium, Brave and Edge, from their `.deb` packages | `~/.pki/nssdb`, which they share |
+| Firefox, Ubuntu's snap and Mozilla's own build | Each profile's own database. A profile Firefox makes later needs `devid setup` again |
+| Chromium as a snap | Its own database, which Devid does not cover yet |
+
+`devid doctor` checks Chrome's database and each Firefox profile, and names the profiles that lack the CA.
+
+## Not on Linux yet
+
+- The desktop app.
+- Apache. Use nginx, the default, or Caddy.
+- Linux on arm64, and Debian and other distributions without systemd-resolved.

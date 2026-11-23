@@ -10,16 +10,17 @@ import { siteUrl } from '@/lib/shared';
 // Ported from the "Devid Landing Page" design canvas. The canvas is the design reference; this file is the source.
 const CLI_COMMAND = 'curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh';
 const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
+const LINUX_COMMAND = `sudo apt install curl libnss3-tools && ${CLI_COMMAND}`;
 
 const DESCRIPTION =
   'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.';
 
 export const metadata: Metadata = {
-  title: { absolute: 'Devid: local PHP and Node.js development for Macs' },
+  title: { absolute: 'Devid: local PHP and Node.js development for Macs and Linux' },
   description: DESCRIPTION,
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Devid: local PHP and Node.js development for Macs',
+    title: 'Devid: local PHP and Node.js development for Macs and Linux',
     url: '/',
     siteName: 'Devid',
     type: 'website',
@@ -33,7 +34,7 @@ const JSON_LD = JSON.stringify({
   '@type': 'SoftwareApplication',
   name: 'Devid',
   applicationCategory: 'DeveloperApplication',
-  operatingSystem: 'macOS 12 or later',
+  operatingSystem: 'macOS 12 or later; Ubuntu 24.04 or later (x86_64)',
   description: DESCRIPTION,
   url: siteUrl,
   downloadUrl: 'https://github.com/hadziqmtqn/devid-binaries/releases/latest',
@@ -55,11 +56,11 @@ export default function HomePage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
     <span style={{ alignSelf: "flex-start", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "14px", color: "var(--dv-accent)", border: "1px solid #3A3948", borderRadius: "999px", padding: "6px 14px" }}>No Homebrew? No problem.</span>
     <h1 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(38px, 4.5cqi, 64px)", lineHeight: "1.06", fontWeight: "600", letterSpacing: "-0.03em" }}>Every project gets its own <span style={{ color: "var(--dv-accent)" }}>https://</span> address.</h1>
-    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel and Apple silicon Macs. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
+    <p style={{ margin: "0", fontSize: "clamp(17px, 1.4cqi, 20px)", color: "#C9C7D6", maxWidth: "32em" }}>Local development for Laravel, PHP and Node.js on Intel and Apple silicon Macs, and on Ubuntu Linux. Each folder runs at <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#F4F4FA" }}>&lt;name&gt;.test</span> with trusted HTTPS. No Homebrew, Docker or VM.</p>
     <div style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
     <a href="#install" style={{ display: "inline-flex", alignItems: "center", gap: "10px", minHeight: "52px", padding: "0 26px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"></path></svg>
-    Install for Mac</a>
+    Install Devid</a>
     <a href="https://github.com/hadziqmtqn/devid" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 26px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>Source on GitHub</a>
     </div>
     <p style={{ margin: "0", fontSize: "14px", color: "#A9A7BA" }}>Open source on GitHub: <a href="https://github.com/hadziqmtqn/devid" style={{ color: "#E4E3EE" }}>devid</a> holds the source (AGPL-3.0), <a href="https://github.com/hadziqmtqn/devid-binaries" style={{ color: "#E4E3EE" }}>devid-binaries</a> the builds and releases.</p>
@@ -92,8 +93,8 @@ export default function HomePage() {
     <p style={{ margin: "0", color: "#4A4860" }}>Native processes. At idle, Devid with nginx and two PHP versions uses about 30 MB.</p>
     </article>
     <article style={{ background: "#16151F", color: "#F4F4FA", borderRadius: "16px", padding: "clamp(20px, 1.8cqi, 26px)", display: "flex", flexDirection: "column", gap: "8px" }}>
-    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Intel and Apple silicon</h3>
-    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested by hand on macOS 14 Sonoma (Intel). Apple silicon is tested on GitHub’s runners only. Next: macOS 15 up to the latest macOS as far as GitHub’s runners allow, then Debian-based Linux, then Windows.</p>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", fontWeight: "600" }}>Macs and Ubuntu</h3>
+    <p style={{ margin: "0", color: "#C9C7D6" }}>Tested by hand on an M1 with macOS 26, on Intel with macOS 14 Sonoma and on Ubuntu 24.04. On Linux, the CLI and the TUI. Next: macOS 15 up to the latest macOS on Intel, as far as GitHub’s runners allow, then Windows.</p>
     </article>
     </div>
     </div>
@@ -227,7 +228,7 @@ export default function HomePage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
     <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#1D6B44" }}>Mail</span>
     <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "26px", lineHeight: "1.2", fontWeight: "600" }}>Every email your apps send, caught</h3>
-    <p style={{ margin: "0", color: "#5A5870" }}>Password resets and invoices land in an inbox on your Mac, not in real mailboxes. Turn it on with <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "15px", whiteSpace: "nowrap" }}>devid mail on</span> and read each message in the app. Devid runs Mailpit for it.</p>
+    <p style={{ margin: "0", color: "#5A5870" }}>Password resets and invoices land in an inbox on your computer, not in real mailboxes. Turn it on with <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "15px", whiteSpace: "nowrap" }}>devid mail on</span> and read each message in the app. Devid runs Mailpit for it.</p>
     </div>
     <div aria-hidden="true" style={{ background: "#F7F6FA", border: "1px solid #E4E2EC", borderRadius: "14px", padding: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "14px" }}>
     <div style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "2px" }}>
@@ -279,7 +280,7 @@ export default function HomePage() {
     </div>
     <dl style={{ margin: "0", display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(0, 5fr)", columnGap: "16px", borderTop: "1px solid #D9D6E3" }}>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>System</dt>
-    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Intel or Apple silicon Mac, macOS 12 or newer (tested by hand on Intel with 14 Sonoma; Apple silicon on GitHub’s runners only)</dd>
+    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Intel or Apple silicon Mac with macOS 12 or newer, or Ubuntu 24.04 or 26.04 on x86_64 (tested by hand on an M1 with macOS 26, on Intel with 14 Sonoma and on Ubuntu 24.04)</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Setup</dt>
     <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Admin password, once: .test DNS, Devid’s CA and ports 80/443</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Ports</dt>
@@ -302,8 +303,12 @@ export default function HomePage() {
     <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>CLI and TUI only</span>
     <InstallCommand command={CLI_COMMAND} copyLabel="Copy the install command without the app" />
     </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+    <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>Linux (Ubuntu, CLI and TUI)</span>
+    <InstallCommand command={LINUX_COMMAND} copyLabel="Copy the install command for Linux" />
     </div>
-    <p style={{ margin: "0", maxWidth: "720px", fontSize: "15px", color: "#A9A7BA" }}>An open-source personal project, provided as is. Builds are ad-hoc signed and not notarized; the command installs them without a Gatekeeper prompt. Setup asks for your password once for .test DNS, Devid’s CA and ports 80/443, and <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#E4E3EE" }}>devid uninstall</span> undoes it.</p>
+    </div>
+    <p style={{ margin: "0", maxWidth: "720px", fontSize: "15px", color: "#A9A7BA" }}>An open-source personal project, provided as is. The macOS builds are ad-hoc signed and not notarized; the command installs them without a Gatekeeper prompt. Setup asks for your password once for .test DNS, Devid’s CA and ports 80/443, and <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#E4E3EE" }}>devid uninstall</span> undoes it.</p>
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px" }}>
     <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 28px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>Releases on GitHub</a>
     <Link href="/docs" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 28px", borderRadius: "12px", border: "1px solid #4A4858", color: "#F4F4FA", fontWeight: "500", textDecoration: "none" }}>Read the guide</Link>

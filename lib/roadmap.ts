@@ -11,19 +11,29 @@ export const next: Plan[] = [
 ];
 
 export const later: Plan[] = [
-  { title: 'Linux (Debian-based), then Windows', note: 'One platform at a time. Windows is the largest effort: its own PHP builds, no php-fpm.' },
+  { title: 'Windows', note: 'The largest effort: its own PHP builds, no php-fpm.' },
+  { title: 'More of Linux', note: 'The desktop app, arm64, and Debian and other distributions.' },
   { title: 'Developer tools', note: 'A dump viewer.' },
 ];
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.18',
-  title: 'Laravel and Vite over HTTPS',
-  note: 'Vite started from Devid serves HTTPS with the site’s certificate, so a Laravel page loads its scripts and CSS in Safari too.',
+  version: '0.19',
+  title: 'Devid on Linux',
+  note: 'Ubuntu 24.04 and 26.04 on x86_64, with the CLI and the TUI: .test sites over trusted HTTPS on ports 80 and 443, as on a Mac.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.19',
+    date: '24 November 2026',
+    items: [
+      'Linux: Devid on Ubuntu 24.04 and 26.04 (x86_64), with the CLI and the TUI',
+      '`.test` through systemd-resolved, ports 80 and 443 through nftables, and Devid’s CA trusted by the system, Chrome and Firefox',
+      'Each release goes through setup, a site over HTTPS and uninstall on Ubuntu before it ships',
+    ],
+  },
   {
     version: '0.18',
     date: '22 November 2026',

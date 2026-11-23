@@ -7,7 +7,7 @@ import { ogSize } from '@/lib/og';
 
 // Ported from the "Roadmap" boards on the "Devid Landing Page" design canvas.
 const DESCRIPTION =
-  'What Devid does today, release by release, and what comes next: macOS 15 and newer, a shorter install command, then Linux and Windows.';
+  'What Devid does today, release by release, and what comes next: macOS 15 and newer, a shorter install command, then Windows.';
 
 export const metadata: Metadata = {
   title: 'Roadmap',

@@ -24,7 +24,7 @@ Setup puts the folder on your `PATH`. To add it again, or to take it out:
 - **CLI:** `devid path on` or `devid path off`. `devid path` shows whether new terminals get the commands, and lists them. It works while the daemon is stopped.
 - **TUI:** `p` on the Settings page.
 
-It adds one line, marked `# added by devid`, to `~/.zshenv` and `~/.zshrc` (with bash, to `~/.bash_profile`):
+It adds one line, marked `# added by devid`, to `~/.zshenv` and `~/.zshrc` (with bash, to `~/.bash_profile`; on Linux with bash, to `~/.bashrc` and `~/.profile`):
 
 ```sh
 export PATH="/Users/you/.devid/bin:$PATH" # added by devid
