@@ -24,10 +24,16 @@ Setup puts the folder on your `PATH`. To add it again, or to take it out:
 - **CLI:** `devid path on` or `devid path off`. `devid path` shows whether new terminals get the commands, and lists them. It works while the daemon is stopped.
 - **TUI:** `p` on the Settings page.
 
-It adds one line, marked `# added by devid`, to `~/.zshenv` and `~/.zshrc` (with bash, to `~/.bash_profile`; on Linux with bash, to `~/.bashrc` and `~/.profile`):
+It adds one line, marked `# added by devid`, to `~/.zshenv` and `~/.zshrc` (with bash, to `~/.bash_profile`; on Linux with bash, to `~/.bashrc` and to `~/.bash_profile` if you have one, otherwise `~/.profile`):
 
 ```sh
 export PATH="/Users/you/.devid/bin:$PATH" # added by devid
+```
+
+With fish as your shell, the line goes to its own file, `~/.config/fish/conf.d/devid.fish`, on macOS and Linux:
+
+```fish
+fish_add_path --global --move --path '/Users/you/.devid/bin' # added by devid
 ```
 
 - `~/.zshenv` reaches every zsh, including the ones that editors, scripts and tools start.

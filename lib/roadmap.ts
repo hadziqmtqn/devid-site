@@ -12,19 +12,28 @@ export const next: Plan[] = [
 
 export const later: Plan[] = [
   { title: 'Windows', note: 'The largest effort: its own PHP builds, no php-fpm.' },
-  { title: 'More of Linux', note: 'The desktop app, arm64, and Debian and other distributions.' },
+  { title: 'More of Linux', note: 'The desktop app, arm64, and Debian, Fedora and other distributions.' },
   { title: 'Developer tools', note: 'A dump viewer.' },
 ];
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.19',
-  title: 'Devid on Linux',
-  note: 'Ubuntu 24.04 and 26.04 on x86_64, with the CLI and the TUI: .test sites over trusted HTTPS on ports 80 and 443, as on a Mac.',
+  version: '0.20',
+  title: 'Devid on Arch Linux',
+  note: 'Arch Linux and the distributions built on it, such as CachyOS, on x86_64: the CLI and the TUI, as on Ubuntu, with bash, zsh or fish.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.20',
+    date: '24 November 2026',
+    items: [
+      'Arch Linux and the distributions built on it (x86_64), tested by hand on Arch with KDE Plasma and on CachyOS with fish',
+      'Where systemd-resolved is off, setup turns it on for `.test` and `devid uninstall` turns it off again; fish gets its own `PATH` file, on Linux and macOS',
+      'Each release goes through setup, a site over HTTPS and uninstall on Arch too before it ships',
+    ],
+  },
   {
     version: '0.19',
     date: '24 November 2026',
