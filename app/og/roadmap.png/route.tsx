@@ -8,6 +8,6 @@ export function GET() {
     badge: 'roadmap',
     title: 'What Devid does today, and what comes next.',
     accent: 'what comes next',
-    description: 'Every release, newest first, and the plans after it: macOS 15 and newer, then Linux and Windows.',
+    description: 'Every release, newest first, and the plans after it: macOS 15 and newer, then Windows.',
   });
 }

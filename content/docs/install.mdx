@@ -15,7 +15,7 @@ Without it (the CLI and TUI only):
 curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
 ```
 
-On Linux, install `curl` and `libnss3-tools` first and leave out `--gui`; [Linux](/docs/linux) lists what setup does there.
+On Linux, install a few packages first (`curl` and `libnss3-tools` on Ubuntu; `curl`, `nss` and `nftables` on Arch) and leave out `--gui`; [Linux](/docs/linux) lists what setup does there.
 
 The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it. On macOS:
 
