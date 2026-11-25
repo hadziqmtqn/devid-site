@@ -11,7 +11,7 @@ import { siteUrl } from '@/lib/shared';
 // The install commands are in components/install-tabs.tsx.
 
 const DESCRIPTION =
-  'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.';
+  'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.6, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.';
 
 export const metadata: Metadata = {
   title: { absolute: 'Devid: local PHP and Node.js development for Macs and Linux' },
@@ -133,7 +133,7 @@ export default function HomePage() {
     
     <article style={{ background: "#FFFFFF", border: "1px solid #E4E2EC", borderRadius: "18px", padding: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
     <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "#1D6B44" }}>PHP</span>
-    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", lineHeight: "1.25", fontWeight: "600" }}>8.3, 8.4 and 8.5, side by side</h3>
+    <h3 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "22px", lineHeight: "1.25", fontWeight: "600" }}>8.3 to 8.6, side by side</h3>
     <div style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "14px" }}>
     <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", borderRadius: "10px", background: "#16151F", color: "#F4F4FA" }}><span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontWeight: "700" }}>8.5</span><span style={{ marginLeft: "auto", color: "#C9C7D6" }}>default</span></div>
     <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", borderRadius: "10px", background: "#F4F3F8" }}><span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontWeight: "700" }}>8.4</span><span style={{ marginLeft: "auto", color: "#5A5870" }}>shop.test</span></div>
