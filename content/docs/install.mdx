@@ -19,7 +19,7 @@ On Linux, install a few packages first (`curl` and `libnss3-tools` on Ubuntu; `c
 
 The script downloads `devid`, checks its sha256 and starts `devid setup`. The script itself never uses sudo. Setup lists every step as it runs it. On macOS:
 
-1. Copies `devid` to `~/.devid/bin`, and adds the `php`, `composer`, `php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` commands there (see [Terminal commands](/docs/terminal)).
+1. Copies `devid` to `~/.devid/bin`, and adds the `php`, `composer`, `php8.3`–`php8.6`, `nginx`, `caddy` and `mailpit` commands there (see [Terminal commands](/docs/terminal)).
 2. Puts `~/.devid/bin` first on your `PATH` in `~/.zshenv` and `~/.zshrc`.
 3. Runs the Devid daemon as a LaunchAgent, so it starts at every login.
 4. Downloads `composer.phar` and checks it.

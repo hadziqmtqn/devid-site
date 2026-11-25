@@ -18,13 +18,22 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.20',
-  title: 'Devid on Arch Linux',
-  note: 'Arch Linux and the distributions built on it, such as CachyOS, on x86_64: the CLI and the TUI, as on Ubuntu, with bash, zsh or fish.',
+  version: '0.20.1',
+  title: 'PHP 8.6',
+  note: 'PHP 8.6 next to 8.3, 8.4 and 8.5, with its own php8.6 command. 8.5 stays the default while Xdebug for 8.6 is a preview.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.20.1',
+    date: '25 November 2026',
+    items: [
+      'PHP 8.6 next to 8.3, 8.4 and 8.5, with `php8.6` in the terminal; 8.5 stays the default for new installs',
+      'Xdebug 3.6.0alpha1 for 8.6, the only Xdebug that supports it so far, and pcov',
+      'The catalog for 8.6 so far: apcu, imagick, ldap and mongodb',
+    ],
+  },
   {
     version: '0.20',
     date: '24 November 2026',

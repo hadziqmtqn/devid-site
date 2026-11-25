@@ -1,6 +1,6 @@
 ---
 title: PHP
-description: "PHP 8.3, 8.4 and 8.5 side by side, with Xdebug, pcov and php.ini."
+description: "PHP 8.3, 8.4, 8.5 and 8.6 side by side, with Xdebug, pcov and php.ini."
 ---
 
 ```sh
@@ -11,13 +11,14 @@ devid php ext 8.5 xdebug on    # turn Xdebug (or pcov) on/off for a version
 devid php ext list 8.4         # bundled, Xdebug/pcov, and installed catalog extensions
 ```
 
-- **The `php` command** follows the folder you are in. Inside an isolated site it uses that site's version; anywhere else it uses the default. `composer` works the same way. `php8.3`, `php8.4` and `php8.5` always run that version (see [Terminal commands](/docs/terminal)).
+- **The `php` command** follows the folder you are in. Inside an isolated site it uses that site's version; anywhere else it uses the default. `composer` works the same way. `php8.3`, `php8.4`, `php8.5` and `php8.6` always run that version (see [Terminal commands](/docs/terminal)).
 - **Extensions:**
   - Every version includes:
     - bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pcntl;
     - PDO with MySQL, PostgreSQL and SQLite, plus mysqli, pgsql and sqlite3;
     - readline (for `php -a` and `artisan tinker`), redis, soap, sockets, sodium, zip, and the XML extensions.
   - Xdebug and pcov are included but off by default. Xdebug starts in trigger mode on port 9003.
+- **PHP 8.6** (Devid 0.20.1): `devid php install 8.6`. New installs keep 8.5 as the default for now, because 8.6 comes with Xdebug 3.6.0alpha1, a preview and so far the only Xdebug that supports 8.6, and its extension catalog is still partial.
 - **Extra extensions:** see [PHP extensions](/docs/extensions).
 - **php.ini:** each version has `~/.devid/php/<version>/etc/php.ini`. Devid writes it once and never overwrites it. After editing it, run `devid restart php-8.5`. The defaults are `memory_limit = 512M`, uploads up to 64 MB, errors displayed, and JIT off.
 - **Processes:** php-fpm uses `pm = ondemand`. An idle version keeps only its master process, about 10–15 MB. Workers start on a request and exit 10 seconds after the last one.
