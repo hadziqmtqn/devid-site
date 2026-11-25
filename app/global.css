@@ -158,6 +158,214 @@
   display: none;
 }
 
+/* The landing page's install section: a tab per system (components/install-tabs.tsx) around the command box
+   (components/install-command.tsx), in the section's dark palette. Focus rings are in the accent. */
+.dv-install {
+  width: 100%;
+  max-width: 920px;
+  margin-top: 8px;
+  background: #1e1d29;
+  border: 1px solid #2e2d3a;
+  border-radius: 16px;
+  text-align: left;
+}
+.dv-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 12px;
+  box-shadow: inset 0 -1px 0 #2e2d3a;
+}
+.dv-tab {
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 8px 8px 0 0;
+  color: #a9a7ba;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.dv-tab:hover {
+  color: #e4e3ee;
+}
+.dv-tab[aria-selected='true'] {
+  color: #f4f4fa;
+  box-shadow: inset 0 -2px 0 var(--dv-accent);
+}
+/* The panels share one grid cell, so the box keeps the tallest one's height and nothing below moves on a switch. */
+.dv-tabpanels {
+  display: grid;
+}
+.dv-tabpanel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 20px 24px 24px;
+  border-radius: 0 0 15px 15px;
+}
+.dv-tabpanel[data-active='false'] {
+  visibility: hidden;
+}
+/* As tall as the macOS choice above its command, so the command box stays in place from tab to tab. */
+.dv-install-note {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  margin: 0;
+  color: #a9a7ba;
+  font-size: 15px;
+}
+.dv-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid #2e2d3a;
+  border-radius: 12px;
+  background: #16151f;
+}
+.dv-choice-opt {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+}
+.dv-choice-opt > span {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 16px 0 12px;
+  border-radius: 8px;
+  color: #a9a7ba;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.dv-choice-opt > span::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #8a889e;
+  border-radius: 50%;
+}
+.dv-choice-opt:hover > span {
+  color: #e4e3ee;
+}
+.dv-choice-opt > input:checked + span {
+  background: #2a2936;
+  color: #f4f4fa;
+}
+.dv-choice-opt > input:checked + span::before {
+  border-color: var(--dv-accent);
+  background: var(--dv-accent);
+  box-shadow: inset 0 0 0 3px #2a2936;
+}
+.dv-cmd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 0;
+  background: #0e0d15;
+  border: 1px solid #2e2d3a;
+  border-radius: 12px;
+  font-size: clamp(13px, 1.05cqi, 15px);
+}
+.dv-cmd-text {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 1ch;
+  min-width: 0;
+  margin: 0;
+  padding: 12px 20px;
+  overflow-x: auto;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: inherit;
+  line-height: 1.7;
+  color: #e4e3ee;
+  white-space: pre-wrap;
+}
+.dv-cmd-text > code {
+  min-width: 0;
+  font: inherit;
+}
+.dv-cmd-prompt {
+  color: var(--dv-accent);
+  user-select: none;
+}
+.dv-cmd-part {
+  white-space: nowrap;
+}
+.dv-cmd-copy {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid #3a3948;
+  border-radius: 9px;
+  background: #1e1d29;
+  color: #f4f4fa;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.dv-cmd-copy:hover {
+  background: #2a2936;
+}
+.dv-tab:focus-visible,
+.dv-tabpanel:focus-visible {
+  outline: 2px solid var(--dv-accent);
+  outline-offset: -2px;
+}
+.dv-choice-opt > input:focus-visible + span,
+.dv-cmd-copy:focus-visible {
+  outline: 2px solid var(--dv-accent);
+  outline-offset: 2px;
+}
+/* Phones: the command gets the box's whole width, with Copy under it. */
+@container dv (max-width: 640px) {
+  .dv-tablist {
+    padding: 0 6px;
+  }
+  .dv-tab {
+    padding: 0 10px;
+  }
+  .dv-tabpanel {
+    padding: 16px;
+  }
+  .dv-cmd {
+    flex-wrap: wrap;
+    padding: 6px;
+  }
+  .dv-cmd-text {
+    flex-basis: 100%;
+    padding: 8px 10px;
+  }
+  .dv-cmd-copy {
+    margin-left: auto;
+  }
+}
+/* The smallest phones: the three tabs still fit on one row. */
+@container dv (max-width: 360px) {
+  .dv-tablist {
+    gap: 0;
+    padding: 0 4px;
+  }
+  .dv-tab {
+    padding: 0 8px;
+    font-size: 14px;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }

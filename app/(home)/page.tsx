@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { InstallCommand } from '@/components/install-command';
+import { InstallTabs } from '@/components/install-tabs';
 import { ErdPromo } from '@/components/erd-promo';
 import { LandingNav } from '@/components/landing-nav';
 import { LandingFooter } from '@/components/landing-footer';
@@ -8,10 +8,7 @@ import { latest, next } from '@/lib/roadmap';
 import { siteUrl } from '@/lib/shared';
 
 // Ported from the "Devid Landing Page" design canvas. The canvas is the design reference; this file is the source.
-const CLI_COMMAND = 'curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh';
-const GUI_COMMAND = `${CLI_COMMAND} -s -- --gui`;
-const LINUX_COMMAND = `sudo apt install curl libnss3-tools && ${CLI_COMMAND}`;
-const ARCH_COMMAND = `sudo pacman -S --needed curl nss nftables && ${CLI_COMMAND}`;
+// The install commands are in components/install-tabs.tsx.
 
 const DESCRIPTION =
   'Every project gets its own https:// address. Laravel on PHP 8.3 to 8.5, Node.js and Vite through your own dev server, with no Homebrew, Docker or VM. Open source under the AGPL-3.0.';
@@ -295,24 +292,7 @@ export default function HomePage() {
     <section id="install" style={{ background: "#16151F", color: "#F4F4FA" }}>
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "clamp(48px, 5.6cqi, 80px) 24px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "20px" }}>
     <h2 style={{ margin: "0", fontFamily: "var(--font-space-grotesk), sans-serif", fontSize: "clamp(30px, 3.3cqi, 48px)", lineHeight: "1.08", fontWeight: "600", letterSpacing: "-0.03em" }}>Install in one command.</h2>
-    <div style={{ width: "100%", maxWidth: "920px", display: "flex", flexDirection: "column", gap: "16px", textAlign: "left" }}>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-    <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>With the desktop app</span>
-    <InstallCommand command={GUI_COMMAND} copyLabel="Copy the install command with the desktop app" />
-    </div>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-    <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>CLI and TUI only</span>
-    <InstallCommand command={CLI_COMMAND} copyLabel="Copy the install command without the app" />
-    </div>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-    <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>Linux: Ubuntu (CLI and TUI)</span>
-    <InstallCommand command={LINUX_COMMAND} copyLabel="Copy the install command for Ubuntu" />
-    </div>
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-    <span style={{ fontSize: "15px", fontWeight: "500", color: "#C9C7D6" }}>Linux: Arch, CachyOS (CLI and TUI)</span>
-    <InstallCommand command={ARCH_COMMAND} copyLabel="Copy the install command for Arch Linux and CachyOS" />
-    </div>
-    </div>
+    <InstallTabs />
     <p style={{ margin: "0", maxWidth: "720px", fontSize: "15px", color: "#A9A7BA" }}>An open-source personal project, provided as is. The macOS builds are ad-hoc signed and not notarized; the command installs them without a Gatekeeper prompt. Setup asks for your password once for .test DNS, Devid’s CA and ports 80/443, and <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "#E4E3EE" }}>devid uninstall</span> undoes it.</p>
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px" }}>
     <a href="https://github.com/hadziqmtqn/devid-binaries/releases" style={{ display: "inline-flex", alignItems: "center", minHeight: "52px", padding: "0 28px", borderRadius: "12px", background: "var(--dv-accent)", color: "#16151F", fontWeight: "600", textDecoration: "none" }}>Releases on GitHub</a>
