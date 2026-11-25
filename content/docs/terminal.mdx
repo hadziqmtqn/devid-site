@@ -1,6 +1,6 @@
 ---
 title: Terminal commands
-description: "Run Devid's PHP, Composer, nginx, Caddy and Mailpit by name, from any terminal, editor or script."
+description: "Run Devid's PHP, Composer, nginx, Caddy, Mailpit and database clients by name, from any terminal, editor or script."
 ---
 
 Devid keeps its commands in `~/.devid/bin`. With that folder on your `PATH`, a terminal runs them by name:
@@ -13,8 +13,11 @@ Devid keeps its commands in `~/.devid/bin`. With that folder on your `PATH`, a t
 | `nginx` | Devid's nginx on Devid's config: `nginx -t`, `nginx -T`, `nginx -s reload`, `nginx -V` |
 | `caddy` | Devid's Caddy, for example `caddy version` |
 | `mailpit` | Devid's Mailpit; `mailpit sendmail` delivers to Devid's inbox |
+| `mysql`, `mysqldump` | MySQL's client and dump tool, to Devid's MySQL as `root` (see [Databases](/docs/databases)) |
+| `psql`, `pg_dump`, `pg_restore` | PostgreSQL's client and tools, to Devid's PostgreSQL as `postgres` |
+| `mongosh` | MongoDB's shell, to Devid's MongoDB |
 
-`php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` come with Devid 0.16, and `php8.6` with Devid 0.20.1. Earlier versions have `devid`, `php` and `composer`.
+`php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` come with Devid 0.16, and `php8.6` with Devid 0.20.1. Earlier versions have `devid`, `php` and `composer`. The database clients come with Devid 0.20.1, each once its database is installed, and reach another server when you name a host or a port.
 
 ## Add to PATH
 
@@ -46,4 +49,4 @@ fish_add_path --global --move --path '/Users/you/.devid/bin' # added by devid
 - **nginx:** Devid starts and stops nginx itself (`devid start|stop|restart nginx`). The `nginx` command only tests, shows or signals it. A plain `nginx` is refused, so a second copy never starts.
 - **Mailpit:** Devid downloads it the first time you turn on [Mail](/docs/mail). `mailpit sendmail` sends to the SMTP port in Devid's settings, unless you pass `-S <host:port>`.
 - **Not installed yet:** a command whose program is missing says how to install it, for example `devid php install 8.4` or `devid server install caddy`.
-- **Your own copies:** Devid's folder comes first on `PATH`, so its `nginx`, `caddy` and `mailpit` hide Homebrew's. Call the other copy by its full path, or run `devid path off`.
+- **Your own copies:** Devid's folder comes first on `PATH`, so its `nginx`, `caddy`, `mailpit` and database clients hide Homebrew's and DBngin's. Call the other copy by its full path, or run `devid path off`.
