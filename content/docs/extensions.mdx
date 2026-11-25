@@ -12,7 +12,7 @@ devid php ext remove 8.4 imagick
 
 In the TUI: PHP page, `enter` on a version, then **Extensions…**: `space` ticks, `enter` on the Install button installs, `r` removes. In the desktop app: PHP, then **Extensions** on a version.
 
-**The catalog** for PHP 8.3, 8.4 and 8.5: apcu, igbinary, imagick, ldap, memcached, mongodb, msgpack and swoole. For PHP 8.6: apcu, imagick, ldap and mongodb so far. igbinary, memcached, msgpack and swoole follow once their own releases support 8.6.
+**The catalog** for PHP 8.3, 8.4 and 8.5: apcu, igbinary, imagick, ldap, memcached, mongodb, msgpack and swoole. For PHP 8.6: imagick, ldap and mongodb so far. apcu, igbinary, memcached, msgpack and swoole follow once their own releases support 8.6.
 - Each comes only from Devid's releases. It is built in CI from its official source for that exact PHP release, and its checksum is verified before install. Nothing is compiled on your Mac.
 - `install` checks that the extension loads in `php` and `php-fpm` before it restarts php-fpm. If it does not load, nothing changes and the sites keep running. Several extensions install in one go, with a single php-fpm restart.
 - `devid update` updates them together with PHP. `devid doctor` reports one that no longer loads.
