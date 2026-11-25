@@ -31,7 +31,7 @@ export const releases: Release[] = [
     items: [
       'PHP 8.6 next to 8.3, 8.4 and 8.5, with `php8.6` in the terminal; 8.5 stays the default for new installs',
       'Xdebug 3.6.0alpha1 for 8.6, the only Xdebug that supports it so far, and pcov',
-      'The catalog for 8.6 so far: apcu, imagick, ldap and mongodb',
+      'The catalog for 8.6 so far: imagick, ldap and mongodb',
     ],
   },
   {
