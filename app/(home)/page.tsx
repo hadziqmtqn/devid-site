@@ -284,7 +284,7 @@ export default function HomePage() {
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Ports</dt>
     <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>80 and 443 free (stop Valet first)</dd>
     <dt style={{ padding: "12px 0", borderBottom: "1px solid #D9D6E3", color: "#5A5870" }}>Not included</dt>
-    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Databases (use e.g. DBngin), and Node.js: Devid uses yours</dd>
+    <dd style={{ margin: "0", padding: "12px 0", borderBottom: "1px solid #D9D6E3" }}>Node.js: Devid uses yours</dd>
     </dl>
     </div>
     </section>

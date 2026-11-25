@@ -1,0 +1,135 @@
+---
+title: Databases
+description: "MySQL, PostgreSQL and MongoDB on your computer, with an account and its .env lines in one step."
+---
+
+Devid runs MySQL, PostgreSQL and MongoDB for your apps, from builds in Devid's releases (sha256-checked), on macOS and Linux. Each one is off until you start it. Creating an account for an app, or giving one a new password, is one step.
+
+## Start a database
+
+```sh
+devid db start mysql        # the first time: downloads MySQL 8.4, sets it up, picks its port
+devid db start postgresql   # PostgreSQL 18
+devid db start mongodb      # MongoDB 8.0, with mongosh
+devid db                    # each one's state, version and address
+devid db stop mysql         # stops it and keeps it off; the data stays
+```
+
+In the desktop app: **Databases**, the engine's tab, then **Start**. In the TUI: page `5`, `enter` on the database.
+
+- **Address:** `127.0.0.1` only, at the usual port (3306, 5432 or 27017) when it is free, else the next free one. The port is kept, so your `.env` files keep working. `devid db port mysql 3310` moves it.
+- **When it runs:** from its first start on, a database starts with Devid. `devid db stop` keeps it off until you start it again.
+- **Memory at rest:** MySQL about 175–225 MB, PostgreSQL 11–26 MB, MongoDB 15–35 MB on macOS (140–190 MB on Linux). Start only what you use.
+
+## An account for each app
+
+```sh
+devid db user add mysql shop   # the account shop, its database shop, and a generated password
+devid db env mysql shop        # the account's .env lines
+```
+
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3307
+DB_DATABASE=shop
+DB_USERNAME=shop
+DB_PASSWORD=…
+```
+
+Put these lines in the app's `.env` in place of its `DB_` lines. For PostgreSQL, `DB_CONNECTION` is `pgsql`. For MongoDB, the lines are `DB_URI` and `DB_DATABASE`, as Laravel's MongoDB package reads them.
+
+| To | Command |
+|---|---|
+| Give an account a new password (generated, or `--password`) | `devid db user password mysql shop` |
+| List the accounts | `devid db user list mysql` |
+| Remove an account; its databases and their data stay | `devid db user remove mysql shop` |
+| Choose the account's database, or none | `devid db user add mysql shop --database store` or `--no-database` |
+| Make a database without an account | `devid db create mysql news` |
+
+- **Passwords** that Devid makes are 24 letters and digits, with nothing to quote in `.env`. Devid keeps them in a file only you can read, so `devid db env` shows them again any time.
+- **After a new password,** an app that uses the old one cannot connect until its `.env` has the new lines.
+- **The main account:** MySQL's `root` and PostgreSQL's `postgres` need no password from your computer, as in DBngin. MongoDB's `root` has a password, which `devid db env mongodb` shows.
+- **PHP:** Devid's PHP has `pdo_mysql`, `mysqli`, `pdo_pgsql` and `pgsql` built in. For MongoDB, add the `mongodb` extension: `devid php ext install 8.5 mongodb` (see [Extensions](/docs/extensions)).
+
+## In the desktop app
+
+The Databases page has a tab for each engine.
+
+- **The server's card:** its version and address, a switch to start or stop it, **Open in Terminal**, and **⋯** with Restart, Copy `.env` for the main account and Show log.
+- **Accounts:** **Copy .env** on each one, and **⋯** with Copy password, New password… and Remove…. **Add account** asks for a name, its database and its password (generated, or your own), then shows the password and the `.env` lines to copy.
+- **Settings:** the port, and the series (another series downloads first if needed).
+- **Storage:** the data folder, with Show in Finder.
+
+**Open in Terminal** opens `mysql`, `psql` or `mongosh` as the main account, at its prompt. **▾** lists the terminal apps on your Mac that run `.command` files, such as Terminal, iTerm2 or cmux, and the app remembers your pick. MongoDB's `root` is logged in for you, without its password showing.
+
+## In the TUI
+
+Page `5` lists the databases. `enter` on one shows its actions: start or stop, Accounts…, copy the main account's `.env` lines, new database…, port… and restart. In Accounts…: `a` add · `p` new password · `c` copy the `.env` lines · `y` copy the password · `d` remove.
+
+## From a terminal
+
+Once a database is installed, its clients are [terminal commands](/docs/terminal): `mysql` and `mysqldump`, `psql`, `pg_dump` and `pg_restore`, and `mongosh`. With no host or port, each one reaches Devid's server as the main account:
+
+```sh
+mysql                         # mysql> as root
+psql                          # postgres=# as postgres
+mysqldump shop > shop.sql     # a dump of shop
+```
+
+- `mongosh` connects without logging in. Run `db.getSiblingDB("admin").auth("root", passwordPrompt())` and paste the password from `devid db env mongodb`, or use **Open in Terminal** in the app.
+- Name a host or a port and the client goes there instead, for example DBngin's MySQL: `mysql -h 127.0.0.1 -P 3306 -u root`.
+
+## Versions
+
+| Engine | Series | Default |
+|---|---|---|
+| MySQL | 8.4, 9.7 | 8.4 |
+| PostgreSQL | 15, 16, 17, 18, 19 | 18 |
+| MongoDB | 7.0, 8.0, 9.0 | 8.0 |
+
+- `devid db list --available` shows the series your computer can run.
+- `devid db use postgresql 17` runs another series instead. Each series keeps its own data and accounts. To move data between series, dump it from one and restore it into the other.
+- `devid update` moves each installed series to its newest build. The data stays.
+- **Limits:**
+  - on macOS 12 and 13, no MySQL, and no MongoDB 8.0 or 9.0 (7.0 runs);
+  - MongoDB on an Intel or AMD processor needs AVX;
+  - on Intel Macs, MySQL gets no more fixes after 8.4.11 and 9.7.4, the last builds Oracle made for them.
+
+## Next to DBngin or Homebrew
+
+Devid never starts, stops or reads their servers or their data. It only avoids their ports: with DBngin's MySQL on 3306, Devid's MySQL takes 3307. Devid's clients come first on your `PATH`, so call theirs with a host and port, as above.
+
+To move a database from DBngin to Devid, dump it from DBngin's server and restore it into Devid's. Run the same series as DBngin's server first, for example `devid db use mysql 9.7`, so the dump restores as it was made.
+
+```sh
+mysqldump -h 127.0.0.1 -P 3306 -u root shop > shop.sql   # from DBngin's MySQL
+devid db user add mysql shop                              # the account and its database in Devid
+mysql shop < shop.sql                                     # into Devid's MySQL
+```
+
+For PostgreSQL, restore as the app's account, so its tables belong to it:
+
+```sh
+pg_dump -h 127.0.0.1 -p 5432 -U postgres --no-owner --no-privileges shop > shop.sql
+devid db user add postgresql shop
+psql -U shop -d shop -f shop.sql
+```
+
+## Where the data is
+
+| Folder | Holds |
+|---|---|
+| `~/.devid/db/<engine>-<series>` | The programs |
+| `~/.devid/data/<engine>-<series>` | The data, and the passwords Devid keeps |
+| `~/.devid/log/<engine>.log` | The server's log: `devid logs mysql.log`, or **⋯** › Show log in the app |
+
+- Stopping a database, updating Devid or uninstalling it keeps the data.
+- `devid uninstall --purge` keeps `~/.devid/data` and says where it is. Add `--delete-databases` to delete it too, for good (see [Uninstall](/docs/uninstall)).
+- `devid db remove mysql 9.7` removes a series you no longer use. Its data stays unless you add `--delete-data`.
+
+## When something is wrong
+
+- `devid doctor` checks each database you started.
+- **A port is taken:** `devid db port mysql 3310`. Devid names the program that holds a port.
+- **It did not start:** its log says why. `devid logs mysql.log -n 50` shows the last lines.

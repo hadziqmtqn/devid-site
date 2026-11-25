@@ -133,7 +133,7 @@ export default function RoadmapPage() {
           <div style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <h2 id="rm-ask" style={{ margin: 0, fontFamily: HEADING, fontSize: '26px', lineHeight: 1.2, fontWeight: 600 }}>Missing something?</h2>
             <p style={{ margin: 0, color: '#5A5870' }}>
-              Ask for it in the issues, with what you are trying to do. Out of scope: databases (use a tool such as DBngin) and Docker- or VM-based setups.
+              Ask for it in the issues, with what you are trying to do. Out of scope: Docker- or VM-based setups.
             </p>
           </div>
           <a href="https://github.com/hadziqmtqn/devid/issues/new/choose" style={{ display: 'inline-flex', alignItems: 'center', minHeight: '48px', padding: '0 22px', borderRadius: '12px', background: '#16151F', color: '#F4F4FA', fontWeight: 600, textDecoration: 'none' }}>

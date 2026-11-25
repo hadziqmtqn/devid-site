@@ -6,8 +6,11 @@ description: "Undo setup, with or without your data."
 ```sh
 devid uninstall --dry-run      # show what would change
 devid uninstall                # undo setup; keeps ~/.devid (PHP, config, CA, certificates)
-devid uninstall --purge        # also delete ~/.devid
+devid uninstall --purge        # also delete ~/.devid, except your databases
+devid uninstall --purge --delete-databases   # the databases too, for good
 ```
+
+Uninstall stops Devid's databases. `--purge` keeps `~/.devid/data`, where their data is, and says where it is, so a new install finds them again. `--delete-databases` deletes it too, and that cannot be undone.
 
 Uninstall undoes the system setup (with sudo), removes the LaunchAgents, the `PATH` lines (in `~/.zshenv` and `~/.zshrc`, or fish's `devid.fish`) and Devid.app, and deletes `~/.devid/bin`.
 

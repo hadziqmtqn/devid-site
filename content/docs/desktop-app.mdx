@@ -3,7 +3,7 @@ title: The desktop app
 description: "Devid.app: a menu-bar icon with the same pages as the TUI."
 ---
 
-Devid.app, for macOS, is a menu-bar icon with a window that has the same pages as the TUI: Sites, PHP, Web Server, Mail, Logs and Settings. It is optional: your sites run without it.
+Devid.app, for macOS, is a menu-bar icon with a window that has the same pages as the TUI: Sites, PHP, Web Server, Mail, Databases, Logs and Settings. It is optional: your sites run without it.
 
 ```sh
 # at the first install, in one command (no sudo for the app itself):
@@ -20,6 +20,7 @@ Without `--gui`, Devid installs no app.
 - **Site details:** click a site for its type and how it is served, its local port, its [commands](/docs/commands) (Start, Stop, logs, Add command), [On demand](/docs/on-demand) for a proxy site, and [Share](/docs/tunnels). Explanations are behind each title's ⓘ, and **Open in browser** opens the site, which also wakes a sleeping one.
 - **Quick menu:** **⋯** on the web server card, at the bottom of the sidebar, lists the sites with their PHP versions, stops or restarts everything, switches the default PHP, and opens Settings or quits Devid.
 - **Mail:** the inbox for the mail your apps send: the messages with search, each one with its HTML, text, headers, source and attachments, and a notification for new mail if you want one. Turned off, the page turns Mail on. See [Mail](/docs/mail).
+- **Databases:** a tab for MySQL, PostgreSQL and MongoDB. Each has its server with a switch and **Open in Terminal** (its client at the prompt, in the terminal app you pick), its accounts with **Copy .env**, Copy password, New password… and **Add account**, and its port and series. See [Databases](/docs/databases).
 - **Logs:** the sources are on the left, grouped as web server, PHP and each site's commands. The log is on the right, with All, Warnings and Errors, search and Follow. A red count marks errors that arrive while the page is open. **⋯** shows the file in Finder or copies its path. Colors and progress bars written for a terminal are shown as plain text.
 - **Menu bar:** the icon shows whether Devid runs, a dot when updates are available, and how many commands run. Its menu starts, stops and restarts everything, stops a command or a share, opens a sleeping on-demand site (which wakes it), opens the inbox or sends a test email, and opens the window or Settings.
 - **Dock:** the app is in the Dock and in Cmd+Tab only while its window is open. At other times it is a menu-bar icon (under 10 MB, no CPU at idle).

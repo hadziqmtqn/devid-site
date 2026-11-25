@@ -18,13 +18,22 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.20.1',
-  title: 'PHP 8.6',
-  note: 'PHP 8.6 next to 8.3, 8.4 and 8.5, with its own php8.6 command. 8.5 stays the default while Xdebug for 8.6 is a preview.',
+  version: '0.21',
+  title: 'Databases',
+  note: 'MySQL, PostgreSQL and MongoDB, run by Devid on your computer, with an account and its .env lines in one step.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.21',
+    date: '25 November 2026',
+    items: [
+      'Databases: MySQL 8.4 and 9.7, PostgreSQL 15 to 19 and MongoDB 7.0 to 9.0, each off until `devid db start`, on 127.0.0.1 next to DBngin or Homebrew',
+      'An account with its own database and password in one step, a new password in one more, and the `.env` lines to copy, in the CLI, the TUI and the desktop app',
+      'The desktop app’s Databases page, with Open in Terminal for `mysql`, `psql` or `mongosh` in the terminal app you pick; uninstall keeps the data',
+    ],
+  },
   {
     version: '0.20.1',
     date: '25 November 2026',
