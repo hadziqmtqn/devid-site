@@ -1,0 +1,47 @@
+---
+title: Instalasi
+description: "Satu perintah menginstal Devid, dengan atau tanpa aplikasi desktop."
+translationOf: 'da9fc30792fc'
+---
+
+Dengan aplikasi desktop:
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --gui
+```
+
+Tanpa aplikasi desktop (hanya CLI dan TUI):
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
+Di Linux, instal dulu beberapa paket (`curl` dan `libnss3-tools` di Ubuntu; `curl`, `nss` dan `nftables` di Arch) dan jangan pakai `--gui`; [Linux](/docs/linux) menjelaskan apa saja yang dilakukan setup di sana.
+
+Skrip ini mengunduh `devid`, memeriksa sha256-nya, lalu menjalankan `devid setup`. Skrip itu sendiri tidak pernah memakai sudo. Setup menampilkan setiap langkah saat menjalankannya. Di macOS, setup:
+
+1. Menyalin `devid` ke `~/.devid/bin`, dan menambahkan perintah `php`, `composer`, `php8.3`–`php8.6`, `nginx`, `caddy` dan `mailpit` di sana (lihat [Perintah terminal](/docs/terminal)).
+2. Menaruh `~/.devid/bin` paling depan di `PATH` Anda, di `~/.zshenv` dan `~/.zshrc`.
+3. Menjalankan daemon Devid sebagai LaunchAgent, sehingga daemon itu berjalan setiap kali Anda login.
+4. Mengunduh `composer.phar` dan memeriksanya.
+5. Meminta password Anda **sekali** untuk pengaturan sistem:
+   - DNS `.test` (`/etc/resolver/test`);
+   - port 80/443 yang dialihkan ke Devid (aturan pf);
+   - kepercayaan pada certificate authority Devid.
+6. Mengunduh PHP 8.5 dan nginx (keduanya diperiksa sha256-nya), kecuali jika PHP atau web server sudah terinstal.
+7. Dengan `--gui`, menginstal Devid.app ke `~/Applications` (diperiksa sha256-nya).
+
+Untuk melihat langkah-langkahnya tanpa mengubah apa pun, jalankan `devid setup --dry-run`. Untuk menginstal versi Devid tertentu, jalankan `DEVID_VERSION=0.7.0 sh install.sh`.
+
+Untuk memilih versi PHP dan web server, berikan opsi ke setup. Dengan skrip instalasi, taruh opsi itu setelah `sh -s --`:
+
+```sh
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --php 8.3 --server caddy
+devid setup --php 8.3 --php 8.4     # beberapa versi; yang pertama menjadi default
+devid setup --server apache         # nginx, caddy atau apache (khusus macOS)
+devid setup --no-php --no-server    # hanya bagian sistem; PHP dan server diinstal nanti
+```
+
+Anda bisa menambah atau mengganti versi PHP dan web server kapan saja (lihat [PHP](/docs/php) dan [Web server dan layanan](/docs/web-servers)).
+
+Buka terminal baru setelah setup supaya `php`, `composer` dan perintah lainnya berasal dari Devid. Settings › Terminal di aplikasi, atau `devid path on`, menambahkan baris `PATH` itu lagi kalau Anda pernah menghapusnya.

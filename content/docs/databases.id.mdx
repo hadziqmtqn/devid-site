@@ -1,0 +1,136 @@
+---
+title: Database
+description: "MySQL, PostgreSQL dan MongoDB di komputer Anda, dengan akun dan baris .env-nya dalam satu langkah."
+translationOf: '94e7f42c3db6'
+---
+
+Devid menjalankan MySQL, PostgreSQL dan MongoDB untuk aplikasi Anda, dari build di rilis Devid (diperiksa sha256-nya), di macOS dan Linux. Masing-masing mati sampai Anda menjalankannya. Membuat akun untuk sebuah aplikasi, atau memberi akun password baru, cukup satu langkah.
+
+## Menjalankan database [#start-a-database]
+
+```sh
+devid db start mysql        # pertama kali: mengunduh MySQL 8.4, menyiapkannya, memilih port-nya
+devid db start postgresql   # PostgreSQL 18
+devid db start mongodb      # MongoDB 8.0, dengan mongosh
+devid db                    # status, versi dan alamat masing-masing
+devid db stop mysql         # menghentikannya dan membiarkannya mati; datanya tetap
+```
+
+Di aplikasi desktop: **Databases**, tab engine-nya, lalu **Start**. Di TUI: halaman `5`, `enter` pada database-nya.
+
+- **Alamat:** hanya `127.0.0.1`, di port yang biasa (3306, 5432 atau 27017) jika kosong, atau port kosong berikutnya. Port itu disimpan, jadi file `.env` Anda tetap berfungsi. `devid db port mysql 3310` memindahkannya.
+- **Kapan berjalan:** sejak pertama kali dijalankan, database ikut berjalan bersama Devid. `devid db stop` membuatnya tetap mati sampai Anda menjalankannya lagi.
+- **Memori saat diam:** MySQL sekitar 175–225 MB, PostgreSQL 11–26 MB, MongoDB 15–35 MB di macOS (140–190 MB di Linux). Jalankan hanya yang Anda pakai.
+
+## Satu akun untuk setiap aplikasi [#an-account-for-each-app]
+
+```sh
+devid db user add mysql shop   # akun shop, database shop, dan password yang dibuatkan
+devid db env mysql shop        # baris .env akun itu
+```
+
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3307
+DB_DATABASE=shop
+DB_USERNAME=shop
+DB_PASSWORD=…
+```
+
+Taruh baris-baris ini di `.env` aplikasi, menggantikan baris `DB_`-nya. Untuk PostgreSQL, `DB_CONNECTION` berisi `pgsql`. Untuk MongoDB, barisnya adalah `DB_URI` dan `DB_DATABASE`, sesuai yang dibaca paket MongoDB untuk Laravel.
+
+| Untuk | Perintah |
+|---|---|
+| Memberi akun password baru (dibuatkan, atau `--password`) | `devid db user password mysql shop` |
+| Menampilkan daftar akun | `devid db user list mysql` |
+| Menghapus akun; database dan datanya tetap ada | `devid db user remove mysql shop` |
+| Memilih database akun, atau tanpa database | `devid db user add mysql shop --database store` atau `--no-database` |
+| Membuat database tanpa akun | `devid db create mysql news` |
+
+- **Password** yang dibuat Devid terdiri dari 24 huruf dan angka, tanpa karakter yang perlu dikutip di `.env`. Devid menyimpannya di file yang hanya bisa Anda baca, jadi `devid db env` bisa menampilkannya lagi kapan saja.
+- **Setelah password baru,** aplikasi yang masih memakai password lama tidak bisa tersambung sampai `.env`-nya berisi baris yang baru.
+- **Akun utama:** `root` MySQL dan `postgres` PostgreSQL tidak butuh password dari komputer Anda, seperti di DBngin. `root` MongoDB punya password, yang ditampilkan oleh `devid db env mongodb`.
+- **PHP:** PHP Devid sudah menyertakan `pdo_mysql`, `mysqli`, `pdo_pgsql` dan `pgsql`. Untuk MongoDB, tambahkan ekstensi `mongodb`: `devid php ext install 8.5 mongodb` (lihat [Ekstensi](/docs/extensions)).
+
+## Di aplikasi desktop [#in-the-desktop-app]
+
+Halaman Databases punya tab untuk setiap engine.
+
+- **Kartu server:** versi dan alamatnya, sakelar untuk menjalankan atau menghentikannya, **Open in Terminal**, dan **⋯** berisi Restart, Copy `.env` untuk akun utama, dan Show log.
+- **Accounts:** **Copy .env** di masing-masing akun, dan **⋯** berisi Copy password, New password… dan Remove…. **Add account** menanyakan nama, database dan password-nya (dibuatkan, atau milik Anda sendiri), lalu menampilkan password dan baris `.env` untuk disalin.
+- **Settings:** port, dan seri (seri lain diunduh dulu jika perlu).
+- **Storage:** folder data, dengan Show in Finder.
+
+**Open in Terminal** membuka `mysql`, `psql` atau `mongosh` sebagai akun utama, langsung di prompt-nya. **▾** menampilkan aplikasi terminal di Mac Anda yang bisa menjalankan file `.command`, seperti Terminal, iTerm2 atau cmux, dan aplikasi mengingat pilihan Anda. `root` MongoDB langsung login untuk Anda, tanpa menampilkan password-nya.
+
+## Di TUI [#in-the-tui]
+
+Halaman `5` menampilkan daftar database. `enter` pada salah satunya menampilkan aksinya: start atau stop, Accounts…, salin baris `.env` akun utama, new database…, port… dan restart. Di Accounts…: `a` tambah · `p` password baru · `c` salin baris `.env` · `y` salin password · `d` hapus.
+
+## Dari terminal [#from-a-terminal]
+
+Setelah database terinstal, client-nya menjadi [perintah terminal](/docs/terminal): `mysql` dan `mysqldump`, `psql`, `pg_dump` dan `pg_restore`, serta `mongosh`. Tanpa host atau port, masing-masing tersambung ke server Devid sebagai akun utama:
+
+```sh
+mysql                         # mysql> sebagai root
+psql                          # postgres=# sebagai postgres
+mysqldump shop > shop.sql     # dump database shop
+```
+
+- `mongosh` tersambung tanpa login. Jalankan `db.getSiblingDB("admin").auth("root", passwordPrompt())` lalu tempel password dari `devid db env mongodb`, atau pakai **Open in Terminal** di aplikasi.
+- Jika Anda menyebutkan host atau port, client itu tersambung ke sana, misalnya ke MySQL milik DBngin: `mysql -h 127.0.0.1 -P 3306 -u root`.
+
+## Versi [#versions]
+
+| Engine | Seri | Default |
+|---|---|---|
+| MySQL | 8.4, 9.7 | 8.4 |
+| PostgreSQL | 15, 16, 17, 18, 19 | 18 |
+| MongoDB | 7.0, 8.0, 9.0 | 8.0 |
+
+- `devid db list --available` menampilkan seri yang bisa dijalankan komputer Anda.
+- `devid db use postgresql 17` menjalankan seri lain sebagai gantinya. Setiap seri menyimpan data dan akunnya sendiri. Untuk memindahkan data antarseri, dump dari satu seri lalu restore ke seri lainnya.
+- `devid update` memindahkan setiap seri yang terinstal ke build terbarunya. Datanya tetap.
+- **Batasan:**
+  - di macOS 12 dan 13, tidak ada MySQL, dan tidak ada MongoDB 8.0 atau 9.0 (7.0 bisa berjalan);
+  - MongoDB di prosesor Intel atau AMD butuh AVX;
+  - di Mac Intel, MySQL tidak mendapat perbaikan lagi setelah 8.4.11 dan 9.7.4, build terakhir yang dibuat Oracle untuk Mac Intel.
+
+## Berdampingan dengan DBngin atau Homebrew [#next-to-dbngin-or-homebrew]
+
+Devid tidak pernah menjalankan, menghentikan, atau membaca server dan data milik keduanya. Devid hanya menghindari port-nya: jika MySQL DBngin ada di 3306, MySQL Devid memakai 3307. Client Devid didahulukan di `PATH` Anda, jadi panggil client milik mereka dengan host dan port, seperti di atas.
+
+Untuk memindahkan database dari DBngin ke Devid, dump dari server DBngin lalu restore ke server Devid. Jalankan dulu seri yang sama dengan server DBngin, misalnya `devid db use mysql 9.7`, supaya dump-nya ter-restore persis seperti saat dibuat.
+
+```sh
+mysqldump -h 127.0.0.1 -P 3306 -u root shop > shop.sql   # dari MySQL DBngin
+devid db user add mysql shop                              # akun dan database-nya di Devid
+mysql shop < shop.sql                                     # ke MySQL Devid
+```
+
+Untuk PostgreSQL, restore sebagai akun aplikasi, supaya tabel-tabelnya menjadi milik akun itu:
+
+```sh
+pg_dump -h 127.0.0.1 -p 5432 -U postgres --no-owner --no-privileges shop > shop.sql
+devid db user add postgresql shop
+psql -U shop -d shop -f shop.sql
+```
+
+## Lokasi data [#where-the-data-is]
+
+| Folder | Isinya |
+|---|---|
+| `~/.devid/db/<engine>-<series>` | Program-programnya |
+| `~/.devid/data/<engine>-<series>` | Data, dan password yang disimpan Devid |
+| `~/.devid/log/<engine>.log` | Log server: `devid logs mysql.log`, atau **⋯** › Show log di aplikasi |
+
+- Menghentikan database, memperbarui Devid, atau meng-uninstall-nya tetap menyimpan datanya.
+- `devid uninstall --purge` menyimpan `~/.devid/data` dan menyebutkan lokasinya. Tambahkan `--delete-databases` untuk ikut menghapusnya, secara permanen (lihat [Uninstal](/docs/uninstall)).
+- `devid db remove mysql 9.7` menghapus seri yang tidak lagi Anda pakai. Datanya tetap ada kecuali Anda menambahkan `--delete-data`.
+
+## Kalau ada masalah [#when-something-is-wrong]
+
+- `devid doctor` memeriksa setiap database yang Anda jalankan.
+- **Port sudah dipakai:** `devid db port mysql 3310`. Devid menyebutkan program yang memakai port itu.
+- **Database tidak mau jalan:** log-nya menjelaskan alasannya. `devid logs mysql.log -n 50` menampilkan baris-baris terakhirnya.

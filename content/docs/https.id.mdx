@@ -1,0 +1,21 @@
+---
+title: HTTPS
+description: "Certificate authority lokal, dan tool yang punya trust store sendiri."
+translationOf: 'f2390361a6ed'
+---
+
+HTTPS tidak butuh langkah manual:
+
+- **Saat pertama kali berjalan:** daemon membuat certificate authority lokal, "Devid Local CA". CA ini dibatasi namanya ke `.test`, jadi tidak bisa dipakai untuk domain lain.
+- **Saat setup:** di macOS, `devid setup` menambahkan CA ke keychain System. Di Linux, setup menambahkan CA ke penyimpanan sistem, ke database Chrome dan ke setiap profil Firefox (lihat [Linux](/docs/linux#browsers)).
+- **Per situs:** setiap situs mendapat sertifikat saat di-link atau di-park. Devid memperbaruinya 30 hari sebelum kedaluwarsa.
+- **Browser:** di macOS, browser yang memakai keychain (Safari, Chrome, Brave) memercayai sertifikat ini. Di Linux, begitu juga Chrome, Brave, Edge dan Firefox.
+- **PHP dan Composer Devid:** keduanya memakai `~/.devid/ca/cacert.pem` (bundle macOS ditambah CA Devid), jadi panggilan HTTP dari satu situs `.test` ke situs lain tetap berjalan.
+
+Beberapa tool memakai penyimpanan sertifikatnya sendiri:
+
+| Tool | Yang perlu dilakukan |
+|---|---|
+| Firefox | Di macOS, Firefox biasanya membaca keychain (`security.enterprise_roots.enabled`). Di Linux, setup menambahkan CA ke setiap profil; jalankan `devid setup` lagi untuk profil baru. Jika muncul peringatan, impor `~/.devid/ca/devid-ca.crt` di Settings → Privacy & Security → Certificates. |
+| Node.js | `export NODE_EXTRA_CA_CERTS="$HOME/.devid/ca/devid-ca.crt"` |
+| Python (requests) | `export REQUESTS_CA_BUNDLE="$HOME/.devid/ca/cacert.pem"` |

@@ -1,0 +1,49 @@
+---
+title: Dev server on demand
+description: "Kunjungan pertama ke situs menjalankan dev server-nya, dan Devid menghentikannya saat situs tidak dipakai."
+translationOf: '3e3f3e9312d4'
+---
+
+Sejak 0.17.0, situs proxy bisa menunjuk salah satu [perintahnya](/docs/commands) untuk dijalankan saat situs pertama kali dikunjungi. Devid menghentikannya lagi setelah situs tidak dipakai, sehingga dev server hanya memakai memori selama Anda mengerjakannya. Dev server Next.js sering memakan 0,5–1 GB.
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd on-demand dev              # berhenti setelah 10 menit tidak dipakai
+devid cmd on-demand dev --idle 30    # setelah 30 menit; --idle 0 tidak pernah menghentikannya
+devid cmd on-demand off
+```
+
+| Di mana | Caranya |
+|---|---|
+| CLI | `devid cmd on-demand [site] <name> [--idle <minutes>]`, atau `off` |
+| Aplikasi desktop | detail situs › **On demand**: sakelar, perintah, dan **Stop when idle** |
+| TUI | menu situs › `z` On demand… |
+
+Fitur ini berlaku untuk situs proxy, seperti server Next.js, Nuxt, Vite dan Node.js (lihat [Aplikasi](/docs/apps)), dengan nginx, Caddy dan Apache.
+
+## Kunjungan pertama [#the-first-visit]
+
+- Request menunggu selagi Devid menjalankan perintahnya, lalu diteruskan ke dev server. Dalam pengujian Devid, dev server Next.js dengan cache yang sudah terisi menjawab halaman pertamanya dalam 1,5 sampai 5 detik.
+- Halaman yang masih menunggu setelah 5 detik menampilkan halaman Starting berisi bagian akhir log perintah, lalu terbuka sendiri saat dev server menjawab. Request lain, seperti `fetch` atau panggilan API, menunggu sampai 60 detik.
+- Kalau perintahnya keluar sebelum port-nya menjawab, halaman menampilkan exit code dan log-nya. Kunjungan berikutnya mencoba lagi.
+- Request yang datang bersamaan hanya menjalankan perintahnya sekali, dan POST tetap membawa body-nya.
+- Dengan Apache, browser mengirim ulang request pertama setelah dev server menjawab (307 ke alamat yang sama). WebSocket yang dibuka saat situs tidur akan gagal sekali; hot reload tersambung lagi dengan sendirinya.
+
+## Kapan berhenti [#when-it-stops]
+
+- Setelah menit yang diatur berlalu tanpa request dan tanpa koneksi terbuka ke dev server. Tab yang terbuka menjaga WebSocket hot reload-nya tetap terbuka, jadi situs tetap aktif selama Anda membukanya. Pemeriksaannya berjalan setiap 30 detik, jadi penghentian bisa terlambat sampai 30 detik.
+- **Stop** (`devid cmd stop`, aplikasi atau TUI) langsung menidurkannya; kunjungan berikutnya menjalankannya lagi.
+- Perintah ini tidak pernah berjalan saat login. Restart karena pembaruan membiarkannya tetap tidur, sementara perintah lain yang tadinya berjalan dijalankan lagi.
+- `devid cmd`, `devid sites` dan `devid status` menyebutkan apakah perintahnya sedang tidur atau berjalan, dan ikon menu bar menghitung situs yang sedang tidur.
+
+## Yang perlu diketahui [#things-to-know]
+
+- Perintahnya harus mendengarkan di port situs. Perintah situs proxy menerima port itu sebagai `PORT` ([Perintah](/docs/commands)); untuk Vite, berikan `--port <n> --strictPort`.
+- **Next.js 16 dengan fumadocs-mdx:** setiap kali `next dev` dihentikan, sebuah proses `next/dist/telemetry/detached-flush.js` bisa tertinggal, karena telemetry flush memuat `next.config` dan `createMDX()` menjalankan file watcher di sana. On demand sering menghentikan dev server, jadi lewati `createMDX()` di proses itu:
+
+```js
+// next.config.mjs
+const flushing = process.argv.some((arg) => arg.endsWith('detached-flush.js'));
+export default flushing ? config : createMDX()(config);
+```

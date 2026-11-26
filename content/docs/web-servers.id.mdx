@@ -1,0 +1,29 @@
+---
+title: Web server dan layanan
+description: "nginx, Caddy atau Apache, serta cara menjalankan, menghentikan, dan membaca log-nya."
+translationOf: '7bc7016da9ce'
+---
+
+Hanya satu web server yang berjalan dalam satu waktu. nginx adalah default-nya.
+
+```sh
+devid server list              # nginx, caddy, apache: terinstal, aktif, versi
+devid server install caddy     # nginx/caddy dari rilis Devid; apache (khusus macOS) memakai /usr/sbin/httpd
+devid server use caddy         # ganti server; server lama berhenti, yang baru berjalan
+```
+
+Layanan adalah web server dan satu php-fpm per versi PHP, bernama `nginx`, `caddy`, `apache`, `php-8.4` dan seterusnya.
+
+```sh
+devid status                   # daemon, web server, versi PHP, port
+devid restart nginx
+devid stop php-8.4             # tetap berhenti sampai `devid start php-8.4`
+devid stop all                 # hentikan semuanya (restart daemon, mis. saat login, menyalakannya lagi)
+devid start all
+devid autostart off            # setelah login, nginx dan PHP menunggu `devid start all` (default: on)
+devid login-item on            # buka ikon menu bar aplikasi Devid saat login (default: off)
+devid logs                     # daftar log
+devid logs php85-fpm.log -n 50 --follow
+nginx -t                       # uji konfigurasi nginx Devid (lihat Perintah terminal)
+devid logs nginx-error.log --clear
+```

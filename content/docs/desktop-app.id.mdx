@@ -1,0 +1,30 @@
+---
+title: Aplikasi desktop
+description: "Devid.app: ikon di menu bar dengan halaman yang sama seperti TUI."
+translationOf: '1854b52e0cc4'
+---
+
+Devid.app, untuk macOS, adalah ikon di menu bar dengan jendela yang punya halaman yang sama seperti TUI: Sites, PHP, Web Server, Mail, Databases, Logs dan Settings. Aplikasi ini opsional: situs Anda tetap berjalan tanpanya.
+
+```sh
+# saat instalasi pertama, dalam satu perintah (aplikasinya sendiri tidak butuh sudo):
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh -s -- --gui
+# atau nanti, di terminal baru:
+devid setup --gui              # instal ke ~/Applications; buka dari Spotlight
+devid login-item on            # tampilkan ikon menu bar-nya setiap kali login (default: off)
+```
+
+Tanpa `--gui`, Devid tidak menginstal aplikasi apa pun.
+
+- **Gatekeeper:** aplikasi ini ditandatangani secara ad-hoc dan tidak dinotarisasi. Jika diinstal lewat `devid setup --gui`, aplikasi terbuka tanpa peringatan. Jika Anda mengunduh `Devid-darwin-x86_64.zip` (Intel) atau `Devid-darwin-arm64.zip` (Apple silicon) lewat browser, jalankan `xattr -dr com.apple.quarantine Devid.app` setelah mengekstraknya.
+- **Sites:** tabel berisi tipe setiap situs, apa yang menyajikannya (versi PHP-nya, Static, atau port tujuan proxy-nya) dan perintah yang sedang berjalan. Filter di baris Sites berpindah antara situs yang disajikan dan situs dari folder park yang Anda hapus. **+** di bagian atas me-link sebuah folder dari mana saja: setelah Anda memilihnya, Devid menampilkan domain dan tipe aplikasinya, dan Anda bisa memilih versi PHP-nya atau, untuk aplikasi Node.js, port dev server-nya, sebelum me-link-nya. **Add folder** mem-park sebuah folder, sehingga setiap proyek di dalamnya disajikan.
+- **Detail situs:** klik sebuah situs untuk melihat tipe dan cara penyajiannya, port lokalnya, [perintahnya](/docs/commands) (Start, Stop, log, Add command), [On demand](/docs/on-demand) untuk situs proxy, dan [Share](/docs/tunnels). Penjelasannya ada di balik ⓘ di setiap judul, dan **Open in browser** membuka situs itu, sekaligus membangunkan situs yang sedang tidur.
+- **Menu cepat:** **⋯** di kartu web server, di bagian bawah sidebar, menampilkan daftar situs beserta versi PHP-nya, menghentikan atau me-restart semuanya, mengganti PHP default, dan membuka Settings atau menutup Devid.
+- **Mail:** inbox untuk email yang dikirim aplikasi Anda: daftar pesan dengan pencarian, masing-masing dengan HTML, teks, header, source dan lampirannya, serta notifikasi untuk email baru jika Anda mau. Saat Mail mati, dari halaman ini Anda bisa menyalakannya. Lihat [Mail](/docs/mail).
+- **Databases:** tab untuk MySQL, PostgreSQL dan MongoDB. Masing-masing berisi server dengan sakelar dan **Open in Terminal** (client-nya di prompt, di aplikasi terminal yang Anda pilih), akunnya dengan **Copy .env**, Copy password, New password… dan **Add account**, serta port dan serinya. Lihat [Database](/docs/databases).
+- **Logs:** sumber log ada di kiri, dikelompokkan menjadi web server, PHP dan perintah setiap situs. Log-nya ada di kanan, dengan All, Warnings dan Errors, pencarian dan Follow. Angka merah menandai error yang masuk selagi halaman terbuka. **⋯** menampilkan file-nya di Finder atau menyalin path-nya. Warna dan progress bar yang ditulis untuk terminal ditampilkan sebagai teks biasa.
+- **Menu bar:** ikonnya menunjukkan apakah Devid berjalan, titik jika ada pembaruan, dan berapa perintah yang berjalan. Menunya bisa menjalankan, menghentikan, dan me-restart semuanya, menghentikan perintah atau share, membuka situs on demand yang sedang tidur (yang sekaligus membangunkannya), membuka inbox atau mengirim email percobaan, dan membuka jendela atau Settings.
+- **Dock:** aplikasi ada di Dock dan di Cmd+Tab hanya selama jendelanya terbuka. Di luar itu, aplikasi hanya berupa ikon menu bar (di bawah 10 MB, tanpa CPU saat diam).
+- **Terminal:** Settings › Terminal › **Add to PATH** menaruh perintah Devid (`php`, `php8.4`, `composer`, `nginx`, `caddy`, `mailpit`…) di `PATH` Anda untuk terminal baru, dan **Remove from PATH** menghapusnya lagi. Lihat [Perintah terminal](/docs/terminal).
+- **Pembaruan:** Settings › Update Devid (sejak 0.12.1) mengunduh dan menginstal versi baru di latar belakang, me-restart daemon, dan membuka ulang jendela sebagai versi baru. Sejak 0.13.0, Settings menampilkan progres setiap pembaruan: langkahnya, persentase, megabyte yang sudah diunduh, kecepatan dan sisa waktu, untuk Devid sendiri serta untuk PHP, web server dan ekstensi; sidebar juga menampilkan persentasenya. Pembaruan yang gagal menyebutkan langkah mana yang berhenti. **Try again** menjalankannya lagi; untuk PHP dan web server, pembaruan dilanjutkan dari yang gagal. Pembaruan dari versi lama ke 0.13.0 belum menampilkan progres, karena aplikasi versi lama yang menjalankannya. Terminal hanya terbuka jika pengaturan sistem butuh password Anda. `devid self-update` di terminal melakukan hal yang sama dan ikut memperbarui aplikasi; aplikasi yang jendelanya sedang tidak terbuka berpindah ke versi baru dengan sendirinya.
+- **Penghapusan:** `devid uninstall` menghapus aplikasi.

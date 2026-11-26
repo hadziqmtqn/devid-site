@@ -1,0 +1,20 @@
+---
+title: File
+description: "Isi ~/.devid."
+translationOf: '3787434b426a'
+---
+
+Semuanya ada di `~/.devid`:
+
+| Path | Isinya |
+|---|---|
+| `bin/` | `devid`, ditambah `php`, `composer`, `php8.3`–`php8.6`, `nginx`, `caddy`, `mailpit` dan client database yang terinstal (hard link ke `devid`; lihat [Perintah terminal](/docs/terminal)) |
+| `config.toml` | Pengaturan: domain `.test`, web server, PHP default, port (8088/8443 di balik pf atau, di Linux, nftables; DNS 53535), folder yang di-park, link, situs yang dikunci ke satu versi PHP dan yang diabaikan, `autostart`, `update_check_minutes`, dan per situs di bawah `[apps.<site>]` perubahan tipenya, port lokal dan perintahnya. Sebaiknya pakai perintah daripada menyunting file ini. |
+| `php/<version>/` | Binary PHP, `etc/php.ini` (boleh Anda sunting), `etc/conf.d/` (sakelar untuk Xdebug, pcov dan ekstensi katalog) |
+| `php-ext/<version>/` | Ekstensi katalog (`devid php ext install`), satu folder per ekstensi |
+| `nginx/`, `caddy/`, `apache/` | Binary web server dan konfigurasi yang dibuat Devid (ditulis ulang oleh Devid) |
+| `ca/`, `certs/` | CA lokal, bundle CA dan sertifikat per situs |
+| `db/` | Program database, satu folder per seri (`mysql-8.4/`), dan `mongosh/` (lihat [Database](/docs/databases)) |
+| `data/` | Data setiap seri database, dan password yang disimpan Devid untuk akun-akunnya. `devid uninstall --purge` menyimpannya |
+| `log/` | Log daemon, php-fpm, web server dan database, log setiap perintah (`app-<site>-<name>.log`) dan setiap share (`share-<site>.log`) |
+| `run/` | Socket daemon dan file pid, termasuk milik perintah yang berjalan, serta socket database |

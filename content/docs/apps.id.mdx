@@ -1,0 +1,50 @@
+---
+title: Aplikasi dan dev server
+description: "Laravel, CodeIgniter, Node.js, Vite, Next.js dan situs statis: dideteksi per situs, dan bisa Anda ubah."
+translationOf: 'cebbb0200116'
+---
+
+Devid membaca beberapa file di folder setiap situs untuk mengenali jenisnya, lalu menyajikannya sesuai jenis itu. Situs yang tidak cocok dengan apa pun disajikan sebagai PHP, seperti sebelumnya.
+
+| Ditemukan di folder | Tipe | Disajikan sebagai |
+|---|---|---|
+| `artisan`, dan `laravel/framework` di `composer.json` | Laravel | PHP, dari `public/` |
+| `spark` | CodeIgniter 4 | PHP |
+| `system/CodeIgniter.php` atau `system/core/CodeIgniter.php` | CodeIgniter 3 | PHP |
+| `bin/console`, dan `symfony/framework-bundle` | Symfony | PHP |
+| `wp-config.php` atau `wp-load.php` | WordPress | PHP |
+| `composer.json`, `index.php` atau `public/index.php` | PHP | PHP |
+| `next` di `package.json` | Next.js | proxy ke `localhost:3000` |
+| `nuxt` | Nuxt | proxy ke `localhost:3000` |
+| `express`, `fastify`, `koa` atau `hono`, atau skrip `dev` atau `start` | Node.js | proxy ke `localhost:3000` |
+| `vite` | Vite | proxy ke `localhost:5173` |
+| `index.html` | Static | file |
+
+Situs proxy memakai `PORT` dari `.env` proyek jika nilainya diatur. [Perintah](/docs/commands) situs itu menerima port tujuan proxy-nya sebagai `PORT`. PHP disajikan dari `public/` jika folder itu ada.
+
+Sejak 0.12.5, situs proxy baru yang port default-nya sudah dipakai situs lain mendapat port kosong berikutnya, misalnya 3002 untuk proyek Next.js kedua. Folder yang lebih lama tetap memakai port default. Port baru itu disimpan dan ditampilkan sebagai port dev server situs di `devid app show` dan di aplikasi, dan perintah situs itu menerimanya sebagai `PORT`. Devid hanya melakukan ini untuk situs yang belum punya pengaturan apa pun di Devid dan tidak punya `PORT` di `.env`, dan tidak pernah mengubah port yang Anda atur.
+
+## Cara situs disajikan [#how-a-site-is-served]
+
+- **PHP:** file `.php` diteruskan ke php-fpm; file lain disajikan apa adanya.
+- **Static:** hanya file, dari web root (`dist/` untuk Vite, `out/` untuk Next.js). Jika single-page app aktif, path yang tidak punya file akan memuat `index.html`.
+- **Proxy:** setiap request diteruskan ke dev server Anda di `localhost`, termasuk WebSocket (hot reload). Kalau tidak ada yang menjawab di sana, halamannya menyebutkan port mana yang perlu dijalankan, atau, [on demand](/docs/on-demand), Devid menjalankan dev server itu.
+
+`https://<name>.test` tetap memakai sertifikatnya di setiap mode.
+
+| Perintah | Fungsinya |
+|---|---|
+| `devid app show [site]` | Tipe, cara situs disajikan, dan apa yang Anda ubah (default: situs yang memuat folder saat ini). |
+| `devid app set [site] --preset vite` | Memilih tipe; nilai default tipe itu berlaku. |
+| `devid app set [site] --mode proxy --upstream 3010` | Mengubah cara situs disajikan; hanya opsi yang Anda berikan yang berubah. |
+| `devid app set [site] --root dist --spa on` | Web root (php, static) dan single-page app (static). |
+| `devid app reset [site]` | Kembali ke tipe yang terdeteksi. Port lokal dan perintahnya tetap. |
+
+Aplikasi desktop punya pengaturan yang sama di detail situs, dan TUI di menu situs.
+
+## Dev server di balik proxy [#dev-servers-behind-a-proxy]
+
+- Devid mengirim `Host: localhost:<port>` ke dev server, dan menulis ulang `Origin` jika isinya alamat situs itu sendiri. Pemeriksaan host Vite dan pemeriksaan dev origin Next.js menerimanya tanpa perubahan apa pun di proyek Anda. Nama `.test` sampai di `X-Forwarded-Host`, dan `https` di `X-Forwarded-Proto`.
+- `devid app set [site] --pass-host on` mengirim `Host` dan `Origin` `.test` tanpa diubah, untuk aplikasi yang membuat tautan dari `Host`.
+- **Express dengan Vite sebagai middleware:** Vite lalu menjalankan socket hot reload-nya di port sendiri (24678), yang tidak bisa dijangkau halaman `https://`. Halamannya tetap berjalan tanpa hot reload. Untuk memperbaikinya di aplikasi Anda, berikan HTTP server Anda ke Vite sebagai `server.hmr.server`, supaya socket itu memakai port yang sama dengan aplikasi Anda.
+- **Laravel dengan Vite** tetap menjadi situs Laravel. Jalankan `npm run dev` sebagai salah satu [perintahnya](/docs/commands); laravel-vite-plugin mengizinkan halaman `*.test` memuat aset-asetnya. Sejak 0.18, Vite yang dijalankan dengan cara ini menyajikan HTTPS dengan sertifikat situs, sehingga Safari juga bisa memuatnya: lihat [Laravel dan Vite](/docs/laravel-vite).

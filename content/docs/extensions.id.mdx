@@ -1,0 +1,55 @@
+---
+title: Ekstensi PHP
+description: "Ekstensi yang sudah di-build dari katalog Devid, dan ekstensi mana yang bisa ditambahkan."
+translationOf: '4d8eea7bb626'
+---
+
+```sh
+devid php ext available 8.4                 # apa yang ditawarkan katalog untuk PHP 8.4
+devid php ext install 8.4 imagick igbinary # satu atau lebih; php-fpm di-restart sekali
+devid php ext list 8.4                      # ekstensi bawaan, Xdebug/pcov, dan ekstensi katalog yang terinstal
+devid php ext remove 8.4 imagick
+```
+
+Di TUI: halaman PHP, `enter` pada sebuah versi, lalu **Extensions…**: `space` mencentang, `enter` pada tombol Install menginstal, `r` menghapus. Di aplikasi desktop: PHP, lalu **Extensions** pada sebuah versi.
+
+**Katalog** untuk PHP 8.3, 8.4 dan 8.5: apcu, igbinary, imagick, ldap, memcached, mongodb, msgpack dan swoole. Untuk PHP 8.6: sejauh ini imagick, ldap dan mongodb. apcu, igbinary, memcached, msgpack dan swoole menyusul setelah rilis mereka sendiri mendukung 8.6.
+- Setiap ekstensi hanya berasal dari rilis Devid. Ekstensi itu di-build di CI dari source resminya untuk rilis PHP yang persis sama, dan checksum-nya diverifikasi sebelum diinstal. Tidak ada yang dikompilasi di Mac Anda.
+- `install` memeriksa bahwa ekstensinya bisa dimuat di `php` dan `php-fpm` sebelum me-restart php-fpm. Kalau tidak bisa dimuat, tidak ada yang berubah dan situs tetap berjalan. Beberapa ekstensi bisa diinstal sekaligus, dengan satu kali restart php-fpm.
+- `devid update` memperbaruinya bersama PHP. `devid doctor` melaporkan ekstensi yang tidak bisa dimuat lagi.
+
+| Ekstensi | Catatan |
+|---|---|
+| apcu | Juga aktif di CLI (`apc.enable_cli=1`). |
+| igbinary | Opsi serializer untuk Redis dan cache Laravel. PHP 8.5 mendapat 3.2.17RC1, satu-satunya rilis igbinary yang mendukungnya; 8.3 dan 8.4 mendapat 3.2.16 yang stabil. |
+| imagick | JPEG, PNG, GIF, WebP, AVIF, JPEG XL, TIFF dan SVG; HEIC bisa dibaca tetapi tidak bisa ditulis. PDF tidak bisa dibaca (butuh Ghostscript). Gradien SVG dalam satuan `objectBoundingBox`, yang menjadi default SVG, tidak digambar dengan benar ([ImageMagick#9093](https://github.com/ImageMagick/ImageMagick/issues/9093)). Teks memakai font macOS. |
+| ldap | Dari source PHP sendiri, dengan OpenLDAP di dalamnya. |
+| memcached | Dengan libmemcached di dalamnya. Serializer: milik PHP dan JSON, ditambah session handler. Serializer igbinary dan msgpack tidak disertakan, supaya memcached tidak bergantung pada keduanya untuk dimuat lebih dulu. |
+| mongodb | Membawa OpenSSL sendiri. |
+| msgpack | Opsi serializer untuk Redis. |
+| swoole | Untuk CLI (`php artisan octane:start`). TLS, HTTP/2, brotli, async DNS dan coroutine curl hook. Tidak mengubah cara php-fpm menyajikan situs `.test`. |
+
+TLS di mongodb dan ldap memercayai sertifikat sistem macOS. Untuk server dengan sertifikat `.test` dari Devid, berikan `tlsCAFile` (mongodb) atau `LDAP_OPT_X_TLS_CACERTFILE` (ldap) yang menunjuk ke `~/.devid/ca/cacert.pem`.
+
+## Ekstensi mana yang bisa ditambahkan [#which-extensions-can-be-added]
+
+| Jenis | Contoh | Bisa ditambahkan? |
+|---|---|---|
+| Sudah ada di PHP Devid | bcmath, curl, gd, intl, mbstring, mysqli, pdo_pgsql, redis, soap, sodium, zip | Tidak perlu diinstal (`devid php ext list`). |
+| Disertakan bersama PHP Devid, mati secara default | Xdebug, pcov | `devid php ext <version> xdebug on` |
+| Open source, tanpa library tambahan | apcu, igbinary, msgpack, ds, uuid | Ya |
+| Open source, dengan library C open source | imagick, memcached, mongodb, swoole, amqp, rdkafka, yaml | Ya. Library-nya di-build ke dalam ekstensi, jadi tidak ada lagi yang perlu diinstal. |
+| Ada di source PHP tetapi tidak di build Devid | ldap, xsl, gmp, tidy | Ya, di-build dari source PHP yang sama dengan rilisnya. |
+
+**Tidak bisa ditambahkan, dan alasannya:**
+
+| Alasan | Contoh |
+|---|---|
+| Butuh client library proprietary | oci8 / pdo_oci (Oracle Instant Client), sqlsrv / pdo_sqlsrv (Microsoft ODBC Driver) |
+| Butuh PHP yang thread-safe; PHP Devid non-thread-safe, sesuai cara php-fpm memakainya | parallel |
+| Vendornya tidak lagi mem-build-nya untuk Mac Intel | ionCube Loader: loader Intel-nya berhenti di PHP 8.3 |
+| Closed source tanpa lisensi untuk didistribusikan ulang | loader vendor yang lisensinya tidak mengizinkan mirroring maupun pengunduhan dari vendornya |
+| Hanya untuk Windows, atau tidak mendukung PHP 8.3 ke atas | com_dotnet; Zend Guard Loader, pthreads |
+| Agent closed source dengan layanan latar belakangnya sendiri | New Relic, Datadog, Blackfire (tidak direncanakan) |
+
+**Meminta ekstensi lain:** buka [Feature request](https://github.com/hadziqmtqn/devid/issues/new/choose) di repository `devid`. Setiap ekstensi katalog adalah resep yang sudah ditinjau di `devid-binaries` (`extensions/<name>.sh`): source resmi yang dikunci dengan checksum, opsi build-nya, dan smoke test. Pull request mem-build dan mengujinya untuk setiap versi PHP, dan merge menerbitkannya dalam rilis baru, tanpa perlu memperbarui Devid.
