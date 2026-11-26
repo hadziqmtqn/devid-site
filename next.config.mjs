@@ -4,6 +4,11 @@ import { createMDX } from 'fumadocs-mdx/next';
 const config = {
   output: 'export',
   reactStrictMode: true,
+  experimental: {
+    // The site has two root layouts, app/(en) and app/id (one per language), so a 404 has no layout
+    // of its own to render in: app/global-not-found.tsx is the whole 404 page instead.
+    globalNotFound: true,
+  },
 };
 
 // Next's telemetry flush (next/dist/telemetry/detached-flush.js) loads this config too. There,
