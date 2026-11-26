@@ -7,7 +7,9 @@
     "dev": "next dev -p 4321",
     "start": "serve out",
     "types:check": "next typegen && tsc --noEmit",
-    "lint": "eslint"
+    "lint": "eslint",
+    "translations:check": "node scripts/translations.mjs check",
+    "translations:stamp": "node scripts/translations.mjs stamp"
   },
   "dependencies": {
     "cn": "^0.5.0",
@@ -17,7 +19,8 @@
     "lucide-react": "^1.61.0",
     "next": "16.4.6",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",

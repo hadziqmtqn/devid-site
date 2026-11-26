@@ -1,4 +1,5 @@
 import { createGetUrl } from 'fumadocs-core/source';
+import { i18n } from './i18n';
 
 export const appName = 'Devid';
 export const siteUrl = 'https://devid.bekenweb.com';
@@ -13,7 +14,8 @@ export const gitConfig = {
   branch: 'main',
 };
 
-const getContentUrl = createGetUrl(docsContentRoute);
+// Like the pages: no prefix for English, /id for Indonesian (/id/llms.mdx/docs/..., /id/og/docs/...).
+const getContentUrl = createGetUrl(docsContentRoute, i18n);
 
 export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
   const segments = [...page.slugs, 'content.md'];
@@ -21,7 +23,7 @@ export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
   return { segments, url: getContentUrl(segments, page.locale) };
 }
 
-const getImageUrl = createGetUrl(docsImageRoute);
+const getImageUrl = createGetUrl(docsImageRoute, i18n);
 
 export function getPageImageUrl(page: { slugs: string[]; locale?: string }) {
   const segments = [...page.slugs, 'image.png'];

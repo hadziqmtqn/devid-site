@@ -1,12 +1,18 @@
 import { llms, loader } from 'fumadocs-core/source';
-import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+import { docsRoute } from './shared';
+import { i18n, localizeMarkdownLinks } from './i18n';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
+import { z } from 'zod';
 
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
-    schema: pageSchema,
+    schema: pageSchema.extend({
+      // A translation (`<page>.id.mdx`) records the hash of the English file it follows
+      // (lib/source-hash.mjs, written by `npm run translations:stamp`).
+      translationOf: z.string().optional(),
+    }),
     postprocess: {
       includeProcessedMarkdown: true,
     },
@@ -20,11 +26,12 @@ const docs = defineDocs({
 export const source = loader({
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
+  i18n,
   plugins: [],
 });
 
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
-${await page.data.getText('processed')}`,
+${localizeMarkdownLinks(await page.data.getText('processed'), page.locale)}`,
 });
