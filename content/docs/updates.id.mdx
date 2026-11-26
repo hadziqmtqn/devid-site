@@ -1,0 +1,17 @@
+---
+title: Pembaruan
+description: "Memperbarui Devid, PHP, web server dan ekstensi."
+translationOf: '6dc20d451a54'
+---
+
+```sh
+devid self-update --check      # adakah devid yang lebih baru?
+devid self-update              # instal (me-restart daemon, dan memperbarui aplikasi jika terinstal)
+devid self-update --no-sudo    # sama, tanpa permintaan password; langkah yang butuh sudo dilaporkan saja
+devid update --check           # adakah PHP, nginx, Caddy atau ekstensi katalog yang lebih baru?
+devid update                   # instal semuanya
+```
+
+Setiap unduhan diperiksa sha256-nya sebelum dipakai Devid. Daemon juga memeriksa pembaruan setiap 20 menit (`update_check_minutes` di `config.toml`; 0 mematikannya) dan menampilkannya di `devid status`, TUI dan aplikasi. Daemon tidak pernah menginstalnya sendiri. Ekstensi katalog bisa muncul lagi sebagai "new build" dengan versi yang sama: rilis Devid mem-build-nya ulang, misalnya untuk PHP, OpenSSL atau arsitektur Mac yang baru. Di TUI, aksi yang sama ada di halaman Settings.
+
+devid terbaru adalah rilis bertanda **Latest** di [devid-binaries](https://github.com/hadziqmtqn/devid-binaries/releases). Versi dengan akhiran, seperti `0.12.0-rc.1`, adalah pre-release untuk pengujian: `devid self-update` tidak pernah menawarkannya, dan Anda menginstalnya secara manual.

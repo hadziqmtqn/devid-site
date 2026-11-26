@@ -1,0 +1,33 @@
+---
+title: Pemecahan masalah
+description: "devid doctor, masalah umum, dan cara melaporkan bug."
+translationOf: '350b4aa77482'
+---
+
+Mulailah dengan `devid doctor`. Perintah ini memeriksa setiap bagian instalasi dan menampilkan cara memperbaiki setiap masalah:
+
+- `PATH`;
+- LaunchAgent di macOS, atau systemd user unit di Linux;
+- daemon, DNS, web server dan PHP;
+- pengaturan sistem;
+- apakah port 80/443 benar-benar sampai ke web server;
+- resolusi `.test`;
+- CA;
+- Valet;
+- Mail, jika sedang menyala.
+
+| Gejala | Solusi |
+|---|---|
+| `php` masih milik Homebrew atau yang lain | Buka terminal baru (atau `exec zsh`). `~/.devid/bin` harus paling depan di `PATH`. `devid path` menunjukkan apakah barisnya ada di `~/.zshenv` dan `~/.zshrc`. |
+| `php8.4`, `nginx` atau `mailpit`: command not found, di terminal atau editor | Jalankan `devid path on`, atau Settings › Terminal › **Add to PATH** di aplikasi, lalu buka terminal baru. Perintah-perintah ini hadir sejak 0.16: di Devid yang lebih lama, jalankan `devid self-update` dulu. |
+| "daemon is not running" | Jalankan `devid setup` lagi. Aman untuk diulang. Log: `~/.devid/log/daemon.log`. |
+| `.test` tidak ter-resolve, atau port 80/443 tidak menjawab | Jalankan `devid helper status`, lalu `devid helper install`. |
+| Situs berhenti menjawab di 80/443 setelah Docker, OrbStack atau UTM berjalan. `devid doctor` menyebut port 80/443 tidak sampai ke web server; sejak 0.14, aplikasi menampilkan banner dan ikon menu bar berubah merah. | Aplikasi lain mematikan pf di loopback: Internet Sharing di macOS melakukan ini saat jaringan VM berjalan. Jalankan `devid helper install`. Sejak 0.14, perintah ini menyalakan lagi pf untuk loopback. |
+| Situs menampilkan versi PHP yang salah | Jalankan `devid sites` untuk melihat versi setiap situs, lalu `devid isolate <version>` di dalam proyek. |
+| Halaman Laravel tampil tanpa style atau skrip di Safari, sementara di Chrome tampil normal | Vite berjalan dengan HTTP biasa, yang diblokir Safari di halaman `https://`. Atur `APP_URL=https://<site>.test` di `.env`, lalu jalankan Vite dari Devid (0.18 atau lebih baru). Lihat [Laravel dan Vite](/docs/laravel-vite). |
+| Sertifikat tidak dipercaya | Jalankan `devid helper install` untuk memercayai CA lagi, lalu restart browser. |
+| Mail tidak mau jalan: port-nya sudah dipakai | `devid mail` menyebutkan program yang memakainya. Pilih port lain dengan `devid mail port <port>`, dan sesuaikan `MAIL_PORT` di `.env` aplikasi Anda. |
+| Share mengatakan cloudflared tidak ditemukan | Instal cloudflared di salah satu folder yang disebutkan pesan error-nya. Tanpa Homebrew, taruh unduhan resminya di `~/.local/bin` (sejak 0.16; dengan 0.15, jalankan juga `sudo ln -s ~/.local/bin/cloudflared /usr/local/bin/`). Lihat [Port lokal dan Share](/docs/tunnels). |
+| Email dari aplikasi tidak muncul | Pastikan Mail berjalan (`devid mail`) dan `.env` aplikasi berisi `MAIL_HOST=127.0.0.1` dan `MAIL_PORT` Devid. `devid mail test` mengirim email percobaan. |
+
+**Melaporkan bug:** buka [Bug report](https://github.com/hadziqmtqn/devid/issues/new/choose) dengan menyertakan `devid --version`, versi macOS, dan output `devid doctor` Anda.

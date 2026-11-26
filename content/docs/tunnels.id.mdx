@@ -1,0 +1,37 @@
+---
+title: Port lokal dan Share
+description: "Sajikan situs di port lokal yang tetap untuk tunnel Anda sendiri, atau bagikan dengan tautan publik sementara."
+translationOf: '9a9eae00b320'
+---
+
+## Port lokal untuk tunnel Anda sendiri [#a-local-port-for-your-own-tunnel]
+
+`devid app port [site] [PORT|off]` juga menyajikan situs di `http://127.0.0.1:<port>`, untuk `Host` apa pun. Tunnel seperti cloudflared atau ngrok, atau tool lain, lalu bisa menjangkau situs di sana, sebagai pengganti `php artisan serve`.
+
+```sh
+devid app port erdbpro-saas 8000   # juga di http://127.0.0.1:8000
+devid app port erdbpro-saas        # pertahankan port-nya, atau pilih port kosong pertama mulai 8000
+devid app port erdbpro-saas off
+```
+
+- Port di bawah 1024, port milik Devid sendiri, port situs lain dan port dev server akan ditolak.
+- Kalau program lain sudah mendengarkan di port itu, Devid melewatinya dan menyebutkan program mana yang memakainya. Situs Anda yang lain tidak terpengaruh. Jalankan perintahnya lagi setelah port itu kosong.
+- Header `X-Forwarded-Host`, `X-Forwarded-Proto` dan `X-Forwarded-For` dari tunnel sampai ke aplikasi Anda.
+
+## Membagikan situs [#share-a-site]
+
+`devid share [site]` memberi situs tautan `https://….trycloudflare.com` sementara lewat Cloudflare quick tunnel, untuk menunjukkan hasil kerja Anda ke orang lain. `devid share [site] --stop` mengakhirinya.
+
+- Fitur ini butuh `cloudflared`. Devid memakai yang ada di Mac Anda dan tidak mengunduhnya. [Unduh cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+  - Devid mencari di `/usr/local/bin` dan `/opt/homebrew/bin` (Homebrew). Sejak 0.16, Devid juga mencari di `~/.local/bin` dan `~/bin`, sehingga unduhan resmi untuk macOS bisa dipakai tanpa Homebrew atau sudo:
+
+    ```sh
+    tar -xzf cloudflared-darwin-arm64.tgz      # cloudflared-darwin-amd64.tgz di Intel
+    mkdir -p ~/.local/bin && mv cloudflared ~/.local/bin/
+    ```
+- Tautannya baru setiap kali, dan siapa pun yang memegangnya bisa membuka situs itu sampai Anda berhenti membagikannya atau daemon berhenti. Alamat yang tetap adalah tugas tunnel Anda sendiri dengan port lokal.
+- Devid tidak menyentuh tunnel Cloudflare milik Anda atau route-nya.
+- **Tautan di aplikasi Anda:** aplikasi yang membuat URL dari `APP_URL` tetap menautkan ke alamat `.test`-nya. Aplikasi yang mengabaikan `X-Forwarded-Proto` mungkin menautkan ke `http://`. Di Laravel, percayai proxy untuk memperbaiki masalah kedua: `$middleware->trustProxies(at: '*')` di `bootstrap/app.php`.
+- **Laravel dengan Vite:** selama Vite berjalan, halaman pengunjung memuat skrip dan CSS dari Vite di Mac Anda, yang tidak bisa mereka jangkau. Hentikan Vite, yang akan menghapus `public/hot`, lalu jalankan `npm run build` sebelum membagikan. Lihat [Laravel dan Vite](/docs/laravel-vite).
+
+Aplikasi desktop punya kartu Share di detail situs, dengan tautannya dan tombol Copy. Ikon menu bar menampilkan daftar situs yang dibagikan, dengan Stop sharing. Di TUI, tekan `h` di menu situs.

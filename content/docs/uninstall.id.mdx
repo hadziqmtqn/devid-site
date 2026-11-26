@@ -1,0 +1,18 @@
+---
+title: Uninstal
+description: "Membatalkan setup, dengan atau tanpa data Anda."
+translationOf: 'cd117a1ef57a'
+---
+
+```sh
+devid uninstall --dry-run      # tampilkan apa yang akan berubah
+devid uninstall                # batalkan setup; ~/.devid tetap ada (PHP, konfigurasi, CA, sertifikat)
+devid uninstall --purge        # hapus juga ~/.devid, kecuali database Anda
+devid uninstall --purge --delete-databases   # database juga, secara permanen
+```
+
+Uninstall menghentikan database Devid. `--purge` menyimpan `~/.devid/data`, tempat data database berada, dan menyebutkan lokasinya, sehingga instalasi baru bisa menemukannya lagi. `--delete-databases` ikut menghapusnya, dan itu tidak bisa dibatalkan.
+
+Uninstall membatalkan pengaturan sistem (dengan sudo), menghapus LaunchAgent, baris `PATH` (di `~/.zshenv` dan `~/.zshrc`, atau `devid.fish` milik fish) dan Devid.app, serta menghapus `~/.devid/bin`.
+
+Di Linux, uninstall juga membatalkan pengaturan sistem dengan sudo. Jika setup pernah menyalakan systemd-resolved (Arch dengan NetworkManager), uninstall mengembalikan `/etc/resolv.conf` dan mematikan systemd-resolved lagi. Setelah itu, uninstall menghapus certificate authority Devid dari database Chrome dan dari setiap profil Firefox, systemd user unit, dan baris `PATH` (di `~/.bashrc`, `~/.bash_profile` dan `~/.profile`, serta `~/.config/fish/conf.d/devid.fish` milik fish), lalu menghapus `~/.devid/bin`.

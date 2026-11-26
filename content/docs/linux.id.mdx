@@ -1,0 +1,83 @@
+---
+title: Linux
+description: "Devid di Ubuntu dan Arch Linux: apa yang diinstal dulu, apa yang diubah setup, dan browser-nya."
+translationOf: 'ceb67e9b309a'
+---
+
+Devid berjalan di Ubuntu 24.04 dan 26.04 sejak versi 0.19, dan di Arch Linux serta distribusi turunannya sejak versi 0.20, di x86_64 (Intel atau AMD 64-bit). Di Linux, Anda memakainya dari command line dan [TUI](/docs/tui); aplikasi desktop hanya untuk macOS.
+
+Devid diuji secara manual di Ubuntu 24.04, di Arch Linux dengan KDE Plasma, dan di CachyOS dengan KDE Plasma dan fish. Sebelum setiap rilis, Devid menjalani setup, satu situs lewat HTTPS, dan uninstall di Ubuntu dan Arch, di runner GitHub.
+
+## Instalasi [#install]
+
+Devid butuh curl, `certutil` untuk browser dan, di Arch, nftables. Instal semuanya, lalu jalankan perintah instalasi.
+
+Di Ubuntu, yang belum menyertakan curl (`certutil` ada di `libnss3-tools`):
+
+```sh
+sudo apt install curl libnss3-tools
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
+Di Arch Linux, CachyOS dan distribusi lain berbasis Arch (`certutil` ada di `nss`; CachyOS sudah punya ketiganya):
+
+```sh
+sudo pacman -S --needed curl nss nftables
+curl -fsSL https://github.com/hadziqmtqn/devid-binaries/releases/download/devid-latest/install.sh | sh
+```
+
+Kalau ada paket yang belum terinstal, setup menyebutkan namanya beserta perintah `apt` atau `pacman`-nya.
+
+Buka Firefox sekali sebelum menginstal, supaya Firefox punya profil tempat setup menambahkan certificate authority Devid. Kalau Anda baru membukanya pertama kali setelah itu, jalankan `devid setup` lagi.
+
+Setup menerima opsi yang sama seperti di macOS (lihat [Instalasi](/docs/install)), kecuali `--gui` dan `--server apache`.
+
+## Apa yang diubah setup [#what-setup-changes]
+
+Sebagai user Anda, di folder home Anda:
+
+- `~/.devid`, dengan `devid`, `php`, `composer` dan [perintah terminal](/docs/terminal) lain di `~/.devid/bin`.
+- Baris `PATH`, di file yang dibaca login shell Anda:
+  - bash: `~/.bashrc`, dan `~/.bash_profile` jika Anda punya (home default Arch punya), selain itu `~/.profile`;
+  - zsh: `~/.zshenv` dan `~/.zshrc`;
+  - fish, shell default CachyOS: `~/.config/fish/conf.d/devid.fish`.
+
+  Buka terminal baru untuk memakainya. Aplikasi yang Anda jalankan dari menu desktop baru melihatnya setelah Anda login lagi (diperiksa di KDE Plasma dengan SDDM dan dengan Plasma Login Manager).
+- Daemon, sebagai systemd user unit: `~/.config/systemd/user/devid.service`. Daemon berjalan saat Anda login dan berhenti saat Anda logout.
+- Certificate authority Devid di database sertifikat milik browser, dengan `certutil` (lihat [Browser](#browsers)).
+
+Dengan password Anda, sekali (sudo):
+
+- `/etc/systemd/resolved.conf.d/devid.conf`: systemd-resolved mengirim pencarian `.test` ke Devid, dan tidak ada yang lain. Ubuntu dan CachyOS sudah menjalankan systemd-resolved.
+- Jika systemd-resolved mati, seperti di Arch dengan NetworkManager, setup menyalakannya dan mengarahkan `/etc/resolv.conf` ke stub-nya. File lamanya disimpan sebagai `/etc/resolv.conf.devid-backup`, dan perubahannya dicatat di `/etc/devid-resolved.state`. Ini butuh NetworkManager. `devid uninstall` mengembalikan file itu dan mematikan systemd-resolved lagi.
+- `/etc/devid-ports.nft` dan `devid-ports.service`: port 80 dan 443 di `127.0.0.1` diteruskan ke web server Devid. Unit itu memuat aturannya setiap kali boot.
+- Certificate authority di penyimpanan sistem, untuk curl, PHP dan tool lain: `/usr/local/share/ca-certificates` di Ubuntu (`update-ca-certificates`), `/etc/ca-certificates/trust-source/anchors` di Arch (`update-ca-trust`).
+
+Firewall seperti UFW, yang dinyalakan CachyOS, tidak perlu diubah: DNS dan web server Devid hanya mendengarkan di `127.0.0.1`.
+
+`devid setup --dry-run` menampilkan langkah-langkahnya tanpa mengubah apa pun, dan `devid uninstall` membatalkan semuanya (lihat [Uninstal](/docs/uninstall)).
+
+## Browser [#browsers]
+
+Sebagian besar browser di Linux menyimpan database sertifikatnya sendiri. Setup menambahkan certificate authority Devid ke masing-masing:
+
+| Browser | Tempat CA ditambahkan |
+|---|---|
+| Chrome, Chromium, Brave dan Edge, dari `.deb` Ubuntu atau paket Arch | `~/.pki/nssdb`, yang mereka pakai bersama |
+| Firefox: build resmi Mozilla, snap Ubuntu dan paket Arch | Database masing-masing profil, di `~/.mozilla/firefox` atau, di Firefox yang lebih baru, `~/.config/mozilla/firefox`. Profil yang dibuat Firefox kemudian butuh `devid setup` lagi |
+| Chromium sebagai snap | Database-nya sendiri, yang belum ditangani Devid |
+
+Di Arch, Firefox dan Chromium dari paket Arch juga membaca penyimpanan sistem, lewat p11-kit. Setup juga menambahkan CA ke profil Firefox dari Flathub, yang belum diuji dengan Devid.
+
+`devid doctor` memeriksa database Chrome dan setiap profil Firefox, lalu menyebutkan profil yang belum punya CA.
+
+## Aplikasi Flatpak dan terminal [#flatpak-apps-and-terminals]
+
+- Aplikasi yang diinstal sebagai Flatpak, misalnya dari Discover KDE, berjalan di sandbox dan tidak melihat program di luarnya, termasuk `php` Devid. Editor dari paket distribusi Anda (atau AUR) bisa melihatnya.
+- Discover menginstal Konsole sebagai Flatpak, yang selalu terbuka di folder home Anda. Aksi **open in Terminal** di TUI butuh terminal yang terbuka di folder situs, jadi instal terminal dari paket distribusi Anda, misalnya `sudo pacman -S --needed konsole` atau `gnome-terminal`. Instalasi KDE di Arch (profil KDE `archinstall`) tidak menyertakan terminal sendiri.
+
+## Belum tersedia di Linux [#not-on-linux-yet]
+
+- Aplikasi desktop.
+- Apache. Pakai nginx, yang menjadi default, atau Caddy.
+- Linux di arm64. Debian, Fedora dan distribusi lain belum diuji, dan distribusi tanpa systemd (Artix, Void) tidak didukung.

@@ -1,0 +1,80 @@
+---
+title: Mail
+description: "Tangkap email yang dikirim aplikasi Anda ke sebuah inbox di Mac Anda, dan baca di aplikasi desktop."
+translationOf: 'dc5e31e17a8c'
+---
+
+Mail menangkap email yang dikirim aplikasi Anda. Reset password, invoice dan notifikasi masuk ke inbox di Mac Anda, bukan ke kotak surat sungguhan. Devid menjalankan [Mailpit](https://mailpit.axllent.org) untuk itu, dan aplikasi desktop menampilkan inbox-nya. Mail mati sampai Anda menyalakannya.
+
+## Menyalakannya [#turn-it-on]
+
+```sh
+devid mail on     # pertama kali, mengunduh Mailpit (11 MB)
+devid mail        # status, port dan jumlah email
+devid mail off    # email yang sudah ditangkap tetap ada
+```
+
+Di aplikasi desktop: **Mail** › **Turn on Mail**.
+
+- Mail hanya mendengarkan di `127.0.0.1`: SMTP di port 2525, dan inbox-nya di port berikutnya.
+- Saat diam, Mail memakai sekitar 16 MB memori dan tidak memakai CPU. Saat Mail mati, tidak ada yang berjalan.
+- Tidak ada email yang diteruskan ke kotak surat sungguhan.
+
+## Mengirim email dari aplikasi Anda [#send-mail-from-your-app]
+
+Untuk Laravel, taruh baris-baris ini di `.env` aplikasi:
+
+```ini
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+```
+
+- Nama user dan password apa pun bisa dipakai, atau tanpa keduanya. Tidak ada TLS.
+- Untuk aplikasi lain: SMTP di `127.0.0.1:2525`.
+- **`mail()` PHP:** selama Mail menyala, PHP Devid juga mengirim `mail()` ke sana, untuk WordPress dan PHP biasa. `devid mail php-mail off` menghentikannya.
+- `devid mail test` mengirim email percobaan.
+
+## Membacanya di aplikasi [#read-it-in-the-app]
+
+Halaman Mail di aplikasi desktop adalah inbox-nya.
+
+- Daftar pesan, yang terbaru di atas, dengan pencarian dan filter Unread.
+- Setiap pesan dengan HTML, teks, header dan source-nya.
+- Lampirannya di bawah pesan; masing-masing disimpan ke folder Downloads Anda.
+- **Mark as unread** dan **Delete** untuk satu pesan. **⋯** berisi **Mark all as read**, **Mail settings** dan **Delete all**.
+- **Open in Mailpit** menampilkan pesan di halaman Mailpit sendiri di browser Anda, dengan pemeriksaan HTML-nya.
+
+Email baru muncul dalam dua detik. **Notify on new mail** di Mail settings juga menampilkan notifikasi macOS berisi pengirim dan subjeknya. Pada kali pertama, macOS akan bertanya: pilih **Options**, lalu **Allow**.
+
+Email ditampilkan tanpa skripnya, dan tautannya terbuka di browser Anda. Setiap email ditampilkan dengan desain normalnya (terang), juga saat Mac Anda dalam mode gelap.
+
+## Dari terminal [#from-the-terminal]
+
+```sh
+devid mail list                    # 20 email terbaru
+devid mail list invoice --unread   # cari, yang belum dibaca saja
+devid mail show <id>               # satu pesan, dengan lampirannya
+devid mail save <id> <part>        # simpan lampiran ke ~/Downloads
+devid mail delete <id>
+devid mail open                    # inbox Mailpit di browser
+devid mail clear                   # hapus semua email
+```
+
+Pencariannya memakai pencarian Mailpit: kata, `from:`, `to:`, `subject:`, `has:attachment` dan lainnya.
+
+Di TUI, halaman Mail ada di tombol `4`: `m` menyalakan atau mematikan Mail, `t` mengirim email percobaan, `o` membuka inbox di browser, `c` menyalin baris `.env`, `p` menyalakan atau mematikan `mail()` PHP, dan `X` menghapus semua email.
+
+## Pengaturan [#settings]
+
+| Pengaturan | Perintah | Default |
+|---|---|---|
+| Port SMTP; inbox memakai port berikutnya | `devid mail port 2525` | 2525 |
+| Jumlah pesan yang disimpan; yang tertua dihapus lebih dulu | `devid mail keep 1000` | 500 |
+| `mail()` PHP dikirim ke Mail | `devid mail php-mail on` | on |
+| Notifikasi untuk email baru (aplikasi desktop) | `devid mail notify on` | off |
+
+- Email disimpan di `~/.devid/mail`.
+- Devid menolak port yang dipakai Devid sendiri atau salah satu situs Anda, dan menyebutkan program yang memakai suatu port.
+- Menjalankan Mailpit sendiri? Mailpit itu tetap bisa berjalan di port-nya sendiri (1025 dan 8025).
+- Saat pertama kali Anda menyimpan lampiran, macOS mungkin menanyakan apakah `devid` boleh memakai folder Downloads Anda.

@@ -1,0 +1,21 @@
+---
+title: Situs
+description: "Park satu folder berisi proyek atau link satu proyek, dan kunci versi PHP per situs."
+translationOf: 'e066c4a1a0ce'
+---
+
+| Perintah | Fungsinya |
+|---|---|
+| `devid park [path]` | Menyajikan setiap subfolder dari sebuah folder (default: folder saat ini) sebagai `<subfolder>.test`. |
+| `devid unpark [path]` | Berhenti menyajikan folder yang di-park. |
+| `devid link [name] [--path <dir>]` | Menyajikan satu folder (default: folder saat ini) sebagai `<name>.test` (nama default: nama foldernya). |
+| `devid unlink <name>` | Berhenti menyajikan situs yang di-link. |
+| `devid ignore <name>` | Berhenti menyajikan satu situs dari folder yang di-park; foldernya tidak disentuh. `devid sites` menampilkan situs yang diabaikan. |
+| `devid unignore <name>` | Menyajikan lagi situs yang diabaikan. |
+| `devid sites` | Menampilkan daftar situs dengan URL, tipe, cara penyajian, dan foldernya. |
+| `devid isolate <version> [--site <name>]` | Mengunci sebuah situs (default: situs yang memuat folder saat ini) ke satu versi PHP. |
+| `devid unisolate [--site <name>]` | Mengembalikan situs ke versi PHP default. |
+
+Setiap situs otomatis mendapat HTTPS; tidak ada langkah `secure` terpisah.
+
+Devid mendeteksi tipe setiap situs (Laravel, Vite, Next.js…) dan menyajikannya sesuai tipe itu; lihat [Aplikasi dan dev server](/docs/apps). Sebuah situs juga bisa menjalankan [perintahnya sendiri](/docs/commands), serta disajikan di [port lokal atau dibagikan](/docs/tunnels).

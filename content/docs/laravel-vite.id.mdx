@@ -1,0 +1,62 @@
+---
+title: Laravel dan Vite
+description: "Vite yang dijalankan dari Devid menyajikan HTTPS dengan sertifikat situs, sehingga halaman Laravel juga memuat skrip dan CSS-nya di Safari."
+translationOf: '921d844b1b4c'
+---
+
+Sejak 0.18.0, dev server Vite situs Laravel menyajikan HTTPS dengan sertifikat situs jika Devid yang menjalankannya. Safari lalu memuat skrip dan CSS halaman dari Vite, lengkap dengan hot reload.
+
+laravel-vite-plugin menulis alamat Vite ke `public/hot`, dan tag `@vite` Laravel memuat skrip dan CSS halaman dari sana. Tanpa sertifikat, alamat itu berupa HTTP biasa, seperti `http://[::1]:5173`. Chrome dan Firefox mengizinkan halaman `https://` memuat dari alamat itu, karena alamatnya ada di Mac Anda. Safari memblokirnya, sehingga halaman tampil tanpa skrip dan CSS.
+
+## Menyiapkannya [#set-it-up]
+
+Sebutkan situsnya di `.env` proyek:
+
+```sh
+APP_URL=https://shop.test
+```
+
+Lalu jalankan Vite sebagai salah satu [perintah](/docs/commands) situs:
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd start dev
+```
+
+Jika `APP_URL` menyebut situs itu (`https://shop.test`, atau `http://shop.test`, tanpa port), setiap perintah situs mendapat dua variabel. `VITE_DEV_SERVER_KEY` dan `VITE_DEV_SERVER_CERT` menunjuk ke key dan sertifikat situs di `~/.devid/certs`. laravel-vite-plugin lalu menyajikan Vite di `https://shop.test:5173`, menulis alamat itu ke `public/hot` dan menyambungkan hot reload ke sana.
+
+- `devid cmd` menampilkan `vite: started from Devid, it serves HTTPS with this site's certificate`.
+- `composer run dev`, yang menjalankan Vite bersama proses lain, bekerja dengan cara yang sama. Queue worker dan perintah lain mengabaikan kedua variabel itu.
+- Devid membaca `.env` saat perintah dijalankan, jadi jalankan ulang Vite setelah Anda mengubah `APP_URL`.
+
+## Jika APP_URL menyebut alamat lain [#when-app_url-names-another-address]
+
+Dengan `APP_URL=http://localhost:8000`, misalnya, Devid menjalankan Vite seperti sebelumnya, dengan HTTP biasa: dengan sertifikat situs dan alamat itu, Vite tidak akan bisa berjalan. `devid cmd`, menu situs di TUI dan kartu Commands di aplikasi desktop menampilkan catatan sebagai gantinya:
+
+```text
+vite: plain HTTP, which Safari blocks; set APP_URL=https://shop.test in .env (now http://localhost:8000) and restart Vite
+```
+
+Devid tidak mengatur `APP_URL` untuk Anda. Laravel mendahulukan variabel environment di atas `.env`, jadi queue worker, dan plugin Vite yang memanggil `artisan`, akan melihat alamat yang berbeda dari aplikasi Anda.
+
+Seperti Vite, Devid membaca `APP_URL` dari `.env`, `.env.local`, `.env.development` dan `.env.development.local`, dengan file yang lebih belakang didahulukan.
+
+## Vite yang dijalankan di terminal Anda sendiri [#vite-started-in-your-own-terminal]
+
+`npm run dev` di terminal Anda sendiri tidak mendapat apa pun dari Devid. Untuk itu, tambahkan dua baris ini ke `.env` dengan path lengkap, karena plugin itu tidak menerjemahkan `~`:
+
+```sh
+VITE_DEV_SERVER_KEY=/Users/<you>/.devid/certs/shop.test.key
+VITE_DEV_SERVER_CERT=/Users/<you>/.devid/certs/shop.test.crt
+```
+
+`APP_URL` tetap harus menyebut situs itu. Perintah yang dijalankan Devid lalu memakai baris milik Anda.
+
+## Yang perlu diketahui [#things-to-know]
+
+- Proyek yang mengatur `VITE_DEV_SERVER_KEY` atau `VITE_DEV_SERVER_CERT` sendiri tetap memakai miliknya.
+- Devid memperbarui sertifikat situs di path yang sama. Vite yang tetap berjalan melewati pembaruan itu memakai sertifikat lama sampai dijalankan ulang.
+- Vite tidak bisa dijalankan [on demand](/docs/on-demand) untuk situs Laravel: browser berbicara langsung dengan Vite, bukan lewat situs.
+- **Berbagi:** halaman pengunjung tetap akan memuat skripnya dari Vite di Mac Anda. Sebelum Anda [membagikan](/docs/tunnels) situs, hentikan Vite, yang akan menghapus `public/hot`, lalu jalankan `npm run build`.
+- Devid hanya mencari laravel-vite-plugin di `package.json`. Vite di proyek Symfony atau WordPress membaca pengaturannya sendiri.

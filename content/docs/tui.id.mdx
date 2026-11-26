@@ -1,0 +1,22 @@
+---
+title: TUI
+description: "Antarmuka terminal Devid dan tombol-tombolnya."
+translationOf: '4a84833e5ab9'
+---
+
+Jalankan `devid` tanpa argumen, atau jalankan `devid tui`. TUI punya tujuh halaman: Sites, PHP, Server, Mail, Databases, Logs dan Settings. Setiap aksi di dalamnya juga tersedia sebagai perintah CLI.
+
+| Di mana | Tombol |
+|---|---|
+| Di mana saja | `↑ ↓` atau `j k` berpindah · `tab` pindah antara sidebar dan halaman · `1`–`7` lompat ke halaman · `r` muat ulang · `?` bantuan · `q` keluar |
+| Sites | `enter` aksi (buka di browser, buka di Terminal, salin URL, versi PHP, tipe aplikasi, cara penyajian, port lokal, perintah (jalankan atau hentikan satu atau semua, tambah, hapus), `z` [on demand](/docs/on-demand), share, hapus situs, unlink) · `a` link folder · `p` park folder · `U` unpark · `I` sajikan lagi situs yang diabaikan |
+| PHP | `enter` aksi (ekstensi, jadikan default, Xdebug, pcov, sunting php.ini, restart, instal) · `u` periksa pembaruan · `U` perbarui |
+| PHP → Extensions… | `space` centang ekstensi katalog · `tab` ke tombol Install · `enter` instal yang dicentang (setelah konfirmasi, dengan baris `installing 2/3 imagick… 52%`) · `r` hapus satu (setelah konfirmasi) · `x` Xdebug · `c` pcov |
+| Server | `enter` aksi (pakai, instal, restart, stop/start, lihat konfigurasi) · `S` hentikan semua · `A` jalankan semua |
+| Mail | `m` nyalakan/matikan · `t` email percobaan · `o` buka inbox di browser · `c` salin baris `.env` · `p` nyalakan/matikan `mail()` PHP · `X` hapus semua email |
+| Databases | `enter` aksi (start atau stop, Accounts…, salin baris `.env` akun utama, database baru, port, restart). Lihat [Database](/docs/databases) |
+| Databases → Accounts… | `a` tambah · `p` password baru · `c` salin baris `.env` · `y` salin password · `d` hapus |
+| Logs | `f` ikuti · `c` kosongkan |
+| Settings | `d` pemeriksaan kesehatan · `u` periksa pembaruan · `U` perbarui PHP/nginx · `D` perbarui devid · `s` setup · `X` uninstal · `a` sajikan situs saat login · `p` nyalakan/matikan perintah Devid di `PATH` |
+
+Aksi yang destruktif meminta konfirmasi lebih dulu. Warna mengikuti tema terminal Anda, dan setiap status juga punya simbol dan kata. Atur `NO_COLOR=1` untuk tampilan monokrom.

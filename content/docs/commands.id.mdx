@@ -1,0 +1,46 @@
+---
+title: Perintah
+description: "Jalankan dev server, queue worker, atau watcher sebuah proyek dari Devid, tanpa terminal."
+translationOf: '457b65dac1c8'
+---
+
+Simpan perintah yang biasa Anda ketik di terminal untuk sebuah proyek, lalu jalankan dan hentikan dari Devid, satu per satu atau sekaligus.
+
+| Perintah | Fungsinya |
+|---|---|
+| `devid cmd [list] [site]` | Perintah situs beserta statusnya, dan saran dari `package.json`-nya (serta worker Laravel) |
+| `devid cmd add [site] <name> -- <command…>` | Menyimpan perintah; nama yang sama akan menggantinya |
+| `devid cmd rm [site] <name>` | Menghapus perintah, setelah menghentikannya dulu |
+| `devid cmd start [site] [name]` | Menjalankan satu perintah, atau semua perintah situs |
+| `devid cmd stop [site] [name]` | Menghentikan satu perintah, atau semua perintah situs |
+
+Di folder proyek, situsnya boleh tidak disebutkan:
+
+```sh
+cd ~/Projects/shop
+devid cmd add dev -- npm run dev
+devid cmd add queue -- php artisan queue:work
+devid cmd start                 # keduanya
+devid logs app-shop-dev.log -f  # ikuti output salah satunya
+devid cmd stop dev
+```
+
+## Cara perintah berjalan [#how-a-command-runs]
+
+- Di folder situs, dengan environment login shell Anda (`$SHELL -l`), jadi `~/.cargo/bin` dan path lain dari profil Anda tersedia.
+- Node berasal dari nvm: versi di `.nvmrc` folder itu, atau versi default nvm. `php` dan `composer` Devid didahulukan, jadi `php artisan` memakai versi PHP situs.
+- Sejak 0.12.4, perintah situs proxy mendapat `PORT` berisi port dev server-nya ("Forward to"). Next.js, Express dan server lain yang membaca `PORT` lalu mendengarkan di port yang dituju Devid. `PORT=` di perintah itu sendiri tetap didahulukan (`PORT=4000 npm run api`), jadi server kedua di proyek yang sama bisa memakai port lain. Vite mengabaikan `PORT`: berikan `--port <n> --strictPort`. Perintah yang sedang berjalan tetap memakai port saat ia dijalankan, jadi jalankan ulang setelah mengubah "Forward to".
+- Sejak 0.18.0, perintah situs Laravel mendapat `VITE_DEV_SERVER_KEY` dan `VITE_DEV_SERVER_CERT` jika `APP_URL` proyeknya menyebut situs itu, sehingga Vite menyajikan HTTPS dengan sertifikat situs. Lihat [Laravel dan Vite](/docs/laravel-vite).
+- Input ditutup, jadi perintah yang mengajukan pertanyaan akan berhenti dengan error, dan log-nya menjelaskan alasannya.
+- Setiap perintah mendapat process group sendiri. Stop bekerja seperti Ctrl+C untuk seluruh group, jadi npm, node, esbuild, cargo dan jendela desktop semuanya berhenti. Perintah yang mengabaikan Ctrl+C mendapat SIGTERM setelah 5 detik dan SIGKILL setelah 10 detik.
+- Output ditulis ke `~/.devid/log/app-<site>-<name>.log`, yang dikosongkan setiap kali perintah dijalankan dan dipangkas menjadi 1 MB terakhir begitu melewati 10 MB. Halaman Logs, `devid logs` dan daftar perintah di aplikasi menampilkannya.
+
+## Kapan perintah berjalan [#when-commands-run]
+
+- Hanya saat Anda menjalankannya, atau saat situs pertama kali dikunjungi jika perintahnya [on demand](/docs/on-demand): tidak pernah saat login, dan tidak pernah dijalankan ulang oleh Devid ketika berhenti.
+- Menghentikan daemon menghentikan semuanya, begitu juga logout.
+- Pembaruan (`devid self-update`, atau Update Devid di aplikasi) juga menjalankan ulang daemon. Sejak 0.12.3, perintah yang tadinya berjalan akan jalan lagi setelahnya (perintah on demand tidur sampai kunjungan berikutnya), dan setiap log diawali dengan "started again after Devid restarted for an update". Share tidak dijalankan ulang, karena tautannya akan berubah.
+- Jika daemon crash, daemon berikutnya menghentikan apa yang ditinggalkan daemon lama.
+- Dev server memakai banyak memori (sering 0,5–1 GB masing-masing), jadi hentikan yang tidak Anda pakai, atau biarkan [on demand](/docs/on-demand) menghentikannya saat situs tidak dipakai.
+
+Aplikasi desktop menampilkan perintah situs di detail situs, dengan Start, Stop, Start all, Stop all, Add command dan log setiap perintah. Ikon menu bar menampilkan berapa perintah yang berjalan, dengan Stop untuk masing-masing, serta situs on demand yang sedang tidur. Di TUI, perintah ada di menu situs.

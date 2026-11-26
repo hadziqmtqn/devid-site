@@ -1,0 +1,53 @@
+---
+title: Perintah terminal
+description: "Jalankan PHP, Composer, nginx, Caddy, Mailpit dan client database milik Devid lewat namanya, dari terminal, editor, atau skrip apa pun."
+translationOf: 'e82e56eb9b46'
+---
+
+Devid menyimpan perintah-perintahnya di `~/.devid/bin`. Jika folder itu ada di `PATH` Anda, terminal bisa menjalankannya lewat namanya:
+
+| Perintah | Menjalankan |
+|---|---|
+| `devid` | CLI, atau TUI jika tanpa argumen |
+| `php`, `composer` | Versi PHP situs tempat Anda berada, atau versi default (lihat [PHP](/docs/php)) |
+| `php8.3`, `php8.4`, `php8.5`, `php8.6` | Versi PHP itu, di mana pun Anda berada, dengan `php.ini` Devid |
+| `nginx` | nginx Devid dengan konfigurasi Devid: `nginx -t`, `nginx -T`, `nginx -s reload`, `nginx -V` |
+| `caddy` | Caddy Devid, misalnya `caddy version` |
+| `mailpit` | Mailpit Devid; `mailpit sendmail` mengirim ke inbox Devid |
+| `mysql`, `mysqldump` | Client dan tool dump MySQL, ke MySQL Devid sebagai `root` (lihat [Database](/docs/databases)) |
+| `psql`, `pg_dump`, `pg_restore` | Client dan tool PostgreSQL, ke PostgreSQL Devid sebagai `postgres` |
+| `mongosh` | Shell MongoDB, ke MongoDB Devid |
+
+`php8.3`–`php8.5`, `nginx`, `caddy` dan `mailpit` hadir sejak Devid 0.16, dan `php8.6` sejak Devid 0.20.1. Versi sebelumnya punya `devid`, `php` dan `composer`. Client database hadir sejak Devid 0.20.1, masing-masing setelah database-nya terinstal, dan tersambung ke server lain jika Anda menyebutkan host atau port.
+
+## Menambahkan ke PATH [#add-to-path]
+
+Setup menaruh folder itu di `PATH` Anda. Untuk menambahkannya lagi, atau mengeluarkannya:
+
+- **Aplikasi desktop:** Settings › Terminal › **Add to PATH** (atau **Remove from PATH**). Bagian ini menampilkan daftar perintahnya.
+- **CLI:** `devid path on` atau `devid path off`. `devid path` menunjukkan apakah terminal baru mendapat perintah-perintah itu, dan menampilkan daftarnya. Perintah ini tetap bisa dipakai saat daemon berhenti.
+- **TUI:** `p` di halaman Settings.
+
+Ini menambahkan satu baris, bertanda `# added by devid`, ke `~/.zshenv` dan `~/.zshrc` (dengan bash, ke `~/.bash_profile`; di Linux dengan bash, ke `~/.bashrc` dan ke `~/.bash_profile` jika Anda punya, selain itu `~/.profile`):
+
+```sh
+export PATH="/Users/you/.devid/bin:$PATH" # added by devid
+```
+
+Jika shell Anda fish, barisnya ditulis ke file tersendiri, `~/.config/fish/conf.d/devid.fish`, di macOS dan Linux:
+
+```fish
+fish_add_path --global --move --path '/Users/you/.devid/bin' # added by devid
+```
+
+- `~/.zshenv` menjangkau setiap zsh, termasuk yang dijalankan editor, skrip, dan tool.
+- `~/.zshrc` menjaga perintah Devid tetap di depan perintah Homebrew di terminal. macOS menyusun ulang `PATH` setelah membaca `~/.zshenv`, jadi baris kedua inilah yang menaruh Devid di depan.
+- Jendela terminal yang sudah terbuka sebelum perubahan tetap memakai `PATH` lamanya. Buka jendela baru, atau jalankan `exec zsh`.
+- **Remove from PATH** dan `devid path off` hanya menghapus baris yang ditambahkan Devid.
+
+## Catatan [#notes]
+
+- **nginx:** Devid sendiri yang menjalankan dan menghentikan nginx (`devid start|stop|restart nginx`). Perintah `nginx` hanya menguji, menampilkan, atau mengirim sinyal ke nginx itu. `nginx` tanpa argumen ditolak, sehingga salinan kedua tidak pernah berjalan.
+- **Mailpit:** Devid mengunduhnya saat Anda pertama kali menyalakan [Mail](/docs/mail). `mailpit sendmail` mengirim ke port SMTP di pengaturan Devid, kecuali Anda memberikan `-S <host:port>`.
+- **Belum terinstal:** perintah yang programnya belum ada akan memberi tahu cara menginstalnya, misalnya `devid php install 8.4` atau `devid server install caddy`.
+- **Salinan milik Anda sendiri:** folder Devid berada paling depan di `PATH`, jadi `nginx`, `caddy`, `mailpit` dan client database milik Devid menutupi milik Homebrew dan DBngin. Panggil salinan lainnya dengan path lengkapnya, atau jalankan `devid path off`.

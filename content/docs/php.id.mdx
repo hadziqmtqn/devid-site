@@ -1,0 +1,25 @@
+---
+title: PHP
+description: "PHP 8.3, 8.4, 8.5 dan 8.6 berdampingan, dengan Xdebug, pcov dan php.ini."
+translationOf: 'b611493b2456'
+---
+
+```sh
+devid php list                 # versi yang terinstal dan apakah php-fpm berjalan
+devid php install 8.4          # tambah versi lain
+devid php use 8.4              # jadikan default
+devid php ext 8.5 xdebug on    # nyalakan/matikan Xdebug (atau pcov) untuk satu versi
+devid php ext list 8.4         # ekstensi bawaan, Xdebug/pcov, dan ekstensi katalog yang terinstal
+```
+
+- **Perintah `php`** mengikuti folder tempat Anda berada. Di dalam situs yang dikunci ke satu versi (`devid isolate`), perintah ini memakai versi situs itu; di tempat lain, memakai versi default. `composer` bekerja dengan cara yang sama. `php8.3`, `php8.4`, `php8.5` dan `php8.6` selalu menjalankan versi masing-masing (lihat [Perintah terminal](/docs/terminal)).
+- **Ekstensi:**
+  - Setiap versi menyertakan:
+    - bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pcntl;
+    - PDO dengan MySQL, PostgreSQL dan SQLite, ditambah mysqli, pgsql dan sqlite3;
+    - readline (untuk `php -a` dan `artisan tinker`), redis, soap, sockets, sodium, zip, dan ekstensi XML.
+  - Xdebug dan pcov disertakan tetapi mati secara default. Xdebug berjalan dalam trigger mode di port 9003.
+- **PHP 8.6** (Devid 0.20.1): `devid php install 8.6`. Untuk sementara, instalasi baru tetap memakai 8.5 sebagai default, karena 8.6 datang dengan Xdebug 3.6.0alpha1, sebuah preview dan sejauh ini satu-satunya Xdebug yang mendukung 8.6, dan katalog ekstensinya belum lengkap.
+- **Ekstensi tambahan:** lihat [Ekstensi PHP](/docs/extensions).
+- **php.ini:** setiap versi punya `~/.devid/php/<version>/etc/php.ini`. Devid menulisnya sekali dan tidak pernah menimpanya. Setelah menyuntingnya, jalankan `devid restart php-8.5`. Nilai default-nya `memory_limit = 512M`, upload sampai 64 MB, error ditampilkan, dan JIT mati.
+- **Proses:** php-fpm memakai `pm = ondemand`. Versi yang tidak dipakai hanya menyisakan master process-nya, sekitar 10–15 MB. Worker berjalan saat ada request dan keluar 10 detik setelah request terakhir.
