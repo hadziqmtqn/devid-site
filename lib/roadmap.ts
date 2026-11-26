@@ -27,7 +27,7 @@ export const latest: Plan & { version: string } = {
 export const releases: Release[] = [
   {
     version: '0.21',
-    date: '25 November 2026',
+    date: '26 November 2026',
     items: [
       'Databases: MySQL 8.4 and 9.7, PostgreSQL 15 to 19 and MongoDB 7.0 to 9.0, each off until `devid db start`, on 127.0.0.1 next to DBngin or Homebrew',
       'An account with its own database and password in one step, a new password in one more, and the `.env` lines to copy, in the CLI, the TUI and the desktop app',
