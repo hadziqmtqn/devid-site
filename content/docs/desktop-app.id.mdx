@@ -1,7 +1,7 @@
 ---
 title: Aplikasi desktop
 description: "Devid.app: ikon di menu bar dengan halaman yang sama seperti TUI."
-translationOf: '1854b52e0cc4'
+translationOf: '9df0bc436169'
 ---
 
 Devid.app, untuk macOS, adalah ikon di menu bar dengan jendela yang punya halaman yang sama seperti TUI: Sites, PHP, Web Server, Mail, Databases, Logs dan Settings. Aplikasi ini opsional: situs Anda tetap berjalan tanpanya.
@@ -17,7 +17,7 @@ devid login-item on            # tampilkan ikon menu bar-nya setiap kali login (
 Tanpa `--gui`, Devid tidak menginstal aplikasi apa pun.
 
 - **Gatekeeper:** aplikasi ini ditandatangani secara ad-hoc dan tidak dinotarisasi. Jika diinstal lewat `devid setup --gui`, aplikasi terbuka tanpa peringatan. Jika Anda mengunduh `Devid-darwin-x86_64.zip` (Intel) atau `Devid-darwin-arm64.zip` (Apple silicon) lewat browser, jalankan `xattr -dr com.apple.quarantine Devid.app` setelah mengekstraknya.
-- **Sites:** tabel berisi tipe setiap situs, apa yang menyajikannya (versi PHP-nya, Static, atau port tujuan proxy-nya) dan perintah yang sedang berjalan. Filter di baris Sites berpindah antara situs yang disajikan dan situs dari folder park yang Anda hapus. **+** di bagian atas me-link sebuah folder dari mana saja: setelah Anda memilihnya, Devid menampilkan domain dan tipe aplikasinya, dan Anda bisa memilih versi PHP-nya atau, untuk aplikasi Node.js, port dev server-nya, sebelum me-link-nya. **Add folder** mem-park sebuah folder, sehingga setiap proyek di dalamnya disajikan.
+- **Sites:** tabel berisi tipe setiap situs, apa yang menyajikannya (versi PHP-nya, Static, atau port tujuan proxy-nya) dan perintah yang sedang berjalan. Filter di baris Sites berpindah antara situs yang disajikan dan situs dari folder park yang Anda hapus. **+** di bagian atas membuat [proyek baru](/docs/new-project) (**New project…**, atau `⌘N` dari halaman mana pun) atau me-link sebuah folder dari mana saja (**Link a folder…**): setelah Anda memilihnya, Devid menampilkan domain dan tipe aplikasinya, dan Anda bisa memilih versi PHP-nya atau, untuk aplikasi Node.js, port dev server-nya, sebelum me-link-nya. **Add folder** mem-park sebuah folder, sehingga setiap proyek di dalamnya disajikan.
 - **Detail situs:** klik sebuah situs untuk melihat tipe dan cara penyajiannya, port lokalnya, [perintahnya](/docs/commands) (Start, Stop, log, Add command), [On demand](/docs/on-demand) untuk situs proxy, dan [Share](/docs/tunnels). Penjelasannya ada di balik ⓘ di setiap judul, dan **Open in browser** membuka situs itu, sekaligus membangunkan situs yang sedang tidur.
 - **Menu cepat:** **⋯** di kartu web server, di bagian bawah sidebar, menampilkan daftar situs beserta versi PHP-nya, menghentikan atau me-restart semuanya, mengganti PHP default, dan membuka Settings atau menutup Devid.
 - **Mail:** inbox untuk email yang dikirim aplikasi Anda: daftar pesan dengan pencarian, masing-masing dengan HTML, teks, header, source dan lampirannya, serta notifikasi untuk email baru jika Anda mau. Saat Mail mati, dari halaman ini Anda bisa menyalakannya. Lihat [Mail](/docs/mail).

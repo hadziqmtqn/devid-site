@@ -1,0 +1,115 @@
+---
+title: New project
+description: "Make a Laravel, WordPress, Symfony, CodeIgniter or Node.js project with its framework's own tool, served at https://<name>.test right away."
+---
+
+`devid new` makes a project with its framework's own create tool, such as Composer for Laravel or `create-next-app` for Next.js, with fixed options so nothing asks you questions. It puts the project in your parked folder and serves it at `https://<name>.test` as soon as it is ready, with its database, `.env` and dev server set up.
+
+## Make a project
+
+```sh
+devid new laravel shop                 # https://shop.test, in your first parked folder
+devid new laravel shop --db mysql      # with a MySQL account and database for it
+devid new laravel shop --kit react     # Laravel's React starter kit
+devid new wordpress blog               # WordPress, installed, with its MySQL database
+devid new next web                     # Next.js; its first visit starts its dev server
+devid new                              # the templates, and what your computer lacks for each
+```
+
+In the desktop app: **Sites**, **+**, **New project…** (or `⌘N`). In the TUI: `n` on the Sites page.
+
+- **The name** is the project's folder and its address, `<name>.test`: lowercase letters, digits and `-`, starting with a letter, at most 32 characters.
+- **The folder:** `<name>` in your first parked folder. With no parked folder, the CLI offers to create `~/Sites` and park it. `--path ~/code/shop` puts the project in another folder, which Devid links.
+- **PHP:** the default version. `--php 8.4` pins the site to another one, as [`devid isolate`](/docs/sites) does.
+- **While it runs,** each step is printed as it starts. The tools' own output goes to `~/.devid/log/new-<name>.log`.
+- **When it is ready,** Devid prints the address, the folder, the database account and its password, and any command it saved. `--open` opens the site in your browser.
+- One project at a time. Devid makes no Git repository: run `git init` in the folder when you want one.
+
+## Templates
+
+| Template | Made with | What Devid sets up |
+|---|---|---|
+| `php` | An `index.php` | The site |
+| `static` | An `index.html` | The site |
+| `laravel` | `composer create-project laravel/laravel`, or a starter kit with `--kit react`, `vue`, `svelte` or `livewire` | `APP_URL`, the database, Mail's lines while [Mail](/docs/mail) is on, and `migrate` |
+| `wordpress` | WP-CLI: WordPress's own download, checked against its checksums, then `wp config create` and `wp core install` | A MySQL account and database, and an admin login |
+| `symfony` | `composer create-project symfony/skeleton`, then the web app (`composer require webapp`), without Docker files. `--kit skeleton` stops at the skeleton | `DATABASE_URL`, and `MAILER_DSN` while Mail is on, in `.env.local` |
+| `codeigniter` | `composer create-project codeigniter4/appstarter` | `.env`: `CI_ENVIRONMENT = development` and `app.baseURL` |
+| `react`, `vue`, `svelte`, `vite` | `npm create vite`, with TypeScript (`vite` is Vite's vanilla template) | The dev server, started by the first visit |
+| `next` | `create-next-app`: TypeScript, ESLint, Tailwind CSS and the App Router | The same |
+| `nuxt` | `npm create nuxt`, the minimal template | The same |
+| `sveltekit` | `sv create`, the minimal template with TypeScript | The same |
+| `astro` | `npm create astro`, the basics template | The same |
+| `express` | `npm install express`, and a `server.js` from Devid that answers with JSON | The same, with `node --watch` |
+
+The tools are always their newest release, as their own docs run them. Devid checks every template with them each week.
+
+## Databases
+
+Laravel and Symfony's web app use SQLite unless you pick another database:
+
+```sh
+devid new laravel shop --db mysql    # or --db pgsql
+devid new symfony shop --db pgsql
+```
+
+- **With `--db mysql` or `--db pgsql`,** Devid starts the [database](/docs/databases), downloading it the first time. It makes an account and a database named after the project (`my-shop` becomes `my_shop`) with a generated password, and writes their lines into `.env` (`.env.local` for Symfony). Laravel then migrates.
+- **WordPress** always gets a MySQL account and database.
+- **The password** is printed at the end. `devid db env mysql shop` shows the `.env` lines again any time.
+
+## WordPress
+
+```sh
+devid new wordpress blog
+```
+
+- **The admin login:** the user `admin` with a generated password, which Devid prints once and does not keep. Sign in at `https://blog.test/wp-admin/` and change it there if you like.
+- **WP-CLI** is a [terminal command](/docs/terminal): `wp` runs it on Devid's PHP, for example `wp plugin install query-monitor --activate` in the site's folder. Devid downloads it the first time you make a WordPress site, checked against its published SHA-512.
+- **Multisite** is not supported yet.
+
+## Node.js projects
+
+```sh
+devid new next web
+```
+
+- **Node.js** is your own: nvm's default (an `.nvmrc` picks another), else the `node` on your `PATH`. Each template needs the version its framework names, and `devid new` with no template says when yours is too old or missing.
+- **Packages** are installed with npm.
+- **Serving:** the site is proxied to the project's dev server, on the framework's usual port (5173, 3000 or 4321) or the next free one. The first visit to `https://web.test` starts `npm run dev`, and Devid stops it once the site has been idle (see [Dev servers on demand](/docs/on-demand)). Hot reload works through `https://web.test`.
+- `devid cmd` in the folder shows the `dev` command, and `devid cmd stop web dev` stops it.
+
+## Laravel's starter kits
+
+```sh
+devid new laravel shop --kit vue
+```
+
+- **The kits** (React, Vue, Svelte and Livewire) come from Laravel's own repositories, as the Laravel installer takes them. Composer builds the front end once while it makes the project, so the site works before any dev server runs.
+- **They need Node.js** 22.18 or later, 24.11 or later, or 26 or later. Devid checks it before Composer starts.
+- **Hot reload:** Devid saves the command `vite` (`npm run dev`). `devid cmd start vite` in the folder runs Vite, over HTTPS with the site's certificate (see [Laravel and Vite](/docs/laravel-vite)).
+
+## In the desktop app
+
+**Sites**, then **+**, then **New project…**. `⌘N` opens it from any page.
+
+- **The form:** the templates, the name with the address it gets, the folder (a parked folder, `~/Sites`, which the app makes and parks for you, or another folder you choose), and the template's options: PHP version, starter kit and database. Below them, one line for each thing Devid sets up, such as "MySQL is off: Devid starts it first".
+- **Create** shows each step with the time it took and the last lines of the log. **Hide** leaves it running, and a notice says when it is done.
+- **Ready:** the address, the folder with Show in Finder and Open in Terminal, the database account with **Copy password** and **Copy .env**, and for WordPress the admin login, shown once.
+
+## In the TUI
+
+`n` on the Sites page opens the New project form. `↑` and `↓` move between the template, the name, the kit and the database, `←` and `→` change them, and `enter` on Create makes the project. Each step shows on the message line, then a summary like the CLI's.
+
+## When something fails
+
+Devid stops at the step that failed, says what went wrong and where the log is, and leaves what it made: the folder, and a database account if it made one. The message names both, with the commands that remove them:
+
+```sh
+rm -rf ~/Sites/shop                    # the folder
+devid db user remove mysql shop        # the account; its database stays
+devid logs new-shop.log -n 50          # the last lines of the tools' output
+```
+
+- **Node.js is too old or missing:** install a newer one (with nvm: `nvm install --lts`), then try again. The starter kits and the Node.js templates need it; the other templates do not.
+- **A site with that name exists, or the folder is not empty:** pick another name, or `--path`.
+- **PHP is not installed:** `devid php install 8.5`.

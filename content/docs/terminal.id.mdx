@@ -1,7 +1,7 @@
 ---
 title: Perintah terminal
-description: "Jalankan PHP, Composer, nginx, Caddy, Mailpit dan client database milik Devid lewat namanya, dari terminal, editor, atau skrip apa pun."
-translationOf: 'e82e56eb9b46'
+description: "Jalankan PHP, Composer, WP-CLI, nginx, Caddy, Mailpit dan client database milik Devid lewat namanya, dari terminal, editor, atau skrip apa pun."
+translationOf: 'bc491a857450'
 ---
 
 Devid menyimpan perintah-perintahnya di `~/.devid/bin`. Jika folder itu ada di `PATH` Anda, terminal bisa menjalankannya lewat namanya:
@@ -14,11 +14,12 @@ Devid menyimpan perintah-perintahnya di `~/.devid/bin`. Jika folder itu ada di `
 | `nginx` | nginx Devid dengan konfigurasi Devid: `nginx -t`, `nginx -T`, `nginx -s reload`, `nginx -V` |
 | `caddy` | Caddy Devid, misalnya `caddy version` |
 | `mailpit` | Mailpit Devid; `mailpit sendmail` mengirim ke inbox Devid |
+| `wp` | WP-CLI dengan versi PHP situs tempat Anda berada, setelah Anda [membuat situs WordPress](/docs/new-project#wordpress) |
 | `mysql`, `mysqldump` | Client dan tool dump MySQL, ke MySQL Devid sebagai `root` (lihat [Database](/docs/databases)) |
 | `psql`, `pg_dump`, `pg_restore` | Client dan tool PostgreSQL, ke PostgreSQL Devid sebagai `postgres` |
 | `mongosh` | Shell MongoDB, ke MongoDB Devid |
 
-`php8.3`–`php8.5`, `nginx`, `caddy` dan `mailpit` hadir sejak Devid 0.16, dan `php8.6` sejak Devid 0.20.1. Versi sebelumnya punya `devid`, `php` dan `composer`. Client database hadir sejak Devid 0.20.1, masing-masing setelah database-nya terinstal, dan tersambung ke server lain jika Anda menyebutkan host atau port.
+`php8.3`–`php8.5`, `nginx`, `caddy` dan `mailpit` hadir sejak Devid 0.16, `php8.6` sejak Devid 0.20.1, dan `wp` sejak Devid 0.22. Versi sebelumnya punya `devid`, `php` dan `composer`. Client database hadir sejak Devid 0.20.1, masing-masing setelah database-nya terinstal, dan tersambung ke server lain jika Anda menyebutkan host atau port.
 
 ## Menambahkan ke PATH [#add-to-path]
 
