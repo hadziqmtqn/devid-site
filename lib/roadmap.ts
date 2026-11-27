@@ -18,13 +18,22 @@ export const later: Plan[] = [
 
 /** The newest release, as the landing page sums it up. */
 export const latest: Plan & { version: string } = {
-  version: '0.21',
-  title: 'Databases',
-  note: 'MySQL, PostgreSQL and MongoDB, run by Devid on your computer, with an account and its .env lines in one step.',
+  version: '0.22',
+  title: 'New projects',
+  note: 'Laravel, WordPress, Symfony, Next.js and more, made with each framework’s own tool and served at https://<name>.test right away.',
 };
 
 /** Newest first. The first `RECENT` show; the rest fold under "Show earlier releases". */
 export const releases: Release[] = [
+  {
+    version: '0.22',
+    date: '27 November 2026',
+    items: [
+      '`devid new`: Laravel with its starter kits, WordPress, Symfony, CodeIgniter 4, PHP and static sites, made with each framework’s own tool and served at `https://<name>.test` right away',
+      'Node.js projects with Vite (React, Vue, Svelte), Next.js, Nuxt, SvelteKit, Astro or Express, whose first visit starts their dev server',
+      'The project’s MySQL or PostgreSQL account in the same step, WordPress installed with its admin login, and `wp` (WP-CLI) in the terminal; in the CLI, the TUI and the desktop app',
+    ],
+  },
   {
     version: '0.21',
     date: '26 November 2026',

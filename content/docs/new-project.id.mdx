@@ -1,0 +1,116 @@
+---
+title: Proyek baru
+description: "Buat proyek Laravel, WordPress, Symfony, CodeIgniter atau Node.js dengan alat resmi framework-nya, langsung disajikan di https://<name>.test."
+translationOf: 'abd3b50fd8c4'
+---
+
+`devid new` membuat proyek dengan alat pembuat resmi framework-nya, misalnya Composer untuk Laravel atau `create-next-app` untuk Next.js, dengan opsi tetap sehingga tidak ada pertanyaan untuk Anda. Devid menaruh proyek itu di folder yang Anda park dan menyajikannya di `https://<name>.test` begitu siap, lengkap dengan database, `.env` dan dev server-nya.
+
+## Membuat proyek [#make-a-project]
+
+```sh
+devid new laravel shop                 # https://shop.test, di folder park pertama Anda
+devid new laravel shop --db mysql      # dengan akun dan database MySQL untuknya
+devid new laravel shop --kit react     # starter kit React dari Laravel
+devid new wordpress blog               # WordPress, sudah terinstal, dengan database MySQL-nya
+devid new next web                     # Next.js; kunjungan pertama menjalankan dev server-nya
+devid new                              # daftar template, dan apa yang kurang di komputer Anda
+```
+
+Di aplikasi desktop: **Sites**, **+**, **New project…** (atau `⌘N`). Di TUI: `n` di halaman Sites.
+
+- **Nama** proyek menjadi nama foldernya dan alamatnya, `<name>.test`: huruf kecil, angka dan `-`, diawali huruf, paling banyak 32 karakter.
+- **Folder:** `<name>` di folder park pertama Anda. Kalau belum ada folder yang di-park, CLI menawarkan untuk membuat `~/Sites` dan mem-park-nya. `--path ~/code/shop` menaruh proyek di folder lain, yang di-link oleh Devid.
+- **PHP:** versi default. `--php 8.4` mengunci situs ke versi lain, seperti [`devid isolate`](/docs/sites).
+- **Selama berjalan,** setiap langkah ditampilkan saat dimulai. Output alat-alatnya masuk ke `~/.devid/log/new-<name>.log`.
+- **Setelah siap,** Devid menampilkan alamat, folder, akun database beserta password-nya, dan perintah yang disimpannya. `--open` membuka situs di browser Anda.
+- Satu proyek dalam satu waktu. Devid tidak membuat repository Git: jalankan `git init` di folder itu jika Anda membutuhkannya.
+
+## Template [#templates]
+
+| Template | Dibuat dengan | Yang disiapkan Devid |
+|---|---|---|
+| `php` | Sebuah `index.php` | Situsnya |
+| `static` | Sebuah `index.html` | Situsnya |
+| `laravel` | `composer create-project laravel/laravel`, atau starter kit dengan `--kit react`, `vue`, `svelte` atau `livewire` | `APP_URL`, database, baris Mail selama [Mail](/docs/mail) menyala, dan `migrate` |
+| `wordpress` | WP-CLI: unduhan resmi WordPress, diperiksa terhadap checksum-nya, lalu `wp config create` dan `wp core install` | Akun dan database MySQL, serta login admin |
+| `symfony` | `composer create-project symfony/skeleton`, lalu web app-nya (`composer require webapp`), tanpa file Docker. `--kit skeleton` berhenti di skeleton | `DATABASE_URL`, dan `MAILER_DSN` selama Mail menyala, di `.env.local` |
+| `codeigniter` | `composer create-project codeigniter4/appstarter` | `.env`: `CI_ENVIRONMENT = development` dan `app.baseURL` |
+| `react`, `vue`, `svelte`, `vite` | `npm create vite`, dengan TypeScript (`vite` adalah template vanilla dari Vite) | Dev server, yang dijalankan oleh kunjungan pertama |
+| `next` | `create-next-app`: TypeScript, ESLint, Tailwind CSS dan App Router | Sama |
+| `nuxt` | `npm create nuxt`, template minimal | Sama |
+| `sveltekit` | `sv create`, template minimal dengan TypeScript | Sama |
+| `astro` | `npm create astro`, template basics | Sama |
+| `express` | `npm install express`, dan `server.js` dari Devid yang menjawab dengan JSON | Sama, dengan `node --watch` |
+
+Alat-alat itu selalu memakai rilis terbarunya, seperti yang dijalankan dokumentasinya sendiri. Devid memeriksa setiap template dengan alat-alat itu setiap minggu.
+
+## Database [#databases]
+
+Laravel dan web app Symfony memakai SQLite kecuali Anda memilih database lain:
+
+```sh
+devid new laravel shop --db mysql    # atau --db pgsql
+devid new symfony shop --db pgsql
+```
+
+- **Dengan `--db mysql` atau `--db pgsql`,** Devid menjalankan [database](/docs/databases)-nya, dan mengunduhnya jika ini yang pertama kali. Devid membuat akun dan database bernama sama dengan proyeknya (`my-shop` menjadi `my_shop`) dengan password yang dibuatkan, lalu menulis barisnya ke `.env` (`.env.local` untuk Symfony). Laravel lalu menjalankan migrasi.
+- **WordPress** selalu mendapat akun dan database MySQL.
+- **Password** ditampilkan di akhir. `devid db env mysql shop` menampilkan baris `.env`-nya lagi kapan saja.
+
+## WordPress [#wordpress]
+
+```sh
+devid new wordpress blog
+```
+
+- **Login admin:** user `admin` dengan password yang dibuatkan, yang ditampilkan Devid sekali dan tidak disimpan. Masuk di `https://blog.test/wp-admin/` dan ganti password-nya di sana jika Anda mau.
+- **WP-CLI** adalah [perintah terminal](/docs/terminal): `wp` menjalankannya dengan PHP Devid, misalnya `wp plugin install query-monitor --activate` di folder situsnya. Devid mengunduhnya saat Anda pertama kali membuat situs WordPress, diperiksa terhadap SHA-512 yang dipublikasikan.
+- **Multisite** belum didukung.
+
+## Proyek Node.js [#nodejs-projects]
+
+```sh
+devid new next web
+```
+
+- **Node.js** adalah milik Anda sendiri: default nvm (`.nvmrc` bisa memilih versi lain), atau `node` di `PATH` Anda. Setiap template butuh versi yang disebutkan framework-nya, dan `devid new` tanpa template memberi tahu jika versi Anda terlalu lama atau tidak ada.
+- **Paket** diinstal dengan npm.
+- **Penyajian:** situs di-proxy ke dev server proyeknya, di port yang biasa dipakai framework itu (5173, 3000 atau 4321) atau port kosong berikutnya. Kunjungan pertama ke `https://web.test` menjalankan `npm run dev`, dan Devid menghentikannya setelah situs itu tidak dipakai (lihat [Dev server on demand](/docs/on-demand)). Hot reload berjalan lewat `https://web.test`.
+- `devid cmd` di folder itu menampilkan perintah `dev`, dan `devid cmd stop web dev` menghentikannya.
+
+## Starter kit Laravel [#laravels-starter-kits]
+
+```sh
+devid new laravel shop --kit vue
+```
+
+- **Starter kit** (React, Vue, Svelte dan Livewire) diambil dari repository resmi Laravel, seperti yang dilakukan Laravel installer. Composer mem-build front end-nya sekali saat membuat proyek, jadi situsnya sudah berfungsi sebelum ada dev server yang berjalan.
+- **Starter kit butuh Node.js** 22.18 atau lebih baru, 24.11 atau lebih baru, atau 26 atau lebih baru. Devid memeriksanya sebelum Composer mulai.
+- **Hot reload:** Devid menyimpan perintah `vite` (`npm run dev`). `devid cmd start vite` di folder itu menjalankan Vite, lewat HTTPS dengan sertifikat situsnya (lihat [Laravel dan Vite](/docs/laravel-vite)).
+
+## Di aplikasi desktop [#in-the-desktop-app]
+
+**Sites**, lalu **+**, lalu **New project…**. `⌘N` membukanya dari halaman mana pun.
+
+- **Formulir:** daftar template, nama beserta alamat yang didapatnya, folder (folder yang di-park, `~/Sites` yang dibuat dan di-park aplikasi untuk Anda, atau folder lain pilihan Anda), dan opsi template: versi PHP, starter kit dan database. Di bawahnya, satu baris untuk setiap hal yang disiapkan Devid, seperti "MySQL is off: Devid starts it first".
+- **Create** menampilkan setiap langkah dengan waktu yang dibutuhkannya dan baris terakhir log-nya. **Hide** membiarkannya tetap berjalan, dan sebuah pemberitahuan muncul saat selesai.
+- **Siap:** alamat, folder dengan Show in Finder dan Open in Terminal, akun database dengan **Copy password** dan **Copy .env**, dan untuk WordPress, login admin yang ditampilkan sekali.
+
+## Di TUI [#in-the-tui]
+
+`n` di halaman Sites membuka formulir New project. `↑` dan `↓` berpindah antara template, nama, kit dan database, `←` dan `→` mengubahnya, dan `enter` pada Create membuat proyeknya. Setiap langkah tampil di baris pesan, lalu ringkasan seperti di CLI.
+
+## Kalau ada yang gagal [#when-something-fails]
+
+Devid berhenti di langkah yang gagal, menyebutkan apa yang salah dan di mana log-nya, dan membiarkan apa yang sudah dibuatnya: foldernya, dan akun database jika Devid sempat membuatnya. Pesannya menyebutkan keduanya, beserta perintah untuk menghapusnya:
+
+```sh
+rm -rf ~/Sites/shop                    # foldernya
+devid db user remove mysql shop        # akunnya; database-nya tetap ada
+devid logs new-shop.log -n 50          # baris terakhir output alat-alatnya
+```
+
+- **Node.js terlalu lama atau tidak ada:** instal yang lebih baru (dengan nvm: `nvm install --lts`), lalu coba lagi. Starter kit dan template Node.js membutuhkannya; template lain tidak.
+- **Sudah ada situs dengan nama itu, atau foldernya tidak kosong:** pilih nama lain, atau pakai `--path`.
+- **PHP belum terinstal:** `devid php install 8.5`.

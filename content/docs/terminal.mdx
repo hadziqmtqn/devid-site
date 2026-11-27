@@ -1,6 +1,6 @@
 ---
 title: Terminal commands
-description: "Run Devid's PHP, Composer, nginx, Caddy, Mailpit and database clients by name, from any terminal, editor or script."
+description: "Run Devid's PHP, Composer, WP-CLI, nginx, Caddy, Mailpit and database clients by name, from any terminal, editor or script."
 ---
 
 Devid keeps its commands in `~/.devid/bin`. With that folder on your `PATH`, a terminal runs them by name:
@@ -13,11 +13,12 @@ Devid keeps its commands in `~/.devid/bin`. With that folder on your `PATH`, a t
 | `nginx` | Devid's nginx on Devid's config: `nginx -t`, `nginx -T`, `nginx -s reload`, `nginx -V` |
 | `caddy` | Devid's Caddy, for example `caddy version` |
 | `mailpit` | Devid's Mailpit; `mailpit sendmail` delivers to Devid's inbox |
+| `wp` | WP-CLI on the PHP of the site you are in, once you have [made a WordPress site](/docs/new-project#wordpress) |
 | `mysql`, `mysqldump` | MySQL's client and dump tool, to Devid's MySQL as `root` (see [Databases](/docs/databases)) |
 | `psql`, `pg_dump`, `pg_restore` | PostgreSQL's client and tools, to Devid's PostgreSQL as `postgres` |
 | `mongosh` | MongoDB's shell, to Devid's MongoDB |
 
-`php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` come with Devid 0.16, and `php8.6` with Devid 0.20.1. Earlier versions have `devid`, `php` and `composer`. The database clients come with Devid 0.20.1, each once its database is installed, and reach another server when you name a host or a port.
+`php8.3`–`php8.5`, `nginx`, `caddy` and `mailpit` come with Devid 0.16, `php8.6` with Devid 0.20.1, and `wp` with Devid 0.22. Earlier versions have `devid`, `php` and `composer`. The database clients come with Devid 0.20.1, each once its database is installed, and reach another server when you name a host or a port.
 
 ## Add to PATH
 
